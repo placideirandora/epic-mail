@@ -296,7 +296,7 @@ input::placeholder
 }
 
 /**
- * sign in form
+ * sign in and sign up forms
  */
 
 .user-options-forms .user-forms-sign-in
@@ -310,11 +310,34 @@ input::placeholder
   transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, transform 0.5s ease-in-out;
 }
 
+.user-options-forms .user-forms-sign-up 
+{
+  position: absolute;
+  top: 55px;
+  left: 40px;
+  width: calc(100% - 80px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, transform 0.5s ease-in-out;
+}
+
 .user-options-forms .user-forms-sign-in 
 {
   transform: translateX(0);
   opacity: 1;
   visibility: visible;
+}
+
+.user-options-forms .user-forms-sign-up .forms-fields 
+{  
+  display: flex;
+  width: 100%;
+  justify-content: space-between; 
+}
+
+.user-options-forms .user-forms-sign-up .forms-fields .forms-field-input
+{
+  width: 49%;
 }
 
 
@@ -406,3 +429,89 @@ input::placeholder
    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
  }
  
+
+/**
+ * bounce to the left side
+ */
+
+ @keyframes bounceLeft 
+ {
+
+  0% {
+            transform: translate(100%, -50%);
+  }
+  50% {
+            transform: translate(-30px, -50%);
+  }
+  100% {
+            transform: translate(0, -50%);
+  }
+
+}
+
+/**
+ * bounce to the right side
+ */
+
+@keyframes bounceRight 
+{
+
+  0% 
+  {
+            transform: translate(0, -50%);
+  }
+
+  50% 
+  {
+            transform: translate(calc(100% + 30px), -50%);
+  }
+
+  100% 
+  {
+            transform: translate(100%, -50%);
+  }
+
+}
+
+/**
+ * show sign up form
+ */
+
+@keyframes showSign-Up 
+{
+
+  100% 
+  {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+
+}
+
+/**
+ * triggers and animation
+ */
+
+.user-options-forms.bounceLeft 
+{
+          animation: bounceLeft 1s forwards;
+}
+
+.user-options-forms.bounceLeft .user-forms-sign-up 
+{
+          animation: showSign-Up 1s forwards;
+}
+
+.user-options-forms.bounceLeft .user-forms-sign-in 
+{
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-120px);
+}
+
+.user-options-forms.bounceRight 
+{
+          animation: bounceRight 1s forwards;
+}
+
