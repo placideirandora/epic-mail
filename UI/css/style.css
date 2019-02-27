@@ -77,4 +77,242 @@
    
  }
  
- 
+ /**
+ * user section
+ */
+
+.user-options-container 
+{
+  position: relative;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 10%;
+}
+
+/**
+ * registered and unregistered section
+ */
+
+.user-options-text 
+{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 3px;
+}
+
+.user-options-registered,
+.user-options-unregistered 
+{
+  width: 50%;
+  padding: 75px 45px;
+  color: #fff;
+  font-weight: 300;
+}
+
+.user-registered-title,
+.user-unregistered-title 
+{
+  margin-bottom: 18px;
+  font-size: 1.60rem;
+  line-height: 1em;
+  letter-spacing: 3.5px;
+}
+
+.user-unregistered-text,
+.user-registered-text 
+{
+  font-size: 0.78rem;
+  line-height: 1.4em;
+  letter-spacing: 2px;
+  font-family: "Montserrat";
+}
+
+.user-registered-sign-in,
+.user-unregistered-sign-up 
+{
+  margin-top: 30px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 10px 30px;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1em;
+  letter-spacing: 0.2rem;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.user-registered-sign-in:hover,
+.user-unregistered-sign-up:hover 
+{
+  color: rgba(34, 34, 34, 0.85);
+  background-color: #ccc;
+}
+
+button 
+{
+  background-color: transparent;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+/**
+ * forms section
+ */
+
+.user-options-forms  
+{
+  position: absolute;
+  top: 49%;
+  left: 30px;
+  width: calc(50% - 30px);
+  min-height: 420px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transform: translate(100%, -50%);
+  
+}
+
+
+/**
+ * forms titles
+ */
+
+.user-options-forms .forms-title 
+{
+  margin-bottom: 45px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1em;
+  text-transform: uppercase;
+  color: rgb(20, 156, 190);
+  letter-spacing: 0.1rem;
+}
+
+/**
+ * forms input
+ */
+
+.user-options-forms .forms-field:not(:last-of-type) 
+{
+  margin-bottom: 20px;
+}
+
+.user-options-forms .forms-field-input 
+{
+  width: 100%;
+  border-bottom: 1.5px solid #bbc1cd;
+  padding: 6px 20px 6px 6px;
+  font-family: 'Montserrat';
+  font-size: 0.90rem;
+  font-weight: bold;
+  color: #06080A;
+  letter-spacing: 0.1rem;
+  transition: border-color 0.3s ease-in-out;
+}
+
+input 
+{
+  background-color: transparent;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  text-align: center;
+}
+
+input[type="submit"] { cursor: pointer; }
+
+input::placeholder 
+{
+  font-size: 0.80rem;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+  color: #6c7882;
+}
+
+.user-options-forms .forms-field-input:focus 
+{
+  border-color: rgb(43, 177, 211);
+}
+
+/**
+ * forms buttons
+ */
+
+.user-options-forms .forms-buttons 
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 35px;
+}
+
+.user-options-forms .forms-buttons-forgot 
+{
+  font-family: 'Montserrat', Helvetica;
+  letter-spacing: 0.1rem;
+  color: #6c7882;
+  text-decoration: underline;
+  transition: color 0.2s ease-in-out;
+}
+
+.user-options-forms .forms-buttons-forgot:hover 
+{
+  color: black;
+}
+
+.user-options-forms .forms-buttons-action 
+{
+  background-color: rgb(20, 156, 190);
+  border-radius: 3px;
+  padding: 10px 35px;
+  font-size: 1rem;
+  font-family: 'Righteous', helvetica;
+  font-weight: 300;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.user-options-forms .right
+{
+  margin-left: 65%;
+}
+
+.user-options-forms .forms-buttons-action a 
+{
+  text-decoration: none;
+  color: #fff;
+}
+
+.user-options-forms .forms-buttons-action:hover 
+{
+  background-color: rgb(7, 106, 131);
+}
+
+/**
+ * sign in form
+ */
+
+.user-options-forms .user-forms-sign-in
+{
+  position: absolute;
+  top: 70px;
+  left: 40px;
+  width: calc(100% - 80px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.user-options-forms .user-forms-sign-in 
+{
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
