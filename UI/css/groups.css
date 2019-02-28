@@ -183,9 +183,25 @@ header
     display: flex;
 }
 
-.row-1 .card-1, .card-2, .card-3
+.row-1 .card-1
 {
-    background: url(../images/email-5.jpg) no-repeat center;
+    background: url(../images/programming-1.jpg) no-repeat center;
+    background-size: cover;
+    width: 32%;
+    height: 100%;
+}
+
+.row-1 .card-2
+{
+    background: url(../images/cybersecurity-2.jpeg) no-repeat center;
+    background-size: cover;
+    width: 32%;
+    height: 100%;
+}
+
+.row-1 .card-3
+{
+    background: url(../images/business.jpeg) no-repeat center;
     background-size: cover;
     width: 32%;
     height: 100%;
@@ -205,7 +221,7 @@ header
     padding-top: 0.8rem;
 }
 
-.group-name h4:hover
+.group-name:hover
 {
     cursor: pointer;
     background:rgb(224, 212, 33); 
@@ -220,14 +236,30 @@ header
 .cards .row-2
 {
     width: 100%;
-    height: 49%;
+    height: 48.7%;
     margin-top: 1%;
     display: flex;
 }
 
-.row-2 .card-4, .card-5, .card-6
+.row-2 .card-4
 {
-    background: url(../images/email-5.jpg) no-repeat center;
+    background: url(../images/photography-1.jfif) no-repeat bottom;
+    background-size: cover;
+    width: 32%;
+    height: 100%;
+}
+
+.row-2 .card-5
+{
+    background: url(../images/sports-1.jpg) no-repeat center;
+    background-size: cover;
+    width: 32%;
+    height: 100%;
+}
+
+.row-2 .card-6
+{
+    background: url(../images/cinema-3.jpeg) no-repeat center;
     background-size: cover;
     width: 32%;
     height: 100%;
@@ -302,16 +334,15 @@ header
 
 .send-msg
 {
-    margin-top: 105%;
-    margin-left: 5%;
-    ;
+    margin-top: 6%;
+    margin-left: 6%;
 }
 
 .send-msg input
 {
     padding: 10px;
     outline: none;
-    width: 70%;
+    width: 72.5%;
     font-family: 'Montserrat';
     font-size: 0.90rem;
     font-weight: bold;
@@ -338,4 +369,25 @@ header
 .send-btn:hover
 {
     cursor: pointer;
+}
+
+.left
+{
+    float: left;
+}
+
+.right
+{
+    margin-left: 12rem;
+}
+
+.send-msg .fa
+{
+    color: rgb(7, 106, 131);
+    font-size: 1.1rem;
+}
+
+.group-name
+{
+    text-transform: uppercase;
 }
