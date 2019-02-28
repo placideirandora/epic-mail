@@ -329,3 +329,54 @@ header
   display: flex;
 }
 
+
+/**
+* modal
+**/
+
+
+.modal 
+{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(60%);
+  transition: visibility 0s linear 0.20s, opacity 0.20s, transform 0.20s;
+}
+
+.modal .modal-content 
+{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 36.5%;
+  background-color: #fff;
+  padding: 1rem 1.5rem;
+  width: 40%;
+  color: black;
+  border-radius: 3px;
+  transform: translateX(60%);
+}
+
+.modal .modal-content h2
+{
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: rgb(20, 156, 190);
+}
+
+.show-modal 
+{
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1.0);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+
