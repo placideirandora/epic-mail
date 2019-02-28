@@ -183,9 +183,25 @@ header
     display: flex;
 }
 
-.row-1 .card-1, .card-2, .card-3
+.row-1 .card-1
 {
-    background: url(../images/email-5.jpg) no-repeat center;
+    background: url(../images/programming-1.jpg) no-repeat center;
+    background-size: cover;
+    width: 32%;
+    height: 100%;
+}
+
+.row-1 .card-2
+{
+    background: url(../images/cybersecurity-2.jpeg) no-repeat center;
+    background-size: cover;
+    width: 32%;
+    height: 100%;
+}
+
+.row-1 .card-3
+{
+    background: url(../images/business.jpeg) no-repeat center;
     background-size: cover;
     width: 32%;
     height: 100%;
@@ -205,7 +221,7 @@ header
     padding-top: 0.8rem;
 }
 
-.group-name h4:hover
+.group-name:hover
 {
     cursor: pointer;
     background:rgb(224, 212, 33); 
@@ -220,14 +236,30 @@ header
 .cards .row-2
 {
     width: 100%;
-    height: 49%;
+    height: 48.7%;
     margin-top: 1%;
     display: flex;
 }
 
-.row-2 .card-4, .card-5, .card-6
+.row-2 .card-4
 {
-    background: url(../images/email-5.jpg) no-repeat center;
+    background: url(../images/photography-1.jfif) no-repeat bottom;
+    background-size: cover;
+    width: 32%;
+    height: 100%;
+}
+
+.row-2 .card-5
+{
+    background: url(../images/sports-1.jpg) no-repeat center;
+    background-size: cover;
+    width: 32%;
+    height: 100%;
+}
+
+.row-2 .card-6
+{
+    background: url(../images/cinema-3.jpeg) no-repeat center;
     background-size: cover;
     width: 32%;
     height: 100%;
@@ -236,4 +268,126 @@ header
 .row-2 .card-4, .card-5
 {
     margin-right: 2%;
+}
+
+
+/**
+* modal
+**/
+
+
+.modal 
+{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    opacity: 0;
+    transition-duration: 0s;
+    transition-property: opacity;
+    visibility: hidden;
+}
+
+.modal .modal-content 
+{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: #EFEFEF;
+    padding: 1rem 1.5rem;
+    width: 40%;
+    color: black;
+    transform: translateX(-50%);
+}
+
+.modal .modal-content h2
+{
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: rgb(20, 156, 190);
+}
+
+.modal .modal-content .msg-space
+{
+    width: 100%;
+    height: 88%;
+    background: #fff;
+    border: solid 1px rgba(34, 34, 34, 0.85);
+}
+
+.show-modal 
+{
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.show-modal .modal-content
+{
+  transform: translateX(0);
+  transition: transform 0.25s;
+}
+
+.send-msg
+{
+    margin-top: 6%;
+    margin-left: 6%;
+}
+
+.send-msg input
+{
+    padding: 10px;
+    outline: none;
+    width: 72.5%;
+    font-family: 'Montserrat';
+    font-size: 0.90rem;
+    font-weight: bold;
+    color: #06080A;
+    letter-spacing: 0.1rem;
+}
+
+.send-msg input::placeholder 
+{
+  font-size: 0.90rem;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+  color: #6c7882;
+}
+
+.send-btn
+{
+    padding: 11px;
+    width: 6rem;
+    font-size: 0.92rem;
+    font-weight: bold;
+}
+
+.send-btn:hover
+{
+    cursor: pointer;
+}
+
+.left
+{
+    float: left;
+}
+
+.right
+{
+    margin-left: 12rem;
+}
+
+.send-msg .fa
+{
+    color: rgb(7, 106, 131);
+    font-size: 1.1rem;
+}
+
+.group-name
+{
+    text-transform: uppercase;
 }
