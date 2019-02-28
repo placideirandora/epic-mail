@@ -277,14 +277,14 @@ header
 {
     position: absolute;
     top: 0;
-    left: 250px;   
+    left: 230px;   
 }
 
 .message-list li .col-3 
 {
     position: absolute;
     top: 0;
-    left: 91%;   
+    left: 88%;   
 }
 
 .message-count
