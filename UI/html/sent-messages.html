@@ -230,6 +230,7 @@
         const triggerSix= document.querySelector("#trigger-6");
         const triggerSeven = document.querySelector("#trigger-7");
         const modal = document.querySelector(".modal");
+        const retractMessage = document.querySelector("#retract-btn");
 
         triggerOne.addEventListener("click", toggle);
         triggerTwo.addEventListener("click", toggle);
@@ -238,6 +239,9 @@
         triggerFive.addEventListener("click", toggle);
         triggerSix.addEventListener("click", toggle);
         triggerSeven.addEventListener("click", toggle);
+        retractMessage.addEventListener("click", () => {
+          alert("Message retracted");
+        })
 
         window.addEventListener("click", () => {
             if (event.target == modal)
