@@ -1,0 +1,410 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Comfortaa');
+@import url('https://fonts.googleapis.com/css?family=Righteous');
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  background: #eaedf3;
+  font-family: 'Comfortaa', 'Segoe UI';
+}
+
+/* admin dashboard */
+
+.logo
+{
+    padding-top: 1.7rem;
+}
+
+.logo .title
+{
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.logo .fa
+{
+    display: block;
+    font-size: 3.5rem;
+    text-align: center;
+}
+
+.sideMenu
+{
+  background: rgb(20, 156, 190);
+  max-width: 310px;
+  width: 310px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+nav
+{
+    padding-top: 20px;
+}
+
+.sideMenu a
+{
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 30px;
+    font-weight: 580;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+}
+
+.sideMenu a:hover
+{
+    background: rgb(7, 106, 131);
+    border-left: 5px solid #F3E730;
+    padding: 10px 30px 15px 25px;
+}
+
+.sideMenu a:hover .fa
+{
+    color: #F3E730;
+}
+
+.sideMenu a .fa
+{
+    color: #eaedf3;;
+    font-size: 1.5rem;
+    margin-right: 0.4rem;
+    display: inline-block;
+    width: 30px;
+    position: relative;
+    top: 2px;
+}
+
+.sideMenu a.active
+{
+    background: rgb(7, 106, 131);
+    border-left: 5px solid #F3E730;
+    padding: 10px 30px 15px 25px;
+}
+
+.sideMenu a.active .fa
+{
+    color: #F3E730;
+}
+
+header
+{
+    background: #fff;
+    margin-left: 310px;
+    padding: 10px;
+}
+
+.welcome
+{
+    display: inline-block;
+}
+
+.message
+{
+    color: rgb(7, 106, 131);
+}
+
+.user-area
+{
+    float: right;
+    display: inline-block;
+}
+
+.user-area a
+{
+    display: inline-block;
+    padding-right: 20px;
+    text-decoration: none;
+}
+
+.user-area a .fa
+{
+    font-size: 20px;
+}
+
+.user-img
+{
+    background: url(../images/placide.jpg) no-repeat center;
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid rgb(7, 106, 131);
+    margin-top: 0.3rem;
+    transiton: all 0.3s ease-in-out;
+    display: inline-block;
+}
+
+.inbox
+{
+    background: #fff;
+    color: black;
+    max-width: 70%;
+    width: 70%;
+    height: 540px;
+    margin-top: 30px;
+    margin-left: 360px;
+    padding: 20px; 
+    font-family: 'Montserrat';
+}
+
+.inbox .title 
+{ 
+    color:  rgb(20, 156, 190);
+    text-transform: uppercase;
+    letter-spacing: 2px; 
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px; 
+    text-align: center;
+    font-family: 'Comfortaa';
+}
+
+ .sender
+ {
+     margin-left: 60px;
+ }
+
+.checkbox-wrapper 
+{
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 0 0 0 1px #A3ADB2;
+    border-radius: 1px;
+    margin-top: 15px;
+    margin-left: 17px;
+}
+
+.checkbox-wrapper input 
+{
+    opacity: 0;
+    cursor: pointer;
+}
+  
+.checkbox-wrapper input:checked ~ label 
+{
+    opacity: 1;
+}
+
+.checkbox-wrapper label 
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    background: rgb(79, 199, 230);
+    opacity: 0;   
+}
+
+.checkbox-wrapper label:hover 
+{
+    background: rgb(79, 199, 230);
+    opacity: 0.5;  
+}
+
+.checkbox-wrapper label:active 
+{
+    background: rgb(79, 199, 230);   
+}
+ 
+.message-list 
+{
+    display: block;
+    font-size: 0.9rem;
+}
+
+.message-list li 
+{
+    position: relative;
+    display: block;
+    line-height: 50px;
+    transition-duration: 0.3s;
+   
+}
+
+.message-list li:hover
+{
+    background: #EFEFEF;
+    transition-duration: 0.05s;
+    cursor: pointer;
+}
+
+.message-list li.unread 
+{
+    font-weight: 600;
+    color: #555;
+}
+ 
+
+.message-list li .col-1 
+{
+    width: 300px;
+}
+
+.message-list li .col-1 .checkbox-wrapper,
+.message-list li .col-1 .dot 
+{
+    display: block;
+    float: left;
+}
+ 
+.message-list li .col-1 .title 
+{
+    position: absolute;
+    left: 50px;
+    font-size: 0.8rem;    
+}
+
+.message-list li .col-2 
+{
+    position: absolute;
+    top: 0;
+    left: 250px;   
+}
+
+.message-list li .col-3 
+{
+    position: absolute;
+    top: 0;
+    left: 91%;   
+}
+
+.message-count
+{
+  color: black;
+  font-size: 10px;
+  margin-right: 10px;
+  margin-top: 8px;
+}
+
+.btn {
+  border-radius: 3px;
+  box-shadow: none;
+  border: 1px solid rgb(150, 148, 148);
+  background-color: #f4f4f4;
+  padding: 5px 10px;
+  font-size: 10px;
+  line-height: 1.5;
+  outline: none;
+  transition: all 0.1s ease-in-out;
+}
+
+.btn:hover
+{
+  cursor: pointer;
+  border-color: black;
+}
+
+.btn:active
+{
+  background: rgb(210, 210, 212);
+}
+
+.btn-group
+{
+  margin-right: 20px;
+}
+
+.pull-right
+{
+  float: right;
+  display: flex;
+}
+
+
+/**
+* modal
+**/
+
+
+.modal 
+{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    opacity: 0;
+    transition-duration: 0s;
+    transition-property: opacity;
+    visibility: hidden;
+}
+
+.modal .modal-content 
+{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: #EFEFEF;
+    padding: 1rem 1.5rem;
+    width: 44%;
+    color: black;
+    transform: translateX(-50%);
+}
+
+.modal .modal-content h2
+{
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: rgb(20, 156, 190);
+}
+
+.show-modal 
+{
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.show-modal .modal-content
+{
+  transform: translateX(0);
+  transition: transform 0.25s;
+}
+
+/**
+* retract button
+**/
+
+
+.retract-btn
+{
+    color: rgb(20, 156, 190);
+    border-color: #ddd;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    margin-top: 20px;
+    margin-left: 34%;
+}
+
+
+button:hover
+{
+    cursor: pointer;
+}
