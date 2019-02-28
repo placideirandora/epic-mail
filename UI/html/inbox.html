@@ -59,7 +59,7 @@
                           </div>
                     </div>
                   <div class="message-list">
-                    <li class="unread">
+                    <li class="unread" id="trigger-1">
                       <div class="col-1">
                         <div class="checkbox-wrapper">
                           <input type="checkbox" id="chk1">
@@ -78,7 +78,7 @@
                           </div>
                       </div>
                     </li>
-                    <li>
+                    <li id="trigger-2">
                         <div class="col-1">
                           <div class="checkbox-wrapper">
                             <input type="checkbox" id="chk2">
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                       </li>
-                      <li class="unread">
+                      <li class="unread" id="trigger-3">
                           <div class="col-1">
                             <div class="checkbox-wrapper">
                               <input type="checkbox" id="chk3">
@@ -116,7 +116,7 @@
                               </div>
                           </div>
                         </li>
-                        <li>
+                        <li id="trigger-4">
                             <div class="col-1">
                               <div class="checkbox-wrapper">
                                 <input type="checkbox" id="chk4">
@@ -135,7 +135,7 @@
                                 </div>
                             </div>
                           </li>
-                          <li class="unread">
+                          <li class="unread" id="trigger-5">
                               <div class="col-1">
                                 <div class="checkbox-wrapper">
                                   <input type="checkbox" id="chk5">
@@ -154,7 +154,7 @@
                                   </div>
                               </div>
                             </li>
-                            <li>
+                            <li id="trigger-6">
                                 <div class="col-1">
                                   <div class="checkbox-wrapper">
                                     <input type="checkbox" id="chk6">
@@ -173,7 +173,7 @@
                                     </div>
                                 </div>
                               </li>
-                              <li class="unread">
+                              <li class="unread" id="trigger-7">
                                   <div class="col-1">
                                     <div class="checkbox-wrapper">
                                       <input type="checkbox" id="chk7">
@@ -220,5 +220,34 @@
                 </div>
           </div>
       </div>
+    <script>
+      const triggerOne = document.querySelector("#trigger-1");
+        const triggerTwo = document.querySelector("#trigger-2");
+        const triggerThree = document.querySelector("#trigger-3");
+        const triggerFour = document.querySelector("#trigger-4");
+        const triggerFive = document.querySelector("#trigger-5");
+        const triggerSix= document.querySelector("#trigger-6");
+        const triggerSeven = document.querySelector("#trigger-7");
+        const modal = document.querySelector(".modal");
+
+        triggerOne.addEventListener("click", toggle);
+        triggerTwo.addEventListener("click", toggle);
+        triggerThree.addEventListener("click", toggle);
+        triggerFour.addEventListener("click", toggle);
+        triggerFive.addEventListener("click", toggle);
+        triggerSix.addEventListener("click", toggle);
+        triggerSeven.addEventListener("click", toggle);
+
+        window.addEventListener("click", () => {
+            if (event.target == modal)
+            {
+              modal.classList.toggle("show-modal");
+            }
+        })
+        function toggle()
+        {
+          modal.classList.toggle("show-modal");
+        }
+    </script>
   </body>
 </html>
