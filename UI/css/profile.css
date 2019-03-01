@@ -113,6 +113,7 @@ header
 .message
 {
     color: rgb(7, 106, 131);
+    letter-spacing: 1.5px;
 }
 
 .user-area
