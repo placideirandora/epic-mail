@@ -228,6 +228,7 @@ header
 {
     display: block;
     font-size: 0.9rem;
+    letter-spacing: 0.3px;
 }
 
 .message-list li 
@@ -276,7 +277,7 @@ header
 {
     position: absolute;
     top: 0;
-    left: 245px;   
+    left: 238px;   
 }
 
 .message-list li .col-3 
@@ -358,6 +359,7 @@ header
     padding: 1rem 1.5rem;
     width: 44%;
     color: black;
+    letter-spacing: 0.5px;
     transform: translateX(-50%);
 }
 
