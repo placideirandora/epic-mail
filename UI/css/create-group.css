@@ -5,19 +5,19 @@
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
 
-* {
-  box-sizing: border-box;
+* 
+{
+    box-sizing: border-box;
 }
 
-body {
+body 
+{
   margin: 0;
   padding: 0;
   color: #fff;
   background: #eaedf3;
   font-family: 'Varela Round', 'Segoe UI';
 }
-
-/* admin dashboard */
 
 .logo
 {
@@ -43,7 +43,7 @@ body {
 {
   background: rgb(20, 156, 190);
   max-width: 310px;
-  width: 310px;
+  width: 280px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -104,7 +104,7 @@ nav
 header
 {
     background: #fff;
-    margin-left: 310px;
+    margin-left: 280px;
     padding: 10px;
 }
 
@@ -117,12 +117,12 @@ header
 {
     color: rgb(7, 106, 131);
     letter-spacing: 1.5px;
+    padding-left: 20px;
 }
 
 .user-area
 {
     float: right;
-    display: inline-block;
 }
 
 .user-area a
@@ -146,7 +146,7 @@ header
     border-radius: 50%;
     border: 3px solid rgb(7, 106, 131);
     margin-top: 0.3rem;
-    transiton: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     display: inline-block;
 }
 
@@ -158,7 +158,7 @@ header
     max-width: 50%;
     width: 50%;
     margin-top: 30px;
-    margin-left: 450px;
+    margin-left: 475px;
     padding: 20px;
 }
 

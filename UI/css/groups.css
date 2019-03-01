@@ -3,19 +3,19 @@
 @import url('https://fonts.googleapis.com/css?family=Righteous');
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
-* {
+* 
+{
   box-sizing: border-box;
 }
 
-body {
+body 
+{
   margin: 0;
   padding: 0;
   color: #fff;
   background: #eaedf3;
   font-family: 'Varela Round', 'Segoe UI';
 }
-
-/* admin dashboard */
 
 .logo
 {
@@ -41,7 +41,7 @@ body {
 {
   background: rgb(20, 156, 190);
   max-width: 310px;
-  width: 310px;
+  width: 280px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -102,7 +102,7 @@ nav
 header
 {
     background: #fff;
-    margin-left: 310px;
+    margin-left: 280px;
     padding: 10px;
 }
 
@@ -115,13 +115,13 @@ header
 {
     color: rgb(7, 106, 131);
     letter-spacing: 1.5px;
+    padding-left: 20px;
 }
 
 
 .user-area
 {
     float: right;
-    display: inline-block;
 }
 
 .user-area a
@@ -145,7 +145,7 @@ header
     border-radius: 50%;
     border: 3px solid rgb(7, 106, 131);
     margin-top: 0.3rem;
-    transiton: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     display: inline-block;
 }
 
@@ -157,7 +157,7 @@ header
     width: 70%;
     height: 540px;
     margin-top: 30px;
-    margin-left: 360px;
+    margin-left: 345px;
     padding: 20px; 
 }
 
@@ -362,7 +362,7 @@ header
 
 .send-btn
 {
-    padding: 11px;
+    padding: 10px;
     width: 6rem;
     font-size: 0.92rem;
     font-weight: bold;

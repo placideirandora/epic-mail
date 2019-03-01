@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width", initial-scale=1.0>
     <title>EPIC Mail - Dashboard</title>
-    <link rel="stylesheet" href="../css/sent-messages.css">
+    <link rel="stylesheet" href="../css/outbox.css">
     <link rel="stylesheet" href="../css/ref.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="shortcut icon" type="image/png" href="../images/epic-mail-icon-1.png"/>
@@ -27,7 +27,7 @@
                             <a href="inbox.html"><i class="fa fa-inbox"></i>
                               view inbox</a>
                             <a href="#" class="active"><i class="fa fa-share-square"></i>
-                                view sent messages</a>
+                                view outbox</a>
                             <a href="profile.html"><i class="fa fa-user-circle"></i>
                                     view profile</a>
                             <a href="sign-in-sign-up.html"><i class="fa fa-sign-out"></i>
@@ -44,9 +44,9 @@
                             </a>
                         </div>
                 </header>
-                <div class="inbox">
+                <div class="outbox">
                     <div class="title">
-                        SENT MESSAGES
+                        OUTBOX MESSAGES
                         <div class="pull-right">
                           <div class="message-count">
                               1-7/50
@@ -68,7 +68,7 @@
                           <p class="sender">Elie NIYITANGA</p>
                           <div class="col-2">
                             <div class="subject">
-                              Lorem ipsum dolor sit Amet consectetur adipiscing elit do magna minim... 
+                              Lorem ipsum dolor sit Amet consectetur adipiscing elit magna minim pariatur...  
                             </div>
                           </div>
                           <div class="col-3">
@@ -87,7 +87,7 @@
                             <p class="sender">Dorcas SHIMA</p>
                             <div class="col-2">
                               <div class="subject">
-                                Lorem ipsum dolor sit Amet consectetur adipiscing elit do magna minim... 
+                                Lorem ipsum dolor sit Amet consectetur adipiscing elit magna minim pariatur...  
                               </div>
                             </div>
                             <div class="col-3">
@@ -106,7 +106,7 @@
                               <p class="sender">Fred MANZI</p>
                               <div class="col-2">
                                 <div class="subject">
-                                  Lorem ipsum dolor sit Amet consectetur adipiscing elit do magna minim... 
+                                  Lorem ipsum dolor sit Amet consectetur adipiscing elit magna minim pariatur...  
                                 </div>
                               </div>
                               <div class="col-3">
@@ -125,7 +125,7 @@
                                 <p class="sender">Aime RWANDA</p>
                                 <div class="col-2">
                                   <div class="subject">
-                                    Lorem ipsum dolor sit Amet consectetur adipiscing elit do magna minim... 
+                                    Lorem ipsum dolor sit Amet consectetur adipiscing elit magna minim pariatur...  
                                   </div>
                                 </div>
                                 <div class="col-3">
@@ -144,7 +144,7 @@
                                   <p class="sender">Hussain MURASHI</p>
                                   <div class="col-2">
                                     <div class="subject">
-                                      Lorem ipsum dolor sit Amet consectetur adipiscing elit do magna minim... 
+                                      Lorem ipsum dolor sit Amet consectetur adipiscing elit magna minim pariatur...  
                                     </div>
                                   </div>
                                   <div class="col-3">
@@ -163,7 +163,7 @@
                                     <p class="sender">Emile HITAYEZU</p>
                                     <div class="col-2">
                                       <div class="subject">
-                                        Lorem ipsum dolor sit Amet consectetur adipiscing elit do magna minim... 
+                                        Lorem ipsum dolor sit Amet consectetur adipiscing elit magna minim pariatur...  
                                       </div>
                                     </div>
                                     <div class="col-3">
@@ -182,7 +182,7 @@
                                       <p class="sender">Jean Pierre NSHUTI</p>
                                       <div class="col-2">
                                         <div class="subject">
-                                          Lorem ipsum dolor sit Amet consectetur adipiscing elit do magna minim... 
+                                          Lorem ipsum dolor sit Amet consectetur adipiscing elit magna minim pariatur...  
                                         </div>
                                       </div>
                                       <div class="col-3">
@@ -192,11 +192,11 @@
                                         </div>
                                     </div>
                                   </li>
-                    </div>
+                  </div>
                   <div class="modal">
                     <div class="modal-content">
                         <h2>Email Message</h2>
-                        <h4>Lorem ipsum dolor sit Amet consectetur adipiscing elit do magna minim... </h4>
+                        <h4>Lorem ipsum dolor sit Amet consectetur adipiscing elit magna minim pariatur...  </h4>
                         <p>
                           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit 
                         </p>
@@ -212,9 +212,6 @@
                         <p>
                             dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit 
                         </p>
-                        <p>
-                            laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil 
-                        </p>
                         <button type="reset" class="retract-btn" id="retract-btn"><i class="fa fa-reply"></i> Retract Message</button>
                     </div>
                   </div>
@@ -222,7 +219,7 @@
           </div>
       </div>
     <script>
-      const triggerOne = document.querySelector("#trigger-1");
+        const triggerOne = document.querySelector("#trigger-1");
         const triggerTwo = document.querySelector("#trigger-2");
         const triggerThree = document.querySelector("#trigger-3");
         const triggerFour = document.querySelector("#trigger-4");
@@ -241,6 +238,7 @@
         triggerSeven.addEventListener("click", toggle);
         retractMessage.addEventListener("click", () => {
           alert("Message retracted");
+          toggle();
         })
 
         window.addEventListener("click", () => {

@@ -5,19 +5,19 @@
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
 
-* {
+* 
+{
   box-sizing: border-box;
 }
 
-body {
+body 
+{
   margin: 0;
   padding: 0;
   color: #fff;
   background: #eaedf3;
   font-family: 'Varela Round', 'Segoe UI';
 }
-
-/* admin dashboard */
 
 .logo
 {
@@ -43,7 +43,7 @@ body {
 {
   background: rgb(20, 156, 190);
   max-width: 310px;
-  width: 310px;
+  width: 280px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -104,7 +104,7 @@ nav
 header
 {
     background: #fff;
-    margin-left: 310px;
+    margin-left: 280px;
     padding: 10px;
 }
 
@@ -117,12 +117,12 @@ header
 {
     color: rgb(7, 106, 131);
     letter-spacing: 1.5px;
+    padding-left: 20px;
 }
 
 .user-area
 {
     float: right;
-    display: inline-block;
 }
 
 .user-area a
@@ -146,30 +146,29 @@ header
     border-radius: 50%;
     border: 3px solid rgb(7, 106, 131);
     margin-top: 0.3rem;
-    transiton: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     display: inline-block;
 }
 
-.inbox
+.outbox
 {
     background: #fff;
     color: black;
     max-width: 70%;
     width: 70%;
-    height: 540px;
+    height: 518px;
     margin-top: 30px;
-    margin-left: 360px;
+    margin-left: 345px;
     padding: 20px; 
 }
 
-.inbox .title 
+.outbox .title 
 { 
     color:  rgb(20, 156, 190);
     text-transform: uppercase;
     letter-spacing: 2px; 
     font-size: 18px;
     font-weight: bold;
-    margin-top: 20px;
     margin-bottom: 20px; 
     text-align: center;
 }
@@ -230,6 +229,7 @@ header
 {
     display: block;
     font-size: 0.9rem;
+    letter-spacing: 0.3px;
 }
 
 .message-list li 
@@ -278,7 +278,7 @@ header
 {
     position: absolute;
     top: 0;
-    left: 230px;   
+    left: 223px;   
 }
 
 .message-list li .col-3 
@@ -358,6 +358,7 @@ header
     bottom: 0;
     background: #EFEFEF;
     padding: 1rem 1.5rem;
+    letter-spacing: 0.5px;
     width: 44%;
     color: black;
     transform: translateX(-50%);
