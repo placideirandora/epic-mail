@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import url('https://fonts.googleapis.com/css?family=Comfortaa');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://fonts.googleapis.com/css?family=Laila');
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
 
 * {
@@ -12,7 +14,7 @@ body {
   padding: 0;
   color: #fff;
   background: #eaedf3;
-  font-family: 'Comfortaa', 'Segoe UI';
+  font-family: 'Varela Round', 'Segoe UI';
 }
 
 /* admin dashboard */
@@ -114,6 +116,7 @@ header
 .message
 {
     color: rgb(7, 106, 131);
+    letter-spacing: 1.5px;
 }
 
 .user-area
@@ -157,7 +160,6 @@ header
     margin-top: 30px;
     margin-left: 360px;
     padding: 20px; 
-    font-family: 'Montserrat';
 }
 
 .inbox .title 
@@ -170,7 +172,6 @@ header
     margin-top: 20px;
     margin-bottom: 20px; 
     text-align: center;
-    font-family: 'Comfortaa';
 }
 
  .sender
@@ -401,6 +402,7 @@ header
     letter-spacing: 0.8px;
     margin-top: 20px;
     margin-left: 34%;
+    font-family: 'Laila', Helvetica;
 }
 
 

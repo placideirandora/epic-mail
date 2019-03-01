@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import url('https://fonts.googleapis.com/css?family=Comfortaa');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://fonts.googleapis.com/css?family=Laila');
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
 
 * {
@@ -12,7 +14,7 @@ body {
   padding: 0;
   color: #fff;
   background: #eaedf3;
-  font-family: 'Comfortaa', 'Segoe UI';
+  font-family: 'Varela Round', 'Segoe UI';
 }
 
 /* admin dashboard */
@@ -114,6 +116,7 @@ header
 .message
 {
     color: rgb(7, 106, 131);
+    letter-spacing: 1.5px;
 }
 
 .user-area
@@ -182,7 +185,7 @@ header
     margin: 5px 0 15px; 
     width: 100%; 
     padding: 8px;
-    font-size: 0.90rem; 
+    font-size: 0.9rem; 
     font-family: 'Montserrat';
     font-weight: bold; 
     letter-spacing: 0.1rem;
@@ -201,11 +204,11 @@ button
 {
   background-color: rgb(20, 156, 190);
   border-radius: 3px;
-  padding: 10px 35px;
+  padding: 10px 20px;
   margin-top: 15px;
-  margin-left: 13.3rem;
-  font-size: 1rem;
-  font-family: 'Righteous', helvetica;
+  margin-left: 15rem;
+  font-size: 0.9rem;
+  font-family: 'Laila', helvetica;
   font-weight: 300;
   color: #fff;
   text-transform: uppercase;

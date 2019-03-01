@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import url('https://fonts.googleapis.com/css?family=Comfortaa');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Laila');
 
 
 * {
@@ -12,7 +14,7 @@ body {
   padding: 0;
   color: #fff;
   background: #eaedf3;
-  font-family: 'Comfortaa', 'Segoe UI';
+  font-family: 'Varela Round', 'Segoe UI';
 }
 
 /* admin dashboard */
@@ -114,6 +116,7 @@ header
 .message
 {
     color: rgb(7, 106, 131);
+    letter-spacing: 1.5px;
 }
 
 .user-area
@@ -191,6 +194,11 @@ header
 button:hover
 {
     cursor: pointer;
+}
+
+.discard-btn, .draft-btn, .send-btn
+{
+    font-family: 'Laila', Helvetica;
 }
 
 .discard-btn
