@@ -6,6 +6,7 @@
  @import url('https://fonts.googleapis.com/css?family=Comfortaa');
  @import url('https://fonts.googleapis.com/css?family=Righteous');
  @import url('https://fonts.googleapis.com/css?family=Laila');
+ @import url('https://fonts.googleapis.com/css?family=Varela+Round');
  
  
  /**
@@ -23,7 +24,7 @@
    background: url('../images/email-5.jpg') no-repeat center;
    background-size: cover;
    color:#fff;
-   font-family: 'Comfortaa', Helvetica;
+   font-family: 'Varela Round', Helvetica;
  }
  
  /**

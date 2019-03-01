@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import url('https://fonts.googleapis.com/css?family=Comfortaa');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
 
 * {
@@ -12,7 +13,7 @@ body {
   padding: 0;
   color: #fff;
   background: #eaedf3;
-  font-family: 'Comfortaa', 'Segoe UI';
+  font-family: 'Varela Round', 'Segoe UI';
 }
 
 /* admin dashboard */
