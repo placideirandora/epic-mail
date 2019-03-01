@@ -4,19 +4,19 @@
 @import url('https://fonts.googleapis.com/css?family=Laila');
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
-* {
+* 
+{
   box-sizing: border-box;
 }
 
-body {
+body 
+{
   margin: 0;
   padding: 0;
   color: #fff;
   background: #eaedf3;
   font-family: 'Varela Round', 'Segoe UI';
 }
-
-/* admin dashboard */
 
 .logo
 {
@@ -242,12 +242,9 @@ header
     font-family: 'Laila', Helvetica;
 }
 
-
-
 /**
 * modal
 **/
-
 
 .modal 
 {
@@ -291,19 +288,14 @@ header
   visibility: visible;
 }
 
-
 .show-modal .modal-content
 {
   transform: translateX(0);
   transition: transform 0.25s;
 }
 
-
-/**
-* form
-**/
-
- .modal .modal-content  .title { 
+ .modal .modal-content  .title 
+ { 
     color:  rgb(20, 156, 190);
     text-transform: uppercase;
     letter-spacing: 2px; 
@@ -365,7 +357,8 @@ header
     padding-left: 8px;
 }
 
- .modal .modal-content .forms-buttons-action:hover {
+ .modal .modal-content .forms-buttons-action:hover 
+{
     background-color: rgb(7, 106, 131);
     cursor: pointer;
 }

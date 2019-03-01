@@ -4,19 +4,19 @@
 @import url('https://fonts.googleapis.com/css?family=Varela+Round');
 
 
-* {
+* 
+{
   box-sizing: border-box;
 }
 
-body {
+body 
+{
   margin: 0;
   padding: 0;
   color: #fff;
   background: #eaedf3;
   font-family: 'Varela Round', 'Segoe UI';
 }
-
-/* admin dashboard */
 
 .logo
 {
