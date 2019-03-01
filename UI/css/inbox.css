@@ -155,7 +155,7 @@ header
     color: black;
     max-width: 70%;
     width: 70%;
-    height: 540px;
+    height: 518px;
     margin-top: 30px;
     margin-left: 360px;
     padding: 20px; 
@@ -168,7 +168,6 @@ header
     letter-spacing: 2px; 
     font-size: 18px;
     font-weight: bold;
-    margin-top: 20px;
     margin-bottom: 20px; 
     text-align: center;
 }
