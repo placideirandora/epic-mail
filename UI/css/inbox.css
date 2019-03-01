@@ -41,7 +41,7 @@ body {
 .sideMenu
 {
   background: rgb(20, 156, 190);
-  max-width: 310px;
+  max-width: 280px;
   width: 310px;
   position: absolute;
   top: 0;
@@ -103,7 +103,7 @@ nav
 header
 {
     background: #fff;
-    margin-left: 310px;
+    margin-left: 280px;
     padding: 10px;
 }
 
@@ -157,7 +157,7 @@ header
     width: 70%;
     height: 518px;
     margin-top: 30px;
-    margin-left: 360px;
+    margin-left: 345px;
     padding: 20px; 
 }
 
