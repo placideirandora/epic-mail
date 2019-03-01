@@ -150,7 +150,7 @@ header
     display: inline-block;
 }
 
-.inbox
+.outbox
 {
     background: #fff;
     color: black;
@@ -162,7 +162,7 @@ header
     padding: 20px; 
 }
 
-.inbox .title 
+.outbox .title 
 { 
     color:  rgb(20, 156, 190);
     text-transform: uppercase;
