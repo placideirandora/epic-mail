@@ -5,6 +5,7 @@
  @import url('https://fonts.googleapis.com/css?family=Montserrat');
  @import url('https://fonts.googleapis.com/css?family=Comfortaa');
  @import url('https://fonts.googleapis.com/css?family=Righteous');
+ @import url('https://fonts.googleapis.com/css?family=Laila');
  
  
  /**
@@ -64,6 +65,7 @@
      border-radius: 10px;
      font-size: 20px;
      color: #FFF;
+     font-family: 'Laila', Helvetica;
    text-decoration: none;
    letter-spacing: 2px;	
    background: rgba(0, 0, 0, 0.6);
@@ -271,7 +273,7 @@ input::placeholder
   border-radius: 3px;
   padding: 10px 35px;
   font-size: 1rem;
-  font-family: 'Righteous', helvetica;
+  font-family: 'Laila', helvetica;
   font-weight: 300;
   color: #fff;
   text-transform: uppercase;

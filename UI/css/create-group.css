@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import url('https://fonts.googleapis.com/css?family=Comfortaa');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://fonts.googleapis.com/css?family=Laila');
 
 
 * {
@@ -206,7 +207,7 @@ button
   margin-top: 15px;
   margin-left: 15rem;
   font-size: 0.9rem;
-  font-family: 'Righteous', helvetica;
+  font-family: 'Laila', helvetica;
   font-weight: 300;
   color: #fff;
   text-transform: uppercase;

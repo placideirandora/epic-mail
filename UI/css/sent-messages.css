@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import url('https://fonts.googleapis.com/css?family=Comfortaa');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://fonts.googleapis.com/css?family=Laila');
 
 
 * {
@@ -400,6 +401,7 @@ header
     letter-spacing: 0.8px;
     margin-top: 20px;
     margin-left: 34%;
+    font-family: 'Laila', Helvetica;
 }
 
 
