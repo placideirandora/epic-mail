@@ -270,6 +270,7 @@ header
   padding: 1rem 1.5rem;
   width: 30%;
   color: black;
+  overflow: scroll;
   transform: translateX(-50%);
 }
 
@@ -338,7 +339,7 @@ header
   background-color: rgb(20, 156, 190);
   border-radius: 3px;
   padding: 8px 18px;
-  margin-top: 15px;
+  margin-top: 30px;
   margin-left: 7.8rem;
   font-size: 0.9rem;
   font-family: 'Laila', helvetica;
@@ -362,3 +363,120 @@ header
     background-color: rgb(7, 106, 131);
     cursor: pointer;
 }
+
+/**
+* profile photo
+**/
+
+
+.uploader {
+    display: block;
+    clear: both;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+  }
+  .uploader label {
+    float: left;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: #fff;
+    overflow: auto;
+    border: 1px solid rgb(170, 170, 170);
+    transition: all .2s ease;
+  }
+  .uploader label:hover {
+    border-color: #434857;
+  }
+  .uploader label.hover {
+    border: 3px solid #434857;
+    box-shadow: inset 0 0 0 4px #eee;
+  }
+  .uploader label.hover #start i.fa {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 0.6;
+  }
+  .uploader #start {
+    float: left;
+    clear: both;
+    width: 100%;
+  }
+  .uploader #start.hidden {
+    display: none;
+  }
+  .uploader #start i.fa {
+    font-size: 2.8rem; 
+    margin-bottom: 1rem;
+    transition: all .2s ease-in-out;
+    color: #5f6982;
+  }
+  .uploader #response {
+    float: left;
+    clear: both;
+    width: 100%;
+  }
+  .uploader #response.hidden {
+    display: none;
+  }
+  .uploader #response #messages {
+    color: black;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+  }
+  .uploader #file-image {
+    margin: 0 auto .5rem auto;
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+  }
+  .uploader #file-image.hidden {
+    display: none;
+  }
+  .uploader #notimage {
+    display: block;
+    float: left;
+    clear: both;
+    width: 100%;
+  }
+  .uploader #notimage.hidden {
+    display: none;
+  }
+
+  .uploader input[type="file"] {
+    display: none;
+  }
+  .uploader div {
+    margin: 0 0 .5rem 0;
+    color: #5f6982;
+    font-size: 0.8rem; 
+  }
+  .uploader .btn {
+    display: inline-block;
+    margin: .5rem .5rem 1rem .5rem;
+    clear: both;
+    font-weight: 400;
+    font-size: 0.7rem; 
+    text-decoration: none;
+    text-transform: uppercase;
+    border: none;
+    border-radius: .2rem;
+    outline: none;
+    padding: 0 1rem;
+    height: 36px;
+    line-height: 36px;
+    color: #fff;
+    transition: all 0.2s ease-in-out;
+    background: #5f6982;
+    letter-spacing: 0.1rem;
+    font-family: 'Laila', Helvetica;
+    cursor: pointer;
+  }
+
+  .uploader .btn:hover
+  {
+    background: #434857;
+  }
+  
