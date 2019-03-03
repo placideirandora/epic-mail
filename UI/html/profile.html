@@ -82,6 +82,24 @@
                                     <label class="label">Email</label>
                                     <input type="text" class="input" value="placideirandora@gmail.com">
                             </div>
+                            <div class="profile-photo">
+                              <form id="file-upload-form" class="uploader">
+                                <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+                                <label for="file-upload" id="file-drag">
+                                  <img id="file-image" src="#" alt="Preview" class="hidden">
+                                  <div id="start">
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
+                                    <div>UPLOAD A NEW PROFILE PHOTO</div>
+                                    <div>Drag and Drop or</div>
+                                    <div id="notimage" class="hidden">Please select an image</div>
+                                    <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+                                  </div>
+                                  <div id="response" class="hidden">
+                                    <div id="messages"></div>
+                                  </div>
+                                </label>
+                              </form>
+                            </div>
                             <div class="forms-buttons">
                               <button class="forms-buttons-action" id="update-btn"><a href="#">Update</a></button>
                             </div>
@@ -115,5 +133,6 @@
             modal.classList.toggle("show-modal");
           }
         </script>
+        <script src="../js/profile-photo.js"></script>
   </body>
 </html>
