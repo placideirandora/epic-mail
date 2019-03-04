@@ -30,6 +30,42 @@ const users = {
       });
     }
   },
+
+  loginUser(req, res) {
+    const {
+      email, password,
+    } = req.body;
+
+    const { error } = Joi.validate({
+      email, password,
+    }, validate.loginSchema);
+    if (error) {
+      res.status(400).json({ error: error.details[0].message });
+    } else {
+      for (let i = 0; i < dummy.users.length; i++) {
+        if (dummy.users[i].email === email) {
+          const { firstname } = dummy.users[i];
+          const { lastname } = dummy.users[i];
+          // eslint-disable-next-line no-shadow
+          const { email } = dummy.users[i];
+          const truePass = bcrypt.compareSync(password, dummy.users[i].password);
+          if (truePass) {
+            const token = jwt.sign({ user: dummy.users[i] }, "secret-key", { expiresIn: "1h" });
+            res.status(200).json({
+              status: 200,
+              success: "logged in",
+              data: [{
+                token, firstname, lastname, email,
+              }],
+            });
+          } else {
+            res.status(400).json({ status: 400, error: "incorrect password" });
+          }
+        }
+      }
+      res.status(400).json({ status: 400, message: "invalid email" });
+    }
+  },
 };
 
 export default users;
