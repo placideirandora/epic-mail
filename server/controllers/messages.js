@@ -108,6 +108,22 @@ const messages = {
       });
     }
   },
+
+  retrieveSentEmails(req, res) {
+    const sentEmails = dummy.messages.filter(email => email.status === "sent");
+    if (sentEmails.length === 0) {
+      res.status(400).json({
+        status: 400,
+        success: "no sent emails found",
+      });
+    } else {
+      res.status(200).json({
+        status: 200,
+        success: "sent emails retrieved",
+        data: [sentEmails],
+      });
+    }
+  },
 };
 
 export default messages;
