@@ -124,6 +124,22 @@ const messages = {
       });
     }
   },
+
+  retrieveReadEmails(req, res) {
+    const readEmails = dummy.messages.filter(email => email.status === "read");
+    if (readEmails.length === 0) {
+      res.status(400).json({
+        status: 400,
+        success: "no read emails found",
+      });
+    } else {
+      res.status(200).json({
+        status: 200,
+        success: "read emails retrieved",
+        data: [readEmails],
+      });
+    }
+  },
 };
 
 export default messages;
