@@ -7,11 +7,11 @@ import validate from "../middleware/validate";
 const messages = {
   sendEmail(req, res) {
     const {
-      subject, message, parentMessageId, status,
+      subject, message, senderId, receiverId, parentMessageId, status,
     } = req.body;
     const { error } = Joi.validate(
       {
-        subject, message, parentMessageId, status,
+        subject, message, senderId, receiverId, parentMessageId, status,
       }, validate.messageSchema,
     );
     if (error) {
@@ -20,7 +20,7 @@ const messages = {
       const id = dummy.messages.length + 1;
       const createdOn = moment().format("LL");
       const messagee = new Message(
-        id, createdOn, subject, message, parentMessageId, status,
+        id, createdOn, subject, message, senderId, receiverId, parentMessageId, status,
       );
       dummy.messages.push(messagee);
       if (status === "sent") {
