@@ -18,10 +18,6 @@ const loginSchema = Joi.object().keys({
     .required(),
 });
 
-const userParams = Joi.object().keys({
-  userId: Joi.number().integer().required(),
-});
-
 const messageSchema = Joi.object().keys({
   subject: Joi.string().alphanum().min(5).max(25)
     .required(),
@@ -34,6 +30,10 @@ const messageSchema = Joi.object().keys({
     .required(),
 });
 
+const emailParams = Joi.object().keys({
+  emailId: Joi.number().integer().required(),
+});
+
 export default {
-  userSchema, loginSchema, userParams, messageSchema,
+  userSchema, loginSchema, messageSchema, emailParams,
 };
