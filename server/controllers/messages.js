@@ -38,6 +38,14 @@ const messages = {
       }
     }
   },
+
+  retrieveMails(req, res) {
+    res.status(200).json({
+      status: 200,
+      success: "received emails retrieved",
+      data: dummy.messages,
+    });
+  },
 };
 
 export default messages;
