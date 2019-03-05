@@ -46,6 +46,34 @@ const messages = {
       data: dummy.messages,
     });
   },
+
+  retrieveSpecificEmail(req, res) {
+    const emailId = parseInt(req.params.id, 10);
+    const { error } = Joi.validate(
+      {
+        emailId,
+      },
+      validate.emailParams,
+    );
+    if (error) {
+      res.status(400).json({ error: error.details[0].message });
+    } else {
+      // eslint-disable-next-line array-callback-return
+      dummy.messages.map((email) => {
+        if (email.id === emailId) {
+          res.status(200).json({
+            status: 200,
+            success: "email retrieved",
+            data: email,
+          });
+        }
+      });
+      res.status(404).json({
+        status: 404,
+        error: "email not found",
+      });
+    }
+  },
 };
 
 export default messages;
