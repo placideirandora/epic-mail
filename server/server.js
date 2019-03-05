@@ -22,7 +22,7 @@ app.use((error, req, res, next) => {
   res.status(400).json({ status: 400, error: error.message, next });
 });
 
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
