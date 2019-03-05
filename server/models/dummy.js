@@ -24,7 +24,34 @@ const users = [
   },
 ];
 
+const messages = [
+  {
+    id: 1,
+    createdOn: "February 20, 2019",
+    subject: "Hello",
+    message: "How have you been?",
+    parentMessageId: 1,
+    status: "sent",
+  },
+  {
+    id: 2,
+    createdOn: "February 24, 2019",
+    subject: "Hi",
+    message: "Have a good time!",
+    parentMessageId: 2,
+    status: "draft",
+  },
+  {
+    id: 3,
+    createdOn: "February 28",
+    subject: "Greetings",
+    message: "You are invited to the party",
+    parentMessageId: 3,
+    status: "read",
+  },
+];
+
 export default
 {
-  users,
+  users, messages,
 };
