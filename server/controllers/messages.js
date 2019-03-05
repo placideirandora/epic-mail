@@ -40,11 +40,18 @@ const messages = {
   },
 
   retrieveMails(req, res) {
-    res.status(200).json({
-      status: 200,
-      success: "received emails retrieved",
-      data: dummy.messages,
-    });
+    if (dummy.messages.length === 0) {
+      res.status(404).json({
+        status: 404,
+        error: "no emails found",
+      });
+    } else {
+      res.status(200).json({
+        status: 200,
+        success: "received emails retrieved",
+        data: dummy.messages,
+      });
+    }
   },
 
   retrieveSpecificEmail(req, res) {
@@ -68,6 +75,33 @@ const messages = {
           });
         }
       });
+      res.status(404).json({
+        status: 404,
+        error: "email not found",
+      });
+    }
+  },
+
+  deleteMail(req, res) {
+    const emailId = parseInt(req.params.id, 10);
+    const { error } = Joi.validate(
+      {
+        emailId,
+      },
+      validate.emailParams,
+    );
+    if (error) {
+      res.status(400).json({ error: error.details[0].message });
+    } else {
+      for (let i = 0; i < dummy.messages.length; i++) {
+        if (dummy.messages[i].id === emailId) {
+          dummy.messages.splice(i, emailId);
+          res.status(200).json({
+            status: 200,
+            success: "email deleted",
+          });
+        }
+      }
       res.status(404).json({
         status: 404,
         error: "email not found",
