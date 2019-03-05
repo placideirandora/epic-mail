@@ -17,6 +17,26 @@ const messages = {
     if (error) {
       res.status(400).json({ error: error.details[0].message });
     } else {
+      const trueSender = dummy.contacts.filter(sender => sender.id === senderId);
+      if (trueSender.length === 0) {
+        res.status(404).json({
+          status: 404,
+          error: "the sender is not registered",
+        });
+      }
+      const trueReceiver = dummy.contacts.filter(receiver => receiver.id === receiverId);
+      if (trueReceiver.length === 0) {
+        res.status(404).json({
+          status: 404,
+          error: "the receiver is not registered",
+        });
+      }
+      if (senderId === receiverId) {
+        res.status(400).json({
+          status: 400,
+          error: "the sender id and receiver id must not be the same",
+        });
+      }
       const id = dummy.messages.length + 1;
       const createdOn = moment().format("LL");
       const messagee = new Message(
