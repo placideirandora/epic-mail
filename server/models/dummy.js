@@ -30,6 +30,8 @@ const messages = [
     createdOn: "February 20, 2019",
     subject: "Hello",
     message: "How have you been?",
+    senderId: 2,
+    receiverId: 1,
     parentMessageId: 1,
     status: "sent",
   },
@@ -38,6 +40,8 @@ const messages = [
     createdOn: "February 24, 2019",
     subject: "Hi",
     message: "Have a good time!",
+    senderId: 3,
+    receiverId: 2,
     parentMessageId: 2,
     status: "draft",
   },
@@ -46,12 +50,32 @@ const messages = [
     createdOn: "February 28",
     subject: "Greetings",
     message: "You are invited to the party",
+    senderId: 1,
+    receiverId: 3,
     parentMessageId: 3,
     status: "read",
   },
 ];
 
+const contacts = [
+  {
+    id: 1,
+    firstname: "Placide",
+    lastname: "IRANDORA",
+  },
+  {
+    id: 2,
+    firstname: "Innocent",
+    lastname: "TUYISHIMIRE",
+  },
+  {
+    id: 3,
+    firstname: "Fred",
+    lastname: "MANZI",
+  },
+];
+
 export default
 {
-  users, messages,
+  users, messages, contacts,
 };

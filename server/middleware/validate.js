@@ -24,6 +24,10 @@ const messageSchema = Joi.object().keys({
   message: Joi.string().trim().min(10)
     .max(100)
     .required(),
+  senderId: Joi.number().integer()
+    .required(),
+  receiverId: Joi.number().integer()
+    .required(),
   parentMessageId: Joi.number().integer()
     .required(),
   status: Joi.string().alphanum().valid("sent", "draft", "read")
@@ -31,7 +35,8 @@ const messageSchema = Joi.object().keys({
 });
 
 const emailParams = Joi.object().keys({
-  emailId: Joi.number().integer().required(),
+  emailId: Joi.number().integer()
+    .required(),
 });
 
 export default {
