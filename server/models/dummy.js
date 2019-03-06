@@ -47,7 +47,7 @@ const messages = [
   },
   {
     id: 3,
-    createdOn: "February 28",
+    createdOn: "February 28, 2019",
     subject: "Greetings",
     message: "You are invited to the party",
     senderId: 1,
