@@ -61,6 +61,7 @@ const users = {
           } else {
             res.status(400).json({ status: 400, error: "incorrect password" });
           }
+          return;
         }
       }
       res.status(400).json({ status: 400, message: "invalid email" });
