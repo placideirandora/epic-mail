@@ -64,7 +64,7 @@ const users = {
           return;
         }
       }
-      res.status(400).json({ status: 400, message: "invalid email" });
+      res.status(400).json({ status: 400, error: "invalid email" });
     }
   },
 };
