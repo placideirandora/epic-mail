@@ -4,7 +4,7 @@
   "description": "EPIC Mail helps people exchange messages/information over the internet.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "nyc --report=html --reporter=text mocha --require babel-polyfill --require @babel/register ./server/tests --timeout 1200 --exit",
     "start": "nodemon --exec babel-node server/server.js"
   },
   "repository": {
@@ -26,6 +26,8 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "dotenv": "^6.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
@@ -43,8 +45,6 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/register": "^7.0.0",
     "babel-polyfill": "^6.26.0",
-    "chai": "^4.2.0",
-    "chai-http": "^4.2.1",
     "codeclimate-test-reporter": "^0.5.1",
     "coveralls": "^3.0.3",
     "eslint": "^5.15.0",

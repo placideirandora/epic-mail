@@ -91,7 +91,7 @@ const messages = {
           res.status(200).json({
             status: 200,
             success: "email retrieved",
-            data: email,
+            data: [email],
           });
         }
       });
@@ -115,7 +115,7 @@ const messages = {
     } else {
       for (let i = 0; i < dummy.messages.length; i++) {
         if (dummy.messages[i].id === emailId) {
-          dummy.messages.splice(i, emailId);
+          dummy.messages.splice(i, 1);
           res.status(200).json({
             status: 200,
             success: "email deleted",
