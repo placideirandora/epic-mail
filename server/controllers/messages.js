@@ -91,7 +91,7 @@ const messages = {
           res.status(200).json({
             status: 200,
             success: "email retrieved",
-            data: email,
+            data: [email],
           });
         }
       });
