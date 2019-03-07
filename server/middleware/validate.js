@@ -19,7 +19,7 @@ const loginSchema = Joi.object().keys({
 });
 
 const messageSchema = Joi.object().keys({
-  subject: Joi.string().alphanum().min(5).max(25)
+  subject: Joi.string().trim().min(5).max(25)
     .required(),
   message: Joi.string().trim().min(10)
     .max(100)
