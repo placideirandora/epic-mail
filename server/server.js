@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
+import path from "path";
 import user from "./routes/user";
 import message from "./routes/message";
 
@@ -8,6 +9,12 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "./views"));
+app.get("/", (req, res) => {
+  res.render("index");
+});
 
 app.use(morgan("dev"));
 
