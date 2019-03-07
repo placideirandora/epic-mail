@@ -1,7 +1,9 @@
-# epic-mail
+# EPIC MAIL
 EPIC Mail helps people exchange messages/information over the internet.
 
 [![Build Status](https://travis-ci.org/placideirandora/epic-mail.svg?branch=develop)](https://travis-ci.org/placideirandora/epic-mail) [![Maintainability](https://api.codeclimate.com/v1/badges/ffeae9beea9202ff160f/maintainability)](https://codeclimate.com/github/placideirandora/epic-mail/maintainability)
+
+
 
 
 
@@ -22,31 +24,43 @@ NodeJS
 ### Test Framework And Assertion Library
 
 ```
-Mocha, Chai
+Mocha and Chai
 ```
 
-### Continuous Integration 
+### Continuous Integration Testing
 
 ```
 Travis-CI
 ```
 
-### Test Coverage
+### Continuous Integration Test Coverage
 
 ```
 Coveralls
 ```
 
-### Code Quality
+### Continuous Integration Code Quality
 
 ```
 Code Climate
 ```
 
-### Data Storage
+### API 
 
 ```
-Array Data Structure
+Representational State Transfer, REST 
+```
+
+### Data Structure
+
+```
+Array 
+```
+
+### Data Transfer and Storage Format
+
+```
+JavaScript Object Notation, JSON
 ```
 
 ### Deployment
