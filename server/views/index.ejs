@@ -1,0 +1,189 @@
+<html>
+<head>
+<title>EPIC MAIL</title>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+body { 
+        background: #7FA4BD;
+        font-family: 'Varela Round';
+        font-size: 14px;
+        text-align: center;
+        letter-spacing: 0.1em;
+        margin: 75px; }
+
+        h1 { font-size: 2.5rem; }
+
+h2 { background: rgb(7, 106, 131); padding: 8px; color: #eaedf3; }
+
+input, button {
+  float: left;
+  font-size: 1em;
+  padding: 3px 6px;
+  margin: 0;
+  border: 1px solid #333;
+  outline: 0;
+  box-shadow: none;
+}
+
+input {
+  width: 60%;
+  margin-left: 15%;
+  padding: 15px;
+  font-size: 15px;
+  letter-spacing: 1px;
+  background: #eaedf3;
+  border-right: 0 none;
+  border-radius: 3px 0 0 3px;
+  transition: all 0.6s ease-in-out;
+}
+
+button {
+  position: relative;
+  padding: 15.5px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #eaedf3;
+  background-color: #42637D;
+  border-radius: 0 3px 3px 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover
+{
+    background: #2E4557;
+}
+
+.copied::after {
+  position: absolute;
+  top: 29%;
+  right: 110%;
+  display: block;
+  content: "copied!";
+  font-size: 1rem;
+  padding: 2px 3px;
+  color: #fff;
+  background-color: darkgreen;
+  border-radius: 3px;
+  opacity: 0;
+  animation: showcopied 0.8s ease;
+}
+
+@keyframes showcopied {
+  0% {
+    opacity: 0;
+    transform: translateX(15%);
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+</style>
+</head>
+<body>
+<h1>EPIC MAIL API ENDPOINT ROUTES</h1>
+<br>
+<h2> 1. USER ROUTES </h2>
+<hr>
+<h3> 1.1. REGISTER A NEW USER WITH POST METHOD </h3>
+<p>
+<input type="text" id="website" value="https://epic-mail-ch2.herokuapp.com/api/v1/auth/signup" readonly/>
+<button data-copytarget="#website">copy the link</button>
+</p>
+<br><br><br><br>
+<hr>
+<h3> 1.2. LOG IN THE USER WITH POST METHOD </h3>
+<input type="text" id="website2" value="https://epic-mail-ch2.herokuapp.com/api/v1/auth/login" readonly/>
+<button data-copytarget="#website2">copy the link</button>
+</p>
+<br><br><br><br>
+<hr>
+<h2> 2. EMAIL ROUTES </h2>
+<hr>
+<h3> 2.1. SEND AN EMAIL WITH POST METHOD </h3>
+<input type="text" id="website3" value="https://epic-mail-ch2.herokuapp.com/api/v1/messages" readonly/>
+<button data-copytarget="#website3">copy the link</button>
+</p>
+<br><br><br><br>
+<hr>
+<h3> 2.2. RETRIEVE ALL RECEIVED EMAILS WITH GET METHOD </h3>
+<input type="text" id="website4" value="https://epic-mail-ch2.herokuapp.com/api/v1/messages" readonly/>
+<button data-copytarget="#website4">copy the link</button>
+</p>
+<br><br><br><br>
+<hr>
+<h3> 2.3. RETRIEVE A SPECIFIC EMAIL WITH GET METHOD </h3>
+<input type="text" id="website5" value="https://epic-mail-ch2.herokuapp.com/api/v1/messages/{id}" readonly/>
+<button data-copytarget="#website5">copy the link</button>
+</p>
+<br><br><br><br>
+<hr>
+<h3> 2.4. DELETE A SPECIFIC EMAIL WITH DELETE METHOD </h3>
+<input type="text" id="website6" value="https://epic-mail-ch2.herokuapp.com/api/v1/messages/{id}" readonly/>
+<button data-copytarget="#website6">copy the link</button>
+</p>
+<br><br><br><br>
+<hr>
+<h3> 2.5. RETRIEVE ALL SENT EMAILS WITH GET METHOD </h3>
+<input type="text" id="website7" value="https://epic-mail-ch2.herokuapp.com/api/v1/messages/sent" readonly/>
+<button data-copytarget="#website7">copy the link</button>
+</p>
+<br><br><br><br>
+<hr>
+<h3> 2.6. RETRIEVE ALL READ EMAILS WITH GET METHOD </h3>
+<input type="text" id="website8" value="https://epic-mail-ch2.herokuapp.com/api/v1/messages/read" readonly/>
+<button data-copytarget="#website8">copy the link</button>
+</p>
+<br><br><br><br>
+<hr>
+<script>
+(function() {
+  
+  // click events
+  document.body.addEventListener('click', copy, true);
+
+    // event handler
+    function copy(e) {
+
+    // find target element
+    var 
+      t = e.target,
+      c = t.dataset.copytarget,
+      inp = (c ? document.querySelector(c) : null);
+      
+    // is element selectable?
+    if (inp && inp.select) {
+      
+      // select text
+      inp.select();
+
+      try {
+        // copy text
+        document.execCommand('copy');
+        inp.blur();
+        
+        // copied animation
+        t.classList.add('copied');
+        setTimeout(function() { t.classList.remove('copied'); }, 1600);
+      }
+      catch (err) {
+        alert('please press Ctrl/Cmd+C to copy');
+      }
+      
+    }
+    
+    }
+
+})();
+</script>
+</body>
+<br>
+<footer>
+        <h3> Copyright &copy; 2019 Placide IRANDORA </h3>
+</footer>
+</html>
