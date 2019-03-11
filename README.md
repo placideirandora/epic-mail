@@ -10,23 +10,23 @@ EPIC Mail helps people exchange messages/information over the internet.
 ## TOOLS USED
 
 
-**JavaScript** - Programming Language
+- **JavaScript** - Programming Language
 
-**NodeJS** - Server Environment
+- **NodeJS** - Server Environment
 
-**Mocha and Chai** - Test Framework And Assertion Library
+- **Mocha and Chai** - Test Framework And Assertion Library
 
-**Travis-CI** - Continuous Integration Testing
+- **Travis-CI** - Continuous Integration Testing
 
-**Coveralls** - Continuous Integration Test Coverage
+- **Coveralls** - Continuous Integration Test Coverage
 
-**Code Climate** - Continuous Integration Code Quality
+- **Code Climate** - Continuous Integration Code Quality
 
-**Heroku** - Deployment. [Visit The App](http://epic-mail-ch2.herokuapp.com)
+- **Heroku** - Deployment. [Visit The App](http://epic-mail-ch2.herokuapp.com)
 
-**GIT** - Version Control System
+- **GIT** - Version Control System
 
-**GitHub Pages** - Front-End UI Hosting. [Visit The App](https://placideirandora.github.io/epic-mail/)
+- **GitHub Pages** - Front-End UI Hosting. [Visit The App](https://placideirandora.github.io/epic-mail/)
 
 
 
