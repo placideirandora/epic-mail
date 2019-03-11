@@ -1,153 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
-@import url('https://fonts.googleapis.com/css?family=Comfortaa');
-@import url('https://fonts.googleapis.com/css?family=Righteous');
-@import url('https://fonts.googleapis.com/css?family=Varela+Round');
-
-* 
-{
-  box-sizing: border-box;
-}
-
-body 
-{
-  margin: 0;
-  padding: 0;
-  color: #fff;
-  background: #eaedf3;
-  font-family: 'Varela Round', 'Segoe UI';
-}
-
-.logo
-{
-    padding-top: 1.7rem;
-}
-
-.logo .title
-{
-    display: block;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.logo .fa
-{
-    display: block;
-    font-size: 3.5rem;
-    text-align: center;
-}
-
-.sideMenu
-{
-  background: rgb(20, 156, 190);
-  max-width: 310px;
-  width: 280px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-}
-
-nav
-{
-    padding-top: 20px;
-}
-
-.sideMenu a
-{
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 30px;
-    font-weight: 580;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    transition: all 0.3s ease-in-out;
-}
-
-.sideMenu a:hover
-{
-    background: rgb(7, 106, 131);
-    border-left: 5px solid #F3E730;
-    padding: 10px 30px 15px 25px;
-}
-
-.sideMenu a:hover .fa
-{
-    color: #F3E730;
-}
-
-.sideMenu a .fa
-{
-    color: #eaedf3;;
-    font-size: 1.5rem;
-    margin-right: 0.4rem;
-    display: inline-block;
-    width: 30px;
-    position: relative;
-    top: 2px;
-}
-
-.sideMenu a.active
-{
-    background: rgb(7, 106, 131);
-    border-left: 5px solid #F3E730;
-    padding: 10px 30px 15px 25px;
-}
-
-.sideMenu a.active .fa
-{
-    color: #F3E730;
-}
-
-header
-{
-    background: #fff;
-    margin-left: 280px;
-    padding: 10px;
-}
-
-.welcome
-{
-    display: inline-block;
-}
-
-.message
-{
-    color: rgb(7, 106, 131);
-    letter-spacing: 1.5px;
-    padding-left: 20px;
-}
-
-
-.user-area
-{
-    float: right;
-}
-
-.user-area a
-{
-    display: inline-block;
-    padding-right: 20px;
-    text-decoration: none;
-}
-
-.user-area a .fa
-{
-    font-size: 20px;
-}
-
-.user-img
-{
-    background: url(../images/placide.jpg) no-repeat center;
-    background-size: cover;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 3px solid rgb(7, 106, 131);
-    margin-top: 0.3rem;
-    transition: all 0.3s ease-in-out;
-    display: inline-block;
-}
+@import url("../css/dashboard.css");
 
 .groups
 {
@@ -161,7 +12,7 @@ header
     padding: 20px; 
 }
 
-.groups .title { 
+.title { 
     color:  rgb(20, 156, 190);
     text-transform: uppercase;
     letter-spacing: 2px; 
@@ -177,14 +28,14 @@ header
     height: 90%;
 }
 
-.cards .row-1
+.row-1
 {
     width: 100%;
     height: 49%;
     display: flex;
 }
 
-.row-1 .card-1
+.card-1
 {
     background: url(../images/programming-1.jpg) no-repeat center;
     background-size: cover;
@@ -192,7 +43,7 @@ header
     height: 100%;
 }
 
-.row-1 .card-2
+.card-2
 {
     background: url(../images/cybersecurity-2.jpeg) no-repeat center;
     background-size: cover;
@@ -200,7 +51,7 @@ header
     height: 100%;
 }
 
-.row-1 .card-3
+.card-3
 {
     background: url(../images/business.jpeg) no-repeat center;
     background-size: cover;
@@ -216,7 +67,7 @@ header
     margin-top: 60.2%;
 }
 
-.group-name h4
+h4
 {
     text-align: center;
     padding-top: 0.8rem;
@@ -230,12 +81,12 @@ header
     transition: all 0.1s ease-in-out;
 }
 
-.row-1 .card-1, .card-2
+.card-1, .card-2
 {
     margin-right: 2%;
 }
 
-.cards .row-2
+.row-2
 {
     width: 100%;
     height: 48.7%;
@@ -243,7 +94,7 @@ header
     display: flex;
 }
 
-.row-2 .card-4
+.card-4
 {
     background: url(../images/photography-1.jfif) no-repeat bottom;
     background-size: cover;
@@ -251,7 +102,7 @@ header
     height: 100%;
 }
 
-.row-2 .card-5
+.card-5
 {
     background: url(../images/sports-1.jpg) no-repeat center;
     background-size: cover;
@@ -259,7 +110,7 @@ header
     height: 100%;
 }
 
-.row-2 .card-6
+.card-6
 {
     background: url(../images/cinema-3.jpeg) no-repeat center;
     background-size: cover;
@@ -267,7 +118,7 @@ header
     height: 100%;
 }
 
-.row-2 .card-4, .card-5
+.card-4, .card-5
 {
     margin-right: 2%;
 }
@@ -293,7 +144,7 @@ header
     visibility: hidden;
 }
 
-.modal .modal-content 
+.modal-content 
 {
     position: absolute;
     top: 0;
@@ -305,7 +156,7 @@ header
     transform: translateX(-50%);
 }
 
-.modal .modal-content h2
+.modal-content h2
 {
   text-align: center;
   text-transform: uppercase;
@@ -313,7 +164,7 @@ header
   color: rgb(20, 156, 190);
 }
 
-.modal .modal-content .msg-space
+.msg-space
 {
     width: 100%;
     height: 88%;

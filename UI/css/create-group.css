@@ -1,154 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
-@import url('https://fonts.googleapis.com/css?family=Comfortaa');
-@import url('https://fonts.googleapis.com/css?family=Righteous');
-@import url('https://fonts.googleapis.com/css?family=Laila');
-@import url('https://fonts.googleapis.com/css?family=Varela+Round');
-
-
-* 
-{
-    box-sizing: border-box;
-}
-
-body 
-{
-  margin: 0;
-  padding: 0;
-  color: #fff;
-  background: #eaedf3;
-  font-family: 'Varela Round', 'Segoe UI';
-}
-
-.logo
-{
-    padding-top: 1.7rem;
-}
-
-.logo .title
-{
-    display: block;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.logo .fa
-{
-    display: block;
-    font-size: 3.5rem;
-    text-align: center;
-}
-
-.sideMenu
-{
-  background: rgb(20, 156, 190);
-  max-width: 310px;
-  width: 280px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-}
-
-nav
-{
-    padding-top: 20px;
-}
-
-.sideMenu a
-{
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 30px;
-    font-weight: 580;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    transition: all 0.3s ease-in-out;
-}
-
-.sideMenu a:hover
-{
-    background: rgb(7, 106, 131);
-    border-left: 5px solid #F3E730;
-    padding: 10px 30px 15px 25px;
-}
-
-.sideMenu a:hover .fa
-{
-    color: #F3E730;
-}
-
-.sideMenu a .fa
-{
-    color: #eaedf3;;
-    font-size: 1.5rem;
-    margin-right: 0.4rem;
-    display: inline-block;
-    width: 30px;
-    position: relative;
-    top: 2px;
-}
-
-.sideMenu a.active
-{
-    background: rgb(7, 106, 131);
-    border-left: 5px solid #F3E730;
-    padding: 10px 30px 15px 25px;
-}
-
-.sideMenu a.active .fa
-{
-    color: #F3E730;
-}
-
-header
-{
-    background: #fff;
-    margin-left: 280px;
-    padding: 10px;
-}
-
-.welcome
-{
-    display: inline-block;
-}
-
-.message
-{
-    color: rgb(7, 106, 131);
-    letter-spacing: 1.5px;
-    padding-left: 20px;
-}
-
-.user-area
-{
-    float: right;
-}
-
-.user-area a
-{
-    display: inline-block;
-    padding-right: 20px;
-    text-decoration: none;
-}
-
-.user-area a .fa
-{
-    font-size: 20px;
-}
-
-.user-img
-{
-    background: url(../images/placide.jpg) no-repeat center;
-    background-size: cover;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 3px solid rgb(7, 106, 131);
-    margin-top: 0.3rem;
-    transition: all 0.3s ease-in-out;
-    display: inline-block;
-}
+@import url("../css/dashboard.css");
 
 .new-group
 {
@@ -162,7 +12,7 @@ header
     padding: 20px;
 }
 
-.new-group  .title { 
+.title { 
     color:  rgb(20, 156, 190);
     text-transform: uppercase;
     letter-spacing: 2px; 
@@ -172,7 +22,7 @@ header
     text-align: center;
   }
 
-.new-group  .input-fields .label 
+.input-fields .label 
 {
     color: #524a4a; 
     font-size: 0.8rem; 
@@ -180,7 +30,7 @@ header
     text-transform: uppercase;  
  }
 
- .new-group  .input 
+ .input 
  { 
     margin: 5px 0 15px; 
     width: 100%; 
@@ -200,7 +50,7 @@ button
   cursor: pointer;
 }
 
-.new-group .forms-buttons-action 
+.forms-buttons-action 
 {
   background-color: rgb(20, 156, 190);
   border-radius: 3px;
@@ -216,7 +66,7 @@ button
   transition: background-color 0.3s ease-in-out;
 }
 
-.new-group .forms-buttons-action a
+.forms-buttons-action a
 {
     text-decoration: none;
     color: #fff;
@@ -224,7 +74,7 @@ button
     padding-left: 8px;
 }
 
-.new-group .forms-buttons-action:hover {
+.forms-buttons-action:hover {
     background-color: rgb(7, 106, 131);
     cursor: pointer;
 }
