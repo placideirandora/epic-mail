@@ -9,72 +9,34 @@ EPIC Mail helps people exchange messages/information over the internet.
 
 ## TOOLS USED
 
-### Programming Language
 
-```
-JavaScript
-```
+**JavaScript** - Programming Language
 
-### Server Environment
+**NodeJS** - Server Environment
 
-```
-NodeJS
-```
+**Mocha and Chai** - Test Framework And Assertion Library
 
-### Test Framework And Assertion Library
+**Travis-CI** - Continuous Integration Testing
 
-```
-Mocha and Chai
-```
+**Coveralls** - Continuous Integration Test Coverage
 
-### Continuous Integration Testing
+**Code Climate** - Continuous Integration Code Quality
 
-```
-Travis-CI
-```
+**Heroku** - Deployment. [Visit The App](http://epic-mail-ch2.herokuapp.com)
 
-### Continuous Integration Test Coverage
+**GIT** - Version Control System
 
-```
-Coveralls
-```
+**GitHub Pages** - Front-End UI Hosting. [Visit The App](https://placideirandora.github.io/epic-mail/)
 
-### Continuous Integration Code Quality
-
-```
-Code Climate
-```
-
-### API 
-
-```
-Representational State Transfer, REST 
-```
-
-### Data Structure
-
-```
-Array 
-```
-
-### Data Transfer and Storage Format
-
-```
-JavaScript Object Notation, JSON
-```
-
-### Deployment
-
-```
-Heroku 
-```
-
-```
-URL: http://epic-mail-ch2.herokuapp.com
-```
 
 
 ## GETTING STARTED
+
+### Clone The Project
+
+```
+$ git clone https://github.com/placideirandora/epic-mail.git
+```
 
 ### Install Required Dependencies
 
@@ -96,16 +58,16 @@ $ npm test
 
 ## API ENDPOINT ROUTES
 
-| METHOD | ROUTE | DESCRIPTION |
-|--------|----------------|-------------|
-|  POST  | api/v1/auth/signup | User Registration |
-|  POST  | api/v1/auth/login  | User Login |
-|  POST   | api/v1/messages | Send Email |
-|  GET   | api/v1/messages | Retrieve Received Emails | 
-|  GET   | api/v1/messages | Retrieve A Specific Email |
-|  DELETE | api/v1/messages | Delete A Specific Email |
-|  GET   | api/v1/messages/sent | Retrieve Sent Emails |
-|  GET   | api/v1/messages/sent | Retrieve Read Emails |
+| METHOD | ROUTE | DESCRIPTION | ACCESS |
+|--------|----------------|-------------|-----------------|
+|  POST  | api/v1/auth/signup | User Registration | Public |
+|  POST  | api/v1/auth/login  | User Login | Public |
+|  POST   | api/v1/messages | Send Email | Private |
+|  GET   | api/v1/messages | Retrieve Received Emails | Private |
+|  GET   | api/v1/messages | Retrieve A Specific Email | Private |
+|  DELETE | api/v1/messages | Delete A Specific Email | Private |
+|  GET   | api/v1/messages/sent | Retrieve Sent Emails | Private |
+|  GET   | api/v1/messages/sent | Retrieve Read Emails | Private |
 
 
 ## REQUEST AND RESPONSE SAMPLE
