@@ -6,6 +6,11 @@ import dummy from "../models/dummy";
 import validate from "../middleware/validate";
 
 const users = {
+  /**
+   * User Registration
+   * @param {object} req
+   * @param {object} res
+   */
   registerUser(req, res) {
     const {
       firstname, lastname, email, password,
@@ -31,6 +36,11 @@ const users = {
     }
   },
 
+  /**
+   * User Login
+   * @param {object} req
+   * @param {object} res
+   */
   loginUser(req, res) {
     const {
       email, password,

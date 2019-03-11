@@ -5,6 +5,11 @@ import dummy from "../models/dummy";
 import validate from "../middleware/validate";
 
 const messages = {
+  /**
+   * Send an email
+   * @param {object} req
+   * @param {object} res
+   */
   sendEmail(req, res) {
     const {
       subject, message, senderId, receiverId, parentMessageId, status,
@@ -59,6 +64,11 @@ const messages = {
     }
   },
 
+  /**
+   * Retrieve all emails
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveMails(req, res) {
     if (dummy.messages.length === 0) {
       res.status(404).json({
@@ -74,6 +84,11 @@ const messages = {
     }
   },
 
+  /**
+   * Retrieve a specific email
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveSpecificEmail(req, res) {
     const emailId = parseInt(req.params.id, 10);
     const { error } = Joi.validate(
@@ -102,6 +117,11 @@ const messages = {
     }
   },
 
+  /**
+   * Delete a specific email
+   * @param {object} req
+   * @param {object} res
+   */
   deleteMail(req, res) {
     const emailId = parseInt(req.params.id, 10);
     const { error } = Joi.validate(
@@ -129,6 +149,11 @@ const messages = {
     }
   },
 
+  /**
+   * Retrieve all sent emails
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveSentEmails(req, res) {
     const sentEmails = dummy.messages.filter(email => email.status === "sent");
     if (sentEmails.length === 0) {
@@ -145,6 +170,11 @@ const messages = {
     }
   },
 
+  /**
+   * Retrieve all read emails
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveReadEmails(req, res) {
     const readEmails = dummy.messages.filter(email => email.status === "read");
     if (readEmails.length === 0) {
