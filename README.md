@@ -67,7 +67,7 @@ $ npm test
 |  GET   | api/v1/messages | Retrieve A Specific Email | Private |
 |  DELETE | api/v1/messages | Delete A Specific Email | Private |
 |  GET   | api/v1/messages/sent | Retrieve Sent Emails | Private |
-|  GET   | api/v1/messages/sent | Retrieve Read Emails | Private |
+|  GET   | api/v1/messages/read | Retrieve Read Emails | Private |
 
 
 ## REQUEST AND RESPONSE SAMPLE
