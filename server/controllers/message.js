@@ -22,8 +22,8 @@ const messages = {
     if (error) {
       res.status(400).json({ error: error.details[0].message });
     } else {
-      const trueSender = dummy.contacts.filter(sender => sender.id === senderId);
-      const trueReceiver = dummy.contacts.filter(receiver => receiver.id === receiverId);
+      const trueSender = dummy.users.filter(sender => sender.id === senderId);
+      const trueReceiver = dummy.users.filter(receiver => receiver.id === receiverId);
 
       if (trueSender.length === 0) {
         res.status(404).json({
