@@ -57,25 +57,7 @@ const messages = [
   },
 ];
 
-const contacts = [
-  {
-    id: 1,
-    firstname: "Placide",
-    lastname: "IRANDORA",
-  },
-  {
-    id: 2,
-    firstname: "Innocent",
-    lastname: "TUYISHIMIRE",
-  },
-  {
-    id: 3,
-    firstname: "Fred",
-    lastname: "MANZI",
-  },
-];
-
 export default
 {
-  users, messages, contacts,
+  users, messages,
 };
