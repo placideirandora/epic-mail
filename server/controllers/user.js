@@ -23,6 +23,11 @@ const users = {
     if (error) {
       res.status(400).json({ error: error.details[0].message });
     } else {
+      for (let i = 0; i < dummy.users.length; i++) {
+        if (dummy.users[i].email === email) {
+          res.status(400).json({ status: 400, error: "the email is already taken. the user already exist. register with another unique email" });
+        }
+      }
       const id = dummy.users.length + 1;
       const user = new User(
         id, firstname, lastname, email, password,
