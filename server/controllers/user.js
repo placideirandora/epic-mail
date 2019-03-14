@@ -23,21 +23,24 @@ const users = {
     if (error) {
       res.status(400).json({ error: error.details[0].message });
     } else {
-      for (let i = 0; i < dummy.users.length; i++) {
-        if (dummy.users[i].email === email) {
-          res.status(400).json({ status: 400, error: "the email is already taken. the user already exist. register with another unique email" });
-        }
+      const emaili = dummy.users.filter(user => user.email === email);
+      if (emaili.length !== 0) {
+        res.status(400).json({
+          status: 400,
+          error: "the email is already taken. the user already exist. register with another unique email",
+        });
+      } else {
+        const id = dummy.users.length + 1;
+        const user = new User(
+          id, firstname, lastname, email, password,
+        );
+        const hash = bcrypt.hashSync(user.password, 10);
+        user.password = hash;
+        const token = jwt.sign({ user: dummy.users.push(user) }, "secret-key");
+        res.status(201).json({
+          status: 201, success: "user registered", data: [{ token, user }],
+        });
       }
-      const id = dummy.users.length + 1;
-      const user = new User(
-        id, firstname, lastname, email, password,
-      );
-      const hash = bcrypt.hashSync(user.password, 10);
-      user.password = hash;
-      const token = jwt.sign({ user: dummy.users.push(user) }, "secret-key");
-      res.status(201).json({
-        status: 201, success: "user registered", data: [{ token, user }],
-      });
     }
   },
 
