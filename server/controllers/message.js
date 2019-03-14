@@ -190,6 +190,27 @@ const messages = {
       });
     }
   },
+
+  /**
+   * Retrieve all unread emails
+   * @param {object} req
+   * @param {object} res
+   */
+  retrieveUnReadEmails(req, res) {
+    const unreadEmails = dummy.messages.filter(email => email.status === "unread");
+    if (unreadEmails.length === 0) {
+      res.status(400).json({
+        status: 400,
+        success: "no unread emails found",
+      });
+    } else {
+      res.status(200).json({
+        status: 200,
+        success: "unread emails retrieved",
+        data: [unreadEmails],
+      });
+    }
+  },
 };
 
 export default messages;
