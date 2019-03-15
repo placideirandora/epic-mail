@@ -20,7 +20,7 @@ const messages = {
       }, validate.messageSchema,
     );
     if (error) {
-      res.status(400).json({ error: error.details[0].message });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
     } else {
       const trueSender = dummy.users.filter(sender => sender.id === senderId);
       const trueReceiver = dummy.users.filter(receiver => receiver.id === receiverId);
@@ -98,7 +98,7 @@ const messages = {
       validate.emailParams,
     );
     if (error) {
-      res.status(400).json({ error: error.details[0].message });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
     } else {
       // eslint-disable-next-line array-callback-return
       dummy.messages.map((email) => {
@@ -131,7 +131,7 @@ const messages = {
       validate.emailParams,
     );
     if (error) {
-      res.status(400).json({ error: error.details[0].message });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
     } else {
       for (let i = 0; i < dummy.messages.length; i++) {
         if (dummy.messages[i].id === emailId) {
