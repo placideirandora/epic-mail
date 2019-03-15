@@ -55,9 +55,13 @@ const messages = {
           res.status(201).json({
             status: 201, success: "email drafted", data: [messagee],
           });
-        } else {
+        } else if (status === "read") {
           res.status(201).json({
             status: 201, success: "email read", data: [messagee],
+          });
+        } else {
+          res.status(201).json({
+            status: 201, success: "email unread", data: [messagee],
           });
         }
       }
@@ -157,9 +161,9 @@ const messages = {
   retrieveSentEmails(req, res) {
     const sentEmails = dummy.messages.filter(email => email.status === "sent");
     if (sentEmails.length === 0) {
-      res.status(400).json({
-        status: 400,
-        success: "no sent emails found",
+      res.status(404).json({
+        status: 404,
+        error: "no sent emails found",
       });
     } else {
       res.status(200).json({
@@ -178,9 +182,9 @@ const messages = {
   retrieveReadEmails(req, res) {
     const readEmails = dummy.messages.filter(email => email.status === "read");
     if (readEmails.length === 0) {
-      res.status(400).json({
-        status: 400,
-        success: "no read emails found",
+      res.status(404).json({
+        status: 404,
+        error: "no read emails found",
       });
     } else {
       res.status(200).json({
@@ -199,9 +203,9 @@ const messages = {
   retrieveUnReadEmails(req, res) {
     const unreadEmails = dummy.messages.filter(email => email.status === "unread");
     if (unreadEmails.length === 0) {
-      res.status(400).json({
-        status: 400,
-        success: "no unread emails found",
+      res.status(404).json({
+        status: 404,
+        error: "no unread emails found",
       });
     } else {
       res.status(200).json({
