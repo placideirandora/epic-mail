@@ -111,7 +111,7 @@ describe("EMAIL ENDPOINT TESTS", () => {
       .send(emptyMessage)
       .set("Accept", "Application/JSON")
       .end((err, res) => {
-        res.body.should.have.property("error").eql("\"message\" is not allowed to be empty");
+        res.body.should.have.property("error").eql("message is not allowed to be empty");
         res.body.should.be.a("object");
         done();
       });
@@ -183,7 +183,7 @@ describe("EMAIL ENDPOINT TESTS", () => {
       .get("/api/v1/messages/test")
       .set("Accept", "Application/JSON")
       .end((err, res) => {
-        res.body.should.have.property("error").eql("\"emailId\" must be a number");
+        res.body.should.have.property("error").eql("emailId must be a number");
         res.body.should.be.a("object");
         done();
       });
@@ -195,7 +195,7 @@ describe("EMAIL ENDPOINT TESTS", () => {
       .delete("/api/v1/messages/test")
       .set("Accept", "Application/JSON")
       .end((err, res) => {
-        res.body.should.have.property("error").eql("\"emailId\" must be a number");
+        res.body.should.have.property("error").eql("emailId must be a number");
         res.body.should.be.a("object");
         done();
       });

@@ -34,7 +34,7 @@ describe("USER ENDPOINT TESTS", () => {
       .send(falseNewUser)
       .set("Accept", "Application/JSON")
       .end((err, res) => {
-        res.body.should.have.property("error").eql("\"email\" must be a valid email");
+        res.body.should.have.property("error").eql("email must be a valid email");
         res.body.should.be.a("object");
         done();
       });
@@ -47,7 +47,7 @@ describe("USER ENDPOINT TESTS", () => {
       .send(falseNewUser2)
       .set("Accept", "Application/JSON")
       .end((err, res) => {
-        res.body.should.have.property("error").eql("\"firstname\" is not allowed to be empty");
+        res.body.should.have.property("error").eql("firstname is not allowed to be empty");
         res.body.should.be.a("object");
         done();
       });
@@ -91,7 +91,7 @@ describe("USER ENDPOINT TESTS", () => {
       .send(falseUserLogIn)
       .set("Accept", "Application/JSON")
       .end((err, res) => {
-        res.body.should.have.property("error").eql("\"email\" is not allowed to be empty");
+        res.body.should.have.property("error").eql("email is not allowed to be empty");
         res.body.should.be.a("object");
         done();
       });
