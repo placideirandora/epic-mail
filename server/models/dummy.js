@@ -55,6 +55,16 @@ const messages = [
     parentMessageId: 3,
     status: "read",
   },
+  {
+    id: 4,
+    createdOn: "March 15, 2019",
+    subject: "HEY",
+    message: "Everything is gonna be okay",
+    senderId: 1,
+    receiverId: 2,
+    parentMessageId: 4,
+    status: "unread",
+  },
 ];
 
 export default

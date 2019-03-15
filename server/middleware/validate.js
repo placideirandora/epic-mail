@@ -30,7 +30,7 @@ const messageSchema = Joi.object().keys({
     .required(),
   parentMessageId: Joi.number().integer()
     .required(),
-  status: Joi.string().alphanum().valid("sent", "draft", "read")
+  status: Joi.string().alphanum().valid("sent", "draft", "read", "unread")
     .required(),
 });
 

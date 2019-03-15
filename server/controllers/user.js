@@ -21,7 +21,7 @@ const users = {
       }, validate.userSchema,
     );
     if (error) {
-      res.status(400).json({ error: error.details[0].message });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
     } else {
       const emaili = dummy.users.filter(user => user.email === email);
       if (emaili.length !== 0) {
@@ -58,7 +58,7 @@ const users = {
       email, password,
     }, validate.loginSchema);
     if (error) {
-      res.status(400).json({ error: error.details[0].message });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
     } else {
       for (let i = 0; i < dummy.users.length; i++) {
         if (dummy.users[i].email === email) {
