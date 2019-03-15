@@ -5,6 +5,13 @@ const newUser = {
   password: "1234",
 };
 
+const UserRegistered = {
+  firstname: "Emmanuel",
+  lastname: "CYUBAHIRO",
+  email: "emmanuelcyubahiro@gmail.com",
+  password: "1234",
+};
+
 const falseNewUser = {
   firstname: "Emmanuel",
   lastname: "CYUBAHIRO",
@@ -66,6 +73,15 @@ const draftMessage = {
   status: "draft",
 };
 
+const unReadMessage = {
+  subject: "Testing",
+  message: "Have you passed!",
+  senderId: 3,
+  receiverId: 2,
+  parentMessageId: 7,
+  status: "unread",
+};
+
 const falseReadMessage = {
   subject: "Testing",
   message: "Have you passed!",
@@ -105,5 +121,5 @@ const emptyMessage = {
 export {
   newUser, newUserLogIn, sentMessage, readMessage, draftMessage, falseEmailLogIn,
   falsePasswdLogIn, falseNewUser, falseNewUser2, falseUserLogIn, falseReadMessage,
-  unregisteredReceiver, unregisteredSender, emptyMessage,
+  unregisteredReceiver, unregisteredSender, emptyMessage, unReadMessage, UserRegistered,
 };

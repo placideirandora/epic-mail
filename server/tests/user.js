@@ -3,7 +3,7 @@ import chaiHTTP from "chai-http";
 import server from "../server";
 import {
   newUser, newUserLogIn, falseEmailLogIn, falsePasswdLogIn, falseNewUser,
-  falseNewUser2, falseUserLogIn,
+  falseNewUser2, falseUserLogIn, UserRegistered,
 } from "./dummy";
 
 chai.use(chaiHTTP);
@@ -48,6 +48,19 @@ describe("USER ENDPOINT TESTS", () => {
       .set("Accept", "Application/JSON")
       .end((err, res) => {
         res.body.should.have.property("error").eql("firstname is not allowed to be empty");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should not register a new user if the email is already taken", (done) => {
+    chai.request(server)
+      .post("/api/v1/auth/signup")
+      .send(UserRegistered)
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.property("error").eql("the email is already taken. the user already exist. register with another unique email");
         res.body.should.be.a("object");
         done();
       });

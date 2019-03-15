@@ -3,7 +3,7 @@ import chaiHTTP from "chai-http";
 import server from "../server";
 import {
   sentMessage, readMessage, draftMessage, falseReadMessage, unregisteredReceiver,
-  unregisteredSender, emptyMessage,
+  unregisteredSender, emptyMessage, unReadMessage,
 } from "./dummy";
 
 chai.use(chaiHTTP);
@@ -53,6 +53,22 @@ describe("EMAIL ENDPOINT TESTS", () => {
         res.body.should.have.status(201);
         res.body.should.have.property("status").eql(201);
         res.body.should.have.property("success").eql("email drafted");
+        res.body.should.be.a("object");
+        res.body.data.should.be.a("array");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should send an email with unread status", (done) => {
+    chai.request(server)
+      .post("/api/v1/messages")
+      .send(unReadMessage)
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(201);
+        res.body.should.have.property("status").eql(201);
+        res.body.should.have.property("success").eql("email unread");
         res.body.should.be.a("object");
         res.body.data.should.be.a("array");
         done();
@@ -163,6 +179,21 @@ describe("EMAIL ENDPOINT TESTS", () => {
   });
 
   // eslint-disable-next-line no-undef
+  it("Should retrieve unread emails", (done) => {
+    chai.request(server)
+      .get("/api/v1/messages/unread")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(200);
+        res.body.should.have.property("status").eql(200);
+        res.body.should.have.property("success").eql("unread emails retrieved");
+        res.body.should.be.a("object");
+        res.body.data.should.be.a("array");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
   it("Should retrieve a specific email", (done) => {
     chai.request(server)
       .get("/api/v1/messages/1")
@@ -244,6 +275,76 @@ describe("EMAIL ENDPOINT TESTS", () => {
   });
 
   // eslint-disable-next-line no-undef
+  it("Should delete a specific email 4", (done) => {
+    chai.request(server)
+      .delete("/api/v1/messages/4")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(200);
+        res.body.should.have.property("status").eql(200);
+        res.body.should.have.property("success").eql("email deleted");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should delete a specific email 5", (done) => {
+    chai.request(server)
+      .delete("/api/v1/messages/5")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(200);
+        res.body.should.have.property("status").eql(200);
+        res.body.should.have.property("success").eql("email deleted");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should delete a specific email 6", (done) => {
+    chai.request(server)
+      .delete("/api/v1/messages/6")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(200);
+        res.body.should.have.property("status").eql(200);
+        res.body.should.have.property("success").eql("email deleted");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should delete a specific email 7", (done) => {
+    chai.request(server)
+      .delete("/api/v1/messages/7")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(200);
+        res.body.should.have.property("status").eql(200);
+        res.body.should.have.property("success").eql("email deleted");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should delete a specific email 8", (done) => {
+    chai.request(server)
+      .delete("/api/v1/messages/8")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(200);
+        res.body.should.have.property("status").eql(200);
+        res.body.should.have.property("success").eql("email deleted");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
   it("Should not retrieve the email 1 because it will have been deleted", (done) => {
     chai.request(server)
       .get("/api/v1/messages/1")
@@ -280,6 +381,132 @@ describe("EMAIL ENDPOINT TESTS", () => {
         res.body.should.have.status(404);
         res.body.should.have.property("status").eql(404);
         res.body.should.have.property("error").eql("email not found");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should not retrieve the email 4 because it will have been deleted", (done) => {
+    chai.request(server)
+      .get("/api/v1/messages/4")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property("status").eql(404);
+        res.body.should.have.property("error").eql("email not found");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should not retrieve the email 5 because it will have been deleted", (done) => {
+    chai.request(server)
+      .get("/api/v1/messages/5")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property("status").eql(404);
+        res.body.should.have.property("error").eql("email not found");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should not retrieve the email 6 because it will have been deleted", (done) => {
+    chai.request(server)
+      .get("/api/v1/messages/6")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property("status").eql(404);
+        res.body.should.have.property("error").eql("email not found");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should not retrieve the email 7 because it will have been deleted", (done) => {
+    chai.request(server)
+      .get("/api/v1/messages/7")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property("status").eql(404);
+        res.body.should.have.property("error").eql("email not found");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should not retrieve the email 8 because it will have been deleted", (done) => {
+    chai.request(server)
+      .get("/api/v1/messages/8")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property("status").eql(404);
+        res.body.should.have.property("error").eql("email not found");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should not retrieve sent emails because they will have been deleted", (done) => {
+    chai.request(server)
+      .get("/api/v1/messages/sent")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property("status").eql(404);
+        res.body.should.have.property("error").eql("no sent emails found");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should not retrieve read emails because they will have been deleted", (done) => {
+    chai.request(server)
+      .get("/api/v1/messages/read")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property("status").eql(404);
+        res.body.should.have.property("error").eql("no read emails found");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should not retrieve unread emails because they will have been deleted", (done) => {
+    chai.request(server)
+      .get("/api/v1/messages/unread")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property("status").eql(404);
+        res.body.should.have.property("error").eql("no unread emails found");
+        res.body.should.be.a("object");
+        done();
+      });
+  });
+
+  // eslint-disable-next-line no-undef
+  it("Should not retrieve received emails because they will have been deleted", (done) => {
+    chai.request(server)
+      .get("/api/v1/messages")
+      .set("Accept", "Application/JSON")
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property("status").eql(404);
+        res.body.should.have.property("error").eql("no emails found");
         res.body.should.be.a("object");
         done();
       });
