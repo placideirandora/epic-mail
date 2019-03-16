@@ -11,8 +11,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(morgan("dev"));
 
-app.use("/api/v1", user);
-app.use("/api/v1", message);
+app.use("/api/v2", user);
+app.use("/api/v2", message);
 
 app.use((req, res) => {
   res.status(404).json({ status: 404, error: "route not found" });
