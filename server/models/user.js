@@ -1,6 +1,5 @@
-class user {
-  constructor(id, firstname, lastname, email, password) {
-    this.id = id;
+class User {
+  constructor(firstname, lastname, email, password) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;
@@ -8,4 +7,4 @@ class user {
   }
 }
 
-export default user;
+export default User;
