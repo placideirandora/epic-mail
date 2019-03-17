@@ -310,12 +310,11 @@ const messages = {
 
   deleteSpecificEmail(req, res) {
     const emailId = req.params.id;
-    const admin = req.userId;
-    const userAccess = "true";
     const user = req.userId;
-    const retrieveAdmin = database(sql.retrieveAdmin, [admin, userAccess]);
+    const userAccess = "true";
+    const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     retrieveAdmin.then((response) => {
-      if (response) {
+      if (response.length !== 0) {
         const specificEmail = database(sql.retrieveSpecificEmail, [emailId]);
         specificEmail.then((response) => {
           if (response.length === 0 || response.length === "undefined") {
@@ -356,8 +355,6 @@ const messages = {
           res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 };
