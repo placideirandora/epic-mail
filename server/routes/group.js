@@ -6,5 +6,6 @@ import group from "../middleware/validate";
 const router = express.Router();
 
 router.post("/groups", authenticate.verifyUser, group.validateGroup, controller.createGroup);
+router.delete("/groups/:id", authenticate.verifyUser, group.validateGroupId, controller.deleteGroup);
 
 export default router;
