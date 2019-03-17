@@ -11,5 +11,6 @@ router.get("/users", authenticate.verifyAdmin, controller.retrieveUsers);
 router.get("/users/:id", authenticate.verifyAdmin, user.validateUserId, controller.retrieveUser);
 router.delete("/users/:id", authenticate.verifyAdmin, user.validateUserId, controller.deleteUser);
 router.post("/auth/reset", user.validateEmailAddr, controller.resetPassword);
+router.get("/auth/reset", authenticate.verifyAdmin, controller.retrievePassResetUsers);
 
 export default router;
