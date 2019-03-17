@@ -1,188 +1,364 @@
+/* eslint-disable max-len */
+/* eslint-disable no-dupe-keys */
+/* eslint-disable no-shadow */
+import dotenv from "dotenv";
 import moment from "moment";
 import Message from "../models/message";
-import dummy from "../models/dummy";
+import database from "../db/database";
+import sql from "../helpers/sql";
+
+dotenv.config();
 
 const messages = {
-  /**
-   * Send an email
-   * @param {object} req
-   * @param {object} res
-   */
   sendEmail(req, res) {
     const {
-      subject, message, senderId, receiverId, parentMessageId, status,
+      subject, message, parentMessageId, receiverId, status,
     } = req.body;
-    const trueSender = dummy.users.filter(sender => sender.id === senderId);
-    const trueReceiver = dummy.users.filter(receiver => receiver.id === receiverId);
+    const senderId = req.userId;
+    const trueReceiver = database(sql.retrieveSpecificUser, [receiverId]);
+    trueReceiver.then((response) => {
+      if (response.length === 0 || response.length === "undefined") {
+        res.status(404).json({ status: 404, error: "the receiver is not registered" });
+      } else if (senderId === receiverId) {
+        res.status(400).json({ status: 400, error: "the sender and receiver id must not be the same" });
+      } else {
+        const messagee = new Message(
+          subject, message, parentMessageId, senderId, receiverId, status,
+        );
+        const query = database(sql.sendEmail, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderId, messagee.receiverId, messagee.status, moment().format("LL")]);
+        query.then((response) => {
+          const {
+            id, subject, message, parentmessageid, senderid, receiverid, status, createdon,
+          } = response[0];
+          res.status(201).json({
+            status: 201,
+            success: "email sent",
+            data: [{
+              id, subject, message, parentmessageid, senderid, receiverid, status, createdon,
+            }],
+          });
+        }).catch((error) => {
+          res.status(500).json({ error: "email not sent", error });
+        });
+      }
+    }).catch((error) => {
+      res.status(500).json({ error: "email not sent", error });
+    });
+  },
 
-    if (trueSender.length === 0) {
-      res.status(404).json({
-        status: 404,
-        error: "the sender is not registered",
-      });
-    } else if (trueReceiver.length === 0) {
-      res.status(404).json({
-        status: 404,
-        error: "the receiver is not registered",
-      });
-    } else if (senderId === receiverId) {
-      res.status(400).json({
-        status: 400,
-        error: "the sender id and receiver id must not be the same",
-      });
-    } else {
-      const id = dummy.messages.length + 1;
-      const createdOn = moment().format("LL");
-      const messagee = new Message(
-        id, createdOn, subject, message, senderId, receiverId, parentMessageId, status,
-      );
-      dummy.messages.push(messagee);
-      if (status === "sent") {
-        res.status(201).json({
-          status: 201, success: "email sent", data: [messagee],
-        });
-      } else if (status === "draft") {
-        res.status(201).json({
-          status: 201, success: "email drafted", data: [messagee],
-        });
-      } else if (status === "read") {
-        res.status(201).json({
-          status: 201, success: "email read", data: [messagee],
+  retrieveMails(req, res) {
+    const user = req.userId;
+    const userAccess = "true";
+    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    findAdmin.then((response) => {
+      if (response.length !== 0) {
+        const allEmails = database(sql.retrieveAllEmails);
+        allEmails.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({
+              status: 404,
+              error: "no emails found",
+            });
+          } else {
+            res.status(200).json({
+              status: 200,
+              success: "received emails retrieved",
+              data: response,
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
         });
       } else {
-        res.status(201).json({
-          status: 201, success: "email unread", data: [messagee],
+        const specificUserEmails = database(sql.retrieveSpecificUserEmails, [user]);
+        specificUserEmails.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "no emails found" });
+          } else {
+            res.status(200).json({
+              status: 200,
+              success: "emails retrieved",
+              data: response,
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
         });
       }
-    }
+    }).catch((error) => {
+      res.status(500).json({ error: "error occured", error });
+    });
   },
 
-  /**
-   * Retrieve all emails
-   * @param {object} req
-   * @param {object} res
-   */
-  retrieveMails(req, res) {
-    if (dummy.messages.length === 0) {
-      res.status(404).json({
-        status: 404,
-        error: "no emails found",
-      });
-    } else {
-      res.status(200).json({
-        status: 200,
-        success: "received emails retrieved",
-        data: dummy.messages,
-      });
-    }
-  },
-
-  /**
-   * Retrieve a specific email
-   * @param {object} req
-   * @param {object} res
-   */
   retrieveSpecificEmail(req, res) {
-    const emailId = parseInt(req.params.id, 10);
-    // eslint-disable-next-line array-callback-return
-    dummy.messages.map((email) => {
-      if (email.id === emailId) {
-        res.status(200).json({
-          status: 200,
-          success: "email retrieved",
-          data: [email],
+    const emailId = req.params.id;
+    const user = req.userId;
+    const userAccess = "true";
+    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    findAdmin.then((response) => {
+      if (response.length !== 0) {
+        const specificEmail = database(sql.retrieveSpecificEmail, [emailId]);
+        specificEmail.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "email not found" });
+          } else {
+            res.status(200).json({
+              status: 200,
+              success: "email retrieved",
+              data: response,
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      } else {
+        const userSpecificEmail = database(sql.retrieveUserSpecificEmail, [emailId, user]);
+        userSpecificEmail.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "email not found" });
+          } else {
+            res.status(200).json({
+              status: 200,
+              success: "email retrieved",
+              data: response,
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
         });
       }
-    });
-    res.status(404).json({
-      status: 404,
-      error: "email not found",
+    }).catch((error) => {
+      res.status(500).json({ error: "error occured", error });
     });
   },
 
-  /**
-   * Delete a specific email
-   * @param {object} req
-   * @param {object} res
-   */
-  deleteMail(req, res) {
-    const emailId = parseInt(req.params.id, 10);
-    for (let i = 0; i < dummy.messages.length; i++) {
-      if (dummy.messages[i].id === emailId) {
-        dummy.messages.splice(i, 1);
-        res.status(200).json({
-          status: 200,
-          success: "email deleted",
-        });
-      }
-    }
-    res.status(404).json({
-      status: 404,
-      error: "email not found",
-    });
-  },
-
-  /**
-   * Retrieve all sent emails
-   * @param {object} req
-   * @param {object} res
-   */
   retrieveSentEmails(req, res) {
-    const sentEmails = dummy.messages.filter(email => email.status === "sent");
-    if (sentEmails.length === 0) {
-      res.status(404).json({
-        status: 404,
-        error: "no sent emails found",
-      });
-    } else {
-      res.status(200).json({
-        status: 200,
-        success: "sent emails retrieved",
-        data: [sentEmails],
-      });
-    }
+    const admin = req.userId;
+    const userAccess = "true";
+    const senderId = req.userId;
+    const status = "sent";
+    const retrieveAdmin = database(sql.retrieveAdmin, [admin, userAccess]);
+    retrieveAdmin.then((response) => {
+      if (response.length !== 0) {
+        const adminGetSentEmails = database(sql.adminGetSentEmails, [status]);
+        adminGetSentEmails.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "admin, no sent emails found" });
+          } else if (response.length !== 0) {
+            res.status(200).json({
+              status: 200,
+              success: "admin, sent emails retrieved",
+              data: response,
+            });
+          }
+        });
+      } else {
+        const sentEmails = database(sql.retrieveSentEmails, [status, senderId]);
+        sentEmails.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "sorry! you have sent no emails!" });
+          } else {
+            const {
+              id, subject, message, parentmessageid, receiverid, status, createdon,
+            } = response[0];
+            res.status(200).json({
+              status: 200,
+              success: "your sent emails retrieved",
+              data: [{
+                id, subject, message, parentmessageid, receiverid, status, createdon,
+              }],
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      }
+    });
   },
 
-  /**
-   * Retrieve all read emails
-   * @param {object} req
-   * @param {object} res
-   */
   retrieveReadEmails(req, res) {
-    const readEmails = dummy.messages.filter(email => email.status === "read");
-    if (readEmails.length === 0) {
-      res.status(404).json({
-        status: 404,
-        error: "no read emails found",
-      });
-    } else {
-      res.status(200).json({
-        status: 200,
-        success: "read emails retrieved",
-        data: [readEmails],
-      });
-    }
+    const admin = req.userId;
+    const userAccess = "true";
+    const receiverId = req.userId;
+    const status = "read";
+    const retrieveAdmin = database(sql.retrieveAdmin, [admin, userAccess]);
+    retrieveAdmin.then((response) => {
+      if (response.length !== 0) {
+        const adminGetReadEmails = database(sql.adminGetReadEmails, [status]);
+        adminGetReadEmails.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "admin, no read emails found" });
+          } else if (response.length !== 0) {
+            res.status(200).json({
+              status: 200,
+              success: "admin, read emails retrieved",
+              data: response,
+            });
+          }
+        });
+      } else {
+        const readEmails = database(sql.retrieveReadEmails, [status, receiverId]);
+        readEmails.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "sorry! you have read no emails!" });
+          } else {
+            const {
+              id, subject, message, parentmessageid, senderid, status, createdon,
+            } = response[0];
+            res.status(200).json({
+              status: 200,
+              success: "your read emails retrieved",
+              data: [{
+                id, subject, message, parentmessageid, senderid, status, createdon,
+              }],
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      }
+    });
   },
 
-  /**
-   * Retrieve all unread emails
-   * @param {object} req
-   * @param {object} res
-   */
   retrieveUnReadEmails(req, res) {
-    const unreadEmails = dummy.messages.filter(email => email.status === "unread");
-    if (unreadEmails.length === 0) {
-      res.status(404).json({
-        status: 404,
-        error: "no unread emails found",
-      });
-    } else {
-      res.status(200).json({
-        status: 200,
-        success: "unread emails retrieved",
-        data: [unreadEmails],
-      });
-    }
+    const admin = req.userId;
+    const userAccess = "true";
+    const receiverId = req.userId;
+    const status = "unread";
+    const retrieveAdmin = database(sql.retrieveAdmin, [admin, userAccess]);
+    retrieveAdmin.then((response) => {
+      if (response.length !== 0) {
+        const adminGetUnreadEmails = database(sql.adminGetUnreadEmails, [status]);
+        adminGetUnreadEmails.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "admin, no unread emails found" });
+          } else if (response.length !== 0) {
+            res.status(200).json({
+              status: 200,
+              success: "unread emails retrieved",
+              data: response,
+            });
+          }
+        });
+      } else {
+        const unreadEmails = database(sql.retrieveUnreadEmails, [status, receiverId]);
+        unreadEmails.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "sorry! you have no unread emails!" });
+          } else {
+            const {
+              id, subject, message, parentmessageid, senderid, status, createdon,
+            } = response[0];
+            res.status(200).json({
+              status: 200,
+              success: "your unread emails retrieved",
+              data: [{
+                id, subject, message, parentmessageid, senderid, status, createdon,
+              }],
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      }
+    });
+  },
+
+  retrieveDraftEmails(req, res) {
+    const admin = req.userId;
+    const userAccess = "true";
+    const receiverId = req.userId;
+    const status = "draft";
+    const retrieveAdmin = database(sql.retrieveAdmin, [admin, userAccess]);
+    retrieveAdmin.then((response) => {
+      if (response.length !== 0) {
+        const adminGetDraftEmails = database(sql.adminGetDraftEmails, [status]);
+        adminGetDraftEmails.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "admin, no emails emails found" });
+          } else if (response.length !== 0) {
+            res.status(200).json({
+              status: 200,
+              success: "admin, draft emails retrieved",
+              data: response,
+            });
+          }
+        });
+      } else {
+        const unreadEmails = database(sql.retrieveDraftEmails, [status, receiverId]);
+        unreadEmails.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "sorry! you have no draft emails!" });
+          } else {
+            const {
+              id, subject, message, parentmessageid, status, createdon,
+            } = response[0];
+            res.status(200).json({
+              status: 200,
+              success: "your draft emails retrieved",
+              data: [{
+                id, subject, message, parentmessageid, status, createdon,
+              }],
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      }
+    });
+  },
+
+  deleteSpecificEmail(req, res) {
+    const emailId = req.params.id;
+    const admin = req.userId;
+    const userAccess = "true";
+    const user = req.userId;
+    const retrieveAdmin = database(sql.retrieveAdmin, [admin, userAccess]);
+    retrieveAdmin.then((response) => {
+      if (response) {
+        const specificEmail = database(sql.retrieveSpecificEmail, [emailId]);
+        specificEmail.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "admin, email not found" });
+          } else {
+            const deleteEmail = database(sql.deleteSpecificEmail, [emailId]);
+            deleteEmail.then((response) => {
+              if (response) {
+                res.status(200).json({ status: 200, success: "email deleted by admin" });
+              } else {
+                res.status(400).json({ status: 400, error: "admin, the email is not deleted" });
+              }
+            }).catch((error) => {
+              res.status(500).json({ error: "error occured", error });
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      } else {
+        const userSpecificEmail = database(sql.retrieveUserSpecificEmail, [emailId, user]);
+        userSpecificEmail.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "email not found" });
+          } else {
+            const deleteEmail = database(sql.deleteSpecificEmail, [emailId]);
+            deleteEmail.then((response) => {
+              if (response) {
+                res.status(200).json({ status: 200, success: "email deleted" });
+              } else {
+                res.status(400).json({ status: 400, error: "email not deleted" });
+              }
+            }).catch((error) => {
+              res.status(500).json({ error: "error occured", error });
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      }
+    }).catch((error) => {
+      res.status(500).json({ error: "error occured", error });
+    });
   },
 };
 
