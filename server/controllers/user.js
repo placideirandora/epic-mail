@@ -67,12 +67,6 @@ const users = {
     query.then((response) => {
       if (response.length === 0 || response.length === "undefined") {
         res.status(404).json({ error: "invalid email" });
-      } else if (response[0].password === null) {
-        res.status(404).json({
-          status: 404,
-          error: "sorry! you have recently reset your password. "
-            + "check your email for the password reset link",
-        });
       } else {
         const truePass = bcrypt.compareSync(password, response[0].password);
         if (truePass) {
