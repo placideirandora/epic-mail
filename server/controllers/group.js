@@ -137,6 +137,40 @@ const groups = {
       res.status(500).json({ error: "error occured", error });
     });
   },
+
+  deleteGroupMember(req, res) {
+    const groupId = req.params.id;
+    const groupMemberId = req.params.mid;
+    const owner = req.userId;
+    const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
+    specificGroupOwner.then((response) => {
+      if (response.length === 0 || response.length === "undefined") {
+        res.status(404).json({ status: 404, error: "group not found" });
+      } else {
+        const specificGroupMember = database(sql.retrieveSpecificGroupMember, [groupMemberId, groupId]);
+        specificGroupMember.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "group member not found" });
+          } else {
+            const query = database(sql.deleteSpecificGroupMember, [groupMemberId, groupId]);
+            query.then((response) => {
+              if (response) {
+                res.status(200).json({ status: 200, success: "group member deleted" });
+              } else {
+                res.status(400).json({ status: 400, error: "group member not deleted" });
+              }
+            }).catch((error) => {
+              res.status(500).json({ error: "failed to delete the group member", error });
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      }
+    }).catch((error) => {
+      res.status(500).json({ error: "error occured", error });
+    });
+  },
 };
 
 export default groups;
