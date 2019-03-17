@@ -15,5 +15,6 @@ router.get("/groups/:id/users", authenticate.verifyUser, group.validateGroupId, 
 router.get("/groups/:id/:users/:mid", authenticate.verifyUser, group.validateGroupIdAndMemberId, controller.retrieveGroupMember);
 router.delete("/groups/:id/:users/:mid", authenticate.verifyUser, group.validateGroupIdAndMemberId, controller.deleteGroupMember);
 router.post("/groups/:id/messages", authenticate.verifyUser, group.validateGroupEmail, controller.sendGroupEmail);
+router.get("/groups/:id/messages", authenticate.verifyUser, group.validateGroupId, controller.retrieveGroupEmails);
 
 export default router;
