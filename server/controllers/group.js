@@ -2,8 +2,10 @@
 /* eslint-disable no-dupe-keys */
 /* eslint-disable no-shadow */
 import dotenv from "dotenv";
+import moment from "moment";
 import Group from "../models/group";
 import Member from "../models/member";
+import Groupmessage from "../models/group-message";
 import database from "../db/database";
 import sql from "../helpers/sql";
 
@@ -165,6 +167,39 @@ const groups = {
           }
         }).catch((error) => {
           res.status(500).json({ error: "error occured", error });
+        });
+      }
+    }).catch((error) => {
+      res.status(500).json({ error: "error occured", error });
+    });
+  },
+
+  sendGroupEmail(req, res) {
+    const groupId = req.params.id;
+    const {
+      subject, message, parentMessageId, status,
+    } = req.body;
+    const owner = req.userId;
+    const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
+    specificGroupOwner.then((response) => {
+      if (response.length === 0 || response.length === "undefined") {
+        res.status(404).json({ status: 404, error: "group not found" });
+      } else {
+        const groupmessage = new Groupmessage(subject, message, parentMessageId, status, groupId);
+        const query = database(sql.sendGroupEmail, [groupmessage.subject, groupmessage.message, groupmessage.parentMessageId, groupmessage.status, moment().format("LL"), groupmessage.groupId]);
+        query.then((response) => {
+          const {
+            id, subject, message, parentmessageid, status, groupid, createdon,
+          } = response[0];
+          res.status(201).json({
+            status: 201,
+            success: "group email sent",
+            data: [{
+              id, subject, message, parentmessageid, status, groupid, createdon,
+            }],
+          });
+        }).catch((error) => {
+          res.status(500).json({ error: "group email not sent", error });
         });
       }
     }).catch((error) => {
