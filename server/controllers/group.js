@@ -45,6 +45,50 @@ const groups = {
     });
   },
 
+  retrieveGroups(req, res) {
+    const user = req.userId;
+    const userAccess = "true";
+    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    findAdmin.then((response) => {
+      if (response.length !== 0) {
+        const allGroups = database(sql.retrieveAllGroups);
+        allGroups.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({
+              status: 404,
+              error: "admin, no groups found",
+            });
+          } else {
+            res.status(200).json({
+              status: 200,
+              success: "admin, groups retrieved",
+              data: response,
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      } else {
+        const userGroups = database(sql.retrieveUserGroups, [user]);
+        userGroups.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "no groups found" });
+          } else {
+            res.status(200).json({
+              status: 200,
+              success: "groups",
+              data: response,
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      }
+    }).catch((error) => {
+      res.status(500).json({ error: "error occured", error });
+    });
+  },
+
   deleteGroup(req, res) {
     const groupId = req.params.id;
     const user = req.userId;
