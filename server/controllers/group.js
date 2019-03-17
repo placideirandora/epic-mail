@@ -3,6 +3,7 @@
 /* eslint-disable no-shadow */
 import dotenv from "dotenv";
 import Group from "../models/group";
+import Member from "../models/member";
 import database from "../db/database";
 import sql from "../helpers/sql";
 
@@ -87,6 +88,49 @@ const groups = {
           }
         }).catch((error) => {
           res.status(500).json({ error: "error occured", error });
+        });
+      }
+    }).catch((error) => {
+      res.status(500).json({ error: "error occured", error });
+    });
+  },
+
+  addGroupMember(req, res) {
+    const groupId = req.params.id;
+    const {
+      firstname, lastname, role,
+    } = req.body;
+    const owner = req.userId;
+    const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
+    specificGroupOwner.then((response) => {
+      if (response.length === 0 || response.length === "undefined") {
+        res.status(404).json({ status: 404, error: "group not found" });
+      } else {
+        const findMember = database(sql.retrieveMember, [firstname, lastname]);
+        findMember.then((response) => {
+          if (response.length !== 0) {
+            res.status(400).json({ status: 400, error: "user with the specified name is already registered" });
+          } else {
+            const memberGroup = groupId;
+            const member = new Member(firstname, lastname, role, memberGroup);
+            const query = database(sql.registerGroupMember, [member.firstname, member.lastname, member.role, member.memberGroup]);
+            query.then((response) => {
+              const {
+                id, firstname, lastname, role, groupid,
+              } = response[0];
+              res.status(201).json({
+                status: 201,
+                success: "group member registered",
+                data: [{
+                  id, firstname, lastname, role, groupid,
+                }],
+              });
+            }).catch((error) => {
+              res.status(500).json({ error: "group member not registered", error });
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ status: 500, error: "registration failed", error });
         });
       }
     }).catch((error) => {
