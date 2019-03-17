@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post("/groups", authenticate.verifyUser, group.validateGroup, controller.createGroup);
 router.get("/groups", authenticate.verifyUser, controller.retrieveGroups);
+router.get("/groups/:id", authenticate.verifyUser, group.validateGroupId, controller.retrieveGroup);
 router.patch("/groups/:id/name", authenticate.verifyUser, group.validateGroupId, group.validateGroupName, controller.changeGroupName);
 router.delete("/groups/:id", authenticate.verifyUser, group.validateGroupId, controller.deleteGroup);
 router.post("/groups/:id/users", authenticate.verifyUser, group.validateGroupId, controller.addGroupMember);
