@@ -192,6 +192,26 @@ const users = {
       res.status(500).json({ status: 500, error: "password reset failed", error });
     });
   },
+
+  retrievePassResetUsers(req, res) {
+    const passResetUsers = database(sql.retrievePassResetUsers);
+    passResetUsers.then((response) => {
+      if (response.length === 0 || response.length === "undefined") {
+        res.status(404).json({
+          status: 404,
+          error: "admin, there are no users who reset their passwords",
+        });
+      } else {
+        res.status(200).json({
+          status: 200,
+          success: "admin, the users who reset their passwords are retrieved",
+          data: response,
+        });
+      }
+    }).catch((error) => {
+      res.status(500).json({ error: "error occured", error });
+    });
+  },
 };
 
 export default users;
