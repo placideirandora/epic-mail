@@ -67,6 +67,12 @@ const users = {
     query.then((response) => {
       if (response.length === 0 || response.length === "undefined") {
         res.status(404).json({ error: "invalid email" });
+      } else if (response[0].password === null) {
+        res.status(404).json({
+          status: 404,
+          error: "sorry! you have recently reset your password. "
+            + "check your email for the password reset link",
+        });
       } else {
         const truePass = bcrypt.compareSync(password, response[0].password);
         if (truePass) {
@@ -153,6 +159,37 @@ const users = {
       }
     }).catch((error) => {
       res.status(500).json({ error: "error occured", error });
+    });
+  },
+
+  resetPassword(req, res) {
+    const {
+      email,
+    } = req.body;
+    const findUserEmail = database(sql.findUserEmail, [email]);
+    findUserEmail.then((response) => {
+      if (response.length === 0 || response.length === "undefined") {
+        res.status(400).json({ status: 400, error: "invalid email" });
+      } else {
+        const deleteUserPassword = database(sql.deleteSpecificUserPassword, [email]);
+        deleteUserPassword.then((response) => {
+          if (response) {
+            res.status(200).json({
+              status: 200,
+              data: [{
+                message: "check your email for a password reset link",
+                email,
+              }],
+            });
+          } else {
+            res.status(400).json({ status: 400, error: "password reset failed" });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      }
+    }).catch((error) => {
+      res.status(500).json({ status: 500, error: "password reset failed", error });
     });
   },
 };
