@@ -1,7 +1,5 @@
-class messagee {
-  constructor(id, createdOn, subject, message, senderId, receiverId, parentMessageId, status) {
-    this.id = id;
-    this.createdOn = createdOn;
+class Message {
+  constructor(subject, message, parentMessageId, senderId, receiverId, status) {
     this.subject = subject;
     this.message = message;
     this.senderId = senderId;
@@ -11,4 +9,4 @@ class messagee {
   }
 }
 
-export default messagee;
+export default Message;
