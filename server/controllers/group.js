@@ -89,6 +89,80 @@ const groups = {
     });
   },
 
+  changeGroupName(req, res) {
+    const groupId = req.params.id;
+    const {
+      name,
+    } = req.body;
+    const user = req.userId;
+    const userAccess = "true";
+    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    findAdmin.then((response) => {
+      if (response.length !== 0) {
+        const specificGroup = database(sql.retrieveSpecificGroup, [groupId]);
+        specificGroup.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "admin, group with the specified id, not found" });
+          } else {
+            const query = database(sql.updateSpecificGroup, [name, groupId]);
+            query.then((response) => {
+              const {
+                id, name, role,
+              } = response[0];
+              res.status(200).json({
+                status: 200,
+                success: "admin, group name changed",
+                data: {
+                  id, name, role,
+                },
+              });
+            }).catch((error) => {
+              res.status(500).json({ error: "failed to change the group name", error });
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      } else {
+        const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
+        userGroup.then((response) => {
+          if (response.length === 0 || response.length === "undefined") {
+            res.status(404).json({ status: 404, error: "group not found" });
+          } else {
+            const findGroup = database(sql.findGroup, [name]);
+            findGroup.then((response) => {
+              if (response.length !== 0 || response.length === "undefined") {
+                res.status(404).json({ status: 404, error: "the specified group name is already taken" });
+              } else {
+                const query = database(sql.updateSpecificGroup, [name, groupId]);
+                query.then((response) => {
+                  const {
+                    id, name, role,
+                  } = response[0];
+                  res.status(200).json({
+                    status: 200,
+                    success: "group name changed",
+                    data: {
+                      id, name, role,
+                    },
+                  });
+                }).catch((error) => {
+                  res.status(500).json({ error: "failed to change the group name", error });
+                });
+              }
+            }).catch((error) => {
+              res.status(500).json({ error: "error occured", error });
+            });
+          }
+        }).catch((error) => {
+          res.status(500).json({ error: "error occured", error });
+        });
+      }
+    }).catch((error) => {
+      res.status(500).json({ error: "error occured", error });
+    });
+  },
+
   deleteGroup(req, res) {
     const groupId = req.params.id;
     const user = req.userId;
