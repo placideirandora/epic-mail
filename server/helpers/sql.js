@@ -13,7 +13,7 @@ const deleteSpecificEmail = "DELETE FROM messages WHERE id = $1";
 const retrieveSentEmails = "SELECT * FROM messages WHERE status = $1 AND senderid = $2";
 const retrieveReadEmails = "SELECT * FROM messages WHERE status = $1 AND receiverid = $2";
 const retrieveUnreadEmails = "SELECT * FROM messages WHERE status = $1 AND receiverid = $2";
-const retrieveDraftEmails = "SELECT * FROM messages WHERE status = $1 AND (receiverid = $2 OR senderid = $2)";
+const retrieveDraftEmails = "SELECT * FROM messages WHERE status = $1 AND senderid = $2";
 const findUser = "SELECT * FROM users WHERE firstname = $1 AND lastname = $2";
 const findUserEmail = "SELECT * FROM users WHERE email = $1";
 const retrieveAdmin = "SELECT * FROM users WHERE id = $1 AND isadmin = $2";
