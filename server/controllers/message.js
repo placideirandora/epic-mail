@@ -267,7 +267,7 @@ const messages = {
   retrieveDraftEmails(req, res) {
     const admin = req.userId;
     const userAccess = "true";
-    const receiverId = req.userId;
+    const senderId = req.userId;
     const status = "draft";
     const retrieveAdmin = database(sql.retrieveAdmin, [admin, userAccess]);
     retrieveAdmin.then((response) => {
@@ -285,8 +285,8 @@ const messages = {
           }
         });
       } else {
-        const unreadEmails = database(sql.retrieveDraftEmails, [status, receiverId]);
-        unreadEmails.then((response) => {
+        const draftEmails = database(sql.retrieveDraftEmails, [status, senderId]);
+        draftEmails.then((response) => {
           if (response.length === 0 || response.length === "undefined") {
             res.status(404).json({ status: 404, error: "sorry! you have no draft emails!" });
           } else {
