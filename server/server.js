@@ -3,6 +3,7 @@ import morgan from "morgan";
 import bodyParser from "body-parser";
 import user from "./routes/user";
 import message from "./routes/message";
+import group from "./routes/group";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(morgan("dev"));
 
 app.use("/api/v2", user);
 app.use("/api/v2", message);
+app.use("/api/v2", group);
 
 app.use((req, res) => {
   res.status(404).json({ status: 404, error: "route not found" });
