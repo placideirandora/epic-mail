@@ -3,10 +3,13 @@
 /* eslint-disable no-shadow */
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
 import moment from "moment";
 import User from "../models/user";
 import database from "../db/database";
 import sql from "../helpers/sql";
+
+dotenv.config();
 
 const users = {
   registerUser(req, res) {
@@ -28,7 +31,7 @@ const users = {
             user.password = hash;
             const query = database(sql.registerUser, [user.firstname, user.lastname, user.email, user.password, moment().format("LL")]);
             query.then((response) => {
-              jwt.sign({ response: response[0] }, "s3cr3Tk1Y$!", (err, token) => {
+              jwt.sign({ response: response[0] }, process.env.SECRET_KEY, (err, token) => {
                 const {
                   id, firstname, lastname, email, isadmin, registered,
                 } = response[0];
@@ -73,7 +76,7 @@ const users = {
       } else {
         const truePass = bcrypt.compareSync(password, response[0].password);
         if (truePass) {
-          jwt.sign({ response: response[0] }, "s3cr3Tk1Y$!", { expiresIn: "3h" }, (err, token) => {
+          jwt.sign({ response: response[0] }, process.env.SECRET_KEY, { expiresIn: "3h" }, (err, token) => {
             const {
               id, firstname, lastname, email, isadmin, registered,
             } = response[0];
