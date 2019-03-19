@@ -169,7 +169,7 @@ const users = {
     const findUserEmail = database(sql.findUserEmail, [email]);
     findUserEmail.then((response) => {
       if (response.length === 0 || response.length === "undefined") {
-        res.status(400).json({ status: 400, error: "invalid email" });
+        res.status(404).json({ status: 404, error: "invalid email" });
       } else {
         const deleteUserPassword = database(sql.deleteSpecificUserPassword, [email]);
         deleteUserPassword.then((response) => {
