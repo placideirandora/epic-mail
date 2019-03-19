@@ -1,8 +1,15 @@
+env:
+  global:
+    - DATABASE_TEST=postgres://postgres@localhost:5000/epic-mail-test
 language: node_js
 node_js:
   - "stable"
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database epic-mail-test;' -U postgres
+  - NODE_ENV=test npm run
 script:
   - npm test
 after_success:
   - npm run coverage
- 
