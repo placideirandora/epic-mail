@@ -183,7 +183,7 @@ const groups = {
             const findGroup = database(sql.findGroup, [name]);
             findGroup.then((response) => {
               if (response.length !== 0 || response.length === "undefined") {
-                res.status(404).json({ status: 404, error: "the specified group name is already taken" });
+                res.status(400).json({ status: 400, error: "the specified group name is already taken" });
               } else {
                 const query = database(sql.updateSpecificGroup, [name, groupId]);
                 query.then((response) => {
