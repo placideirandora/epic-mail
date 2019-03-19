@@ -76,7 +76,7 @@ const groups = {
           } else {
             res.status(200).json({
               status: 200,
-              success: "groups",
+              success: "groups retrieved",
               data: response,
             });
           }
