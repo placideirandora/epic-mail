@@ -46,16 +46,10 @@ const users = {
                   }],
                 });
               });
-            }).catch((error) => {
-              res.status(500).json({ status: 500, error: "registration failed", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ status: 500, error: "registration failed", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ status: 500, error: "registration failed", error });
     });
   },
 
@@ -66,7 +60,7 @@ const users = {
     const query = database(sql.loginUser, [email]);
     query.then((response) => {
       if (response.length === 0 || response.length === "undefined") {
-        res.status(404).json({ error: "invalid email" });
+        res.status(404).json({ status: 404, error: "invalid email" });
       } else if (response[0].password === null) {
         res.status(404).json({
           status: 404,
@@ -83,11 +77,9 @@ const users = {
             res.status(200).json({
               status: 200,
               success: "logged in",
+              token,
               data: [{
-                token,
-                data: {
-                  id, firstname, lastname, email, isadmin, registered,
-                },
+                id, firstname, lastname, email, isadmin, registered,
               }],
             });
           });
@@ -98,8 +90,6 @@ const users = {
           });
         }
       }
-    }).catch((error) => {
-      res.status(500).json(error);
     });
   },
 
@@ -111,8 +101,6 @@ const users = {
       } else {
         res.status(200).json({ status: 200, success: "users retrieved", data: response });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -134,8 +122,6 @@ const users = {
           }],
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -150,15 +136,9 @@ const users = {
         deleteUser.then((response) => {
           if (response) {
             res.status(200).json({ status: 200, success: "user deleted" });
-          } else {
-            res.status(400).json({ status: 400, error: "user not deleted" });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -181,15 +161,9 @@ const users = {
                 email,
               }],
             });
-          } else {
-            res.status(400).json({ status: 400, error: "password reset failed" });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ status: 500, error: "password reset failed", error });
     });
   },
 
@@ -208,8 +182,6 @@ const users = {
           data: response,
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 };
