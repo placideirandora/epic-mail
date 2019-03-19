@@ -22,11 +22,15 @@ EPIC Mail helps people exchange messages/information over the internet.
 
 - **Code Climate** - Continuous Integration Code Quality
 
-- **Heroku** - Deployment. [Visit The App](http://epic-mail-ch2.herokuapp.com)
+- **Heroku** - Deployment. [Visit The App](https://epic-mail-ch3.herokuapp.com/)
 
 - **GIT** - Version Control System
 
 - **GitHub Pages** - Front-End UI Hosting. [Visit The App](https://placideirandora.github.io/epic-mail/)
+
+- **SQL** - Database Data Processing Language
+
+- **Database System** - PostgreSQL. [Download And Install It](https://www.postgresql.org/)
 
 
 
@@ -42,6 +46,72 @@ $ git clone https://github.com/placideirandora/epic-mail.git
 
 ```
 $ npm install
+```
+
+### Download And Install A Database Management System
+
+```
+$ PostgreSQL 
+```
+
+### PostgreSQL Databases
+
+```
+$ Create a PostgreSQL database called 'epic-mail' for development
+```
+
+```
+$ Create a PostgreSQL database called 'epic-mail-test' for testing
+```
+
+### Create A .env File In The Project Folder And Save The Following Credentials Inside
+
+```
+$ DB_HOST = "localhost"
+```
+
+```
+$ DB_USER = "postgres"
+```
+
+```
+$ DB_NAME = "epic-mail"
+```
+
+```
+$ DB_NAME_TEST = "epic-mail-test"
+```
+
+```
+$ DB_PORT = 5000 (custom) or 5432 (default)
+```
+
+```
+$ DB_HOST = "localhost"
+```
+
+```
+$ ADMIN_FIRSTNAME = "someone"
+```
+
+```
+$ ADMIN_LASTNAME = "someone" 
+```
+
+```
+$ ADMIN_EMAIL = "someone@epicmail.com" 
+```
+
+```
+$ ADMIN_PASSWORD = "*xxxxxxxxxx"  
+```
+
+```
+$ IS_ADMIN = "true"
+```
+
+```
+$ SECRET_KEY = "xxxxxxxxxxx"
 ```
 
 ### Start The Server
@@ -60,197 +130,205 @@ $ npm test
 
 | METHOD | ROUTE | DESCRIPTION | ACCESS |
 |--------|----------------|-------------|-----------------|
-|  POST  | api/v1/auth/signup | User Registration | Public |
-|  POST  | api/v1/auth/login  | User Login | Public |
-|  POST   | api/v1/messages | Send Email | Private |
-|  GET   | api/v1/messages | Retrieve Received Emails | Private |
-|  GET   | api/v1/messages | Retrieve A Specific Email | Private |
-|  DELETE | api/v1/messages | Delete A Specific Email | Private |
-|  GET   | api/v1/messages/sent | Retrieve Sent Emails | Private |
-|  GET   | api/v1/messages/read | Retrieve Read Emails | Private |
+|  POST  | api/v2/auth/signup | User Registration | Public |
+|  POST  | api/v2/auth/login  | User Login | Public |
+|  GET  | api/v2/users | Retrieve Registered Users | Private |
+|  GET  | api/v2/users/{userId}  | Retrieve A Specific Registered User | Private |
+|  DELETE  | api/v2/users/{userId}  | Delete A Specific Registered User | Private |
+|  POST  | api/v2/auth/reset | User Password Reset | Public |
+|  GET  | api/v2/auth/reset  | Retrieve Users Who Reset Their Passwords | Private |
+|  POST   | api/v2/messages | Send Email | Private |
+|  GET   | api/v2/messages | Retrieve Received Emails | Private |
+|  GET   | api/v2/messages/{messageId} | Retrieve A Specific Email | Private |
+|  DELETE | api/v2/messages/{messageId} | Delete A Specific Email | Private |
+|  GET   | api/v2/messages/sent | Retrieve Sent Emails | Private |
+|  GET   | api/v2/messages/read | Retrieve Read Emails | Private |
+|  GET   | api/v2/messages/unread | Retrieve Unread Emails | Private |
+|  GET   | api/v2/messages/draft | Retrieve Draft Emails | Private |
+|  POST   | api/v2/groups | Create A Group | Private |
+|  GET   | api/v2/groups | Retrieve Groups | Private |
+|  GET   | api/v2/groups/{groupId} | Retrieve A Specific Group | Private |
+|  DELETE   | api/v2/groups/{groupId} | Delete A Specific Group | Private |
+|  PATCH   | api/v2/groups/{groupId}/name | Change A Group Name | Private |
+|  POST   | api/v2/groups/{groupId}/users | Add A Group Member | Private |
+|  GET   | api/v2/groups/{groupId}/users | Retrieve Group Members | Private |
+|  GET   | api/v2/groups/{groupId}/users/{memberId} | Retrieve A Specific Group Member | Private |
+|  DELETE   | api/v2/groups/{groupId}/users/{memberId} | Delete A Specific Group Member | Private |
+|  POST   | api/v2/groups/{groupId}/messages | Send A Group Message | Private |
+|  GET   | api/v2/groups/{groupId}/messages | Retrieve Group Messages | Private |
+
 
 
 ## REQUEST AND RESPONSE SAMPLE
 
-### POST auth/signup/
+### POST auth/signup
 
 ```
 {
-    "status": 201,
-    "success": "user registered",
-    "data": [
-        {
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo2LCJpYXQiOjE1NTE5MTU2MDF9.XGnpZtUlTgJ_4Q3B-3JwsG_wNARh1YFKW9Mtj99K0ec",
-            "user": {
-                "id": 6,
-                "firstname": "Emmanuel",
-                "lastname": "CYUBAHIRO",
-                "email": "emmanuelcyubahiro@gmail.com",
-                "password": "$2a$10$1OWYPqDkencaQbiaNQOo.e.xwpuav5GFLTARxiSDOqA3gGwPyvhr6"
-            }
-        }
-    ]
+  "status": 201,
+  "success": "user registered",
+  "data": [
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNwb25zZSI6eyJpZCI6MTgsImZpcnN0bmFtZSI6InNvbWVvbmVsc2UiLCJsYXN0bmFtZSI6InNvbWVvbmVsc2UiLCJlbWFpbCI6InNvbWVvbmVsc2VAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkZ3pmU2pHQ3JBWldNcXp2VnV0V1hjdW1SWmRyajNBbTBNbHhWQ0dxcno5WGkzOUVsR0tQNDYiLCJpc2FkbWluIjpmYWxzZSwicmVnaXN0ZXJlZCI6IjIwMTktMDMtMTlUMDA6MDA6MDAuMDAwWiJ9LCJpYXQiOjE1NTMwMDQ4Nzd9.AcQCo1E10_ASqKEKruchDEK3tRIVwC9drZVDgMh6jRc",
+      "user": {
+        "id": 18,
+        "firstname": "someonelse",
+        "lastname": "someonelse",
+        "email": "someonelse@gmail.com",
+        "isadmin": false,
+        "registered": "2019-03-19T00:00:00.000Z"
+      }
+    }
+  ]
 }
 ```
 
-### POST auth/login/
+### POST auth/login
 
 ```
 {
-    "status": 200,
-    "success": "logged in",
-    "data": [
-        {
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJmaXJzdG5hbWUiOiJFbW1hbnVlbCIsImxhc3RuYW1lIjoiQ1lVQkFISVJPIiwiZW1haWwiOiJlbW1hbnVlbGN5dWJhaGlyb0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRjNHgucDdLZ0czRWFhOWZHN0xVZVJPSGduLkdVUXY0QkdiZUx5SHp6MnlnQjB3d3hhODRwaSJ9LCJpYXQiOjE1NTE5MTU2ODIsImV4cCI6MTU1MTkxOTI4Mn0.tBE20pXWsTCYFeAPJf7EOh_7TGbmU6W7Gd5mBfrUNRc",
-            "firstname": "Emmanuel",
-            "lastname": "CYUBAHIRO",
-            "email": "emmanuelcyubahiro@gmail.com"
-        }
-    ]
+  "status": 200,
+  "success": "logged in",
+  "data": [
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNwb25zZSI6eyJpZCI6MTgsImZpcnN0bmFtZSI6InNvbWVvbmVsc2UiLCJsYXN0bmFtZSI6InNvbWVvbmVsc2UiLCJlbWFpbCI6InNvbWVvbmVsc2VAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkZ3pmU2pHQ3JBWldNcXp2VnV0V1hjdW1SWmRyajNBbTBNbHhWQ0dxcno5WGkzOUVsR0tQNDYiLCJpc2FkbWluIjpmYWxzZSwicmVnaXN0ZXJlZCI6IjIwMTktMDMtMTlUMDA6MDA6MDAuMDAwWiJ9LCJpYXQiOjE1NTMwMDQ5NzYsImV4cCI6MTU1MzAxNTc3Nn0._kSiN_cAXacgafWZhv65gL7a9HIZai_abWnBCZaXzNQ",
+      "data": {
+        "id": 18,
+        "firstname": "someonelse",
+        "lastname": "someonelse",
+        "email": "someonelse@gmail.com",
+        "isadmin": false,
+        "registered": "2019-03-19T00:00:00.000Z"
+      }
+    }
+  ]
 }
 ```
 
-### POST messages/
+### POST messages
 
 ```
 {
-    "status": 201,
-    "success": "email sent",
-    "data": [
-        {
-            "id": 4,
-            "createdOn": "March 7, 2019",
-            "subject": "Hello World",
-            "message": "The first program in every programming language",
-            "senderId": 2,
-            "receiverId": 3,
-            "parentMessageId": "4",
-            "status": "sent"
-        }
-    ]
+  "status": 201,
+  "success": "email sent",
+  "data": [
+    {
+      "id": 2,
+      "subject": "Hello World",
+      "message": "The first program in every programming language",
+      "parentmessageid": 1,
+      "senderid": 18,
+      "receiverid": 2,
+      "status": "read",
+      "createdon": "2019-03-19T00:00:00.000Z"
+    }
+  ]
 }
 ```
 
-### GET messages/
+### GET messages
 
 ```
 {
-    "status": 200,
-    "success": "received emails retrieved",
-    "data": [
-        {
-            "id": 1,
-            "createdOn": "February 20, 2019",
-            "subject": "Hello",
-            "message": "How have you been?",
-            "senderId": 2,
-            "receiverId": 1,
-            "parentMessageId": 1,
-            "status": "sent"
-        },
-        {
-            "id": 2,
-            "createdOn": "February 24, 2019",
-            "subject": "Hi",
-            "message": "Have a good time!",
-            "senderId": 3,
-            "receiverId": 2,
-            "parentMessageId": 2,
-            "status": "draft"
-        },
-        {
-            "id": 3,
-            "createdOn": "February 28, 2019",
-            "subject": "Greetings",
-            "message": "You are invited to the party",
-            "senderId": 1,
-            "receiverId": 3,
-            "parentMessageId": 3,
-            "status": "read"
-        },
-        {
-            "id": 4,
-            "createdOn": "March 7, 2019",
-            "subject": "Hello World",
-            "message": "The first program in every programming language",
-            "senderId": 2,
-            "receiverId": 3,
-            "parentMessageId": "4",
-            "status": "sent"
-        }
-    ]
+  "status": 200,
+  "success": "emails retrieved",
+  "data": [
+    {
+      "id": 2,
+      "subject": "Hello World",
+      "message": "The first program in every programming language",
+      "parentmessageid": 1,
+      "senderid": 18,
+      "receiverid": 2,
+      "status": "read",
+      "createdon": "2019-03-19T00:00:00.000Z"
+    }
+  ]
 }
 ```
 
-### GET messages/2
+### POST groups
 
 ```
 {
-    "status": 200,
-    "success": "email retrieved",
-    "data": [
-        {
-            "id": 2,
-            "createdOn": "February 24, 2019",
-            "subject": "Hi",
-            "message": "Have a good time!",
-            "senderId": 3,
-            "receiverId": 2,
-            "parentMessageId": 2,
-            "status": "draft"
-        }
-    ]
+  "status": 201,
+  "success": "group created",
+  "data": [
+    {
+      "id": 3,
+      "name": "Group 1",
+      "role": "Studying Computer Programming"
+    }
+  ]
 }
 ```
 
-### DELETE messages/3
+### GET groups
 
 ```
 {
-    "status": 200,
-    "success": "email deleted"
+  "status": 200,
+  "success": "groups retrieved",
+  "data": [
+    {
+      "id": 3,
+      "name": "Group 1",
+      "role": "Studying Computer Programming",
+      "owner": 18
+    }
+  ]
 }
 ```
 
-### GET messages/sent
+### PATCH groups/3/name
 
 ```
 {
-    "status": 200,
-    "success": "sent emails retrieved",
-    "data": [
-        [
-            {
-                "id": 1,
-                "createdOn": "February 20, 2019",
-                "subject": "Hello",
-                "message": "How have you been?",
-                "senderId": 2,
-                "receiverId": 1,
-                "parentMessageId": 1,
-                "status": "sent"
-            },
-            {
-                "id": 4,
-                "createdOn": "March 7, 2019",
-                "subject": "Hello World",
-                "message": "The first program in every programming language",
-                "senderId": 2,
-                "receiverId": 3,
-                "parentMessageId": "4",
-                "status": "sent"
-            }
-        ]
-    ]
+  "status": 200,
+  "success": "group name changed",
+  "data": {
+    "id": 3,
+    "name": "Group One",
+    "role": "Studying Computer Programming"
+  }
 }
 ```
 
-### GET messages/read
+### POST groups/3/users
 
 ```
 {
-    "status": 400,
-    "success": "no read emails found"
+  "status": 201,
+  "success": "group member registered",
+  "data": [
+    {
+      "id": 3,
+      "firstname": "ibelongtosomeone",
+      "lastname": "ibelongtosomeone",
+      "role": "programming",
+      "groupid": 3
+    }
+  ]
+}
+```
+
+### POST groups/3/messages
+
+```
+{
+  "status": 201,
+  "success": "group email sent",
+  "data": [
+    {
+      "id": 2,
+      "subject": "CODING",
+      "message": "It is a process of telling a computer what to do.",
+      "parentmessageid": 1,
+      "status": "sent",
+      "groupid": 3,
+      "createdon": "2019-03-19T00:00:00.000Z"
+    }
+  ]
 }
 ```
 
