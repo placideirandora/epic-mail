@@ -95,7 +95,8 @@
               "parameters":[
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 }
               ],
               "summary": "Retrieve users",
@@ -105,6 +106,9 @@
               "responses": {
                 "200": {
                   "description": "Users Retrieved"
+                },
+                "403": {
+                  "description": "Access Denied"
                 },
                 "404": {
                   "description": "Users Not Found"
@@ -127,7 +131,8 @@
               "parameters": [
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 },
                 {
                   "name": "userId",
@@ -144,6 +149,9 @@
                 },
                 "400": {
                   "description": "Invalid ID"
+                },
+                "403": {
+                  "description": "Access Denied"
                 },
                 "404": {
                   "description": "User Not Found"
@@ -164,7 +172,8 @@
               "parameters": [
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 },
                 {
                   "name": "userId",
@@ -181,6 +190,9 @@
                 },
                 "400": {
                   "description": "Invalid ID"
+                },
+                "403": {
+                  "description": "Access Denied"
                 },
                 "404": {
                   "description": "User Not Found"
@@ -200,12 +212,22 @@
               "produces": [
                 "application/json"
               ],
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/Email"
+                  }
+                }
+              ],
               "responses": {
                 "200": {
                   "description": "Successful Password Reset"
                 },
-                "404": {
-                  "description": "Access Denied"
+                "400": {
+                  "description": "Password Reset Failed"
                 },
                 "500": {
                   "description": "Internal Server Error"
@@ -219,7 +241,8 @@
               "parameters": [
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 }
               ],
               "summary": "Retrieve users who reset their passwords",
@@ -255,7 +278,8 @@
               "parameters": [
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 },
                 {
                   "in": "body",
@@ -285,7 +309,8 @@
               "parameters": [
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 }
               ],
               "summary": "Retrieve emails",
@@ -313,7 +338,8 @@
               "parameters": [
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 }
               ],
               "summary": "Retrieve sent emails",
@@ -341,7 +367,8 @@
               "parameters": [
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 }
               ],
               "summary": "Retrieve read emails",
@@ -369,7 +396,8 @@
               "parameters": [
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 }
               ],
               "summary": "Retrieve unread emails",
@@ -397,7 +425,8 @@
               "parameters": [
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 }
               ],
               "summary": "Retrieve draft emails",
@@ -429,7 +458,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "messageId",
@@ -466,7 +496,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "messageId",
@@ -505,7 +536,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "in": "body",
@@ -535,7 +567,8 @@
               "parameters": [
                 {
                   "name": "Authorization",
-                  "in": "header"
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                 }
               ],
               "summary": "Retrieve groups",
@@ -567,7 +600,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "groupId",
@@ -604,7 +638,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "groupId",
@@ -643,7 +678,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "groupId",
@@ -690,7 +726,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "groupId",
@@ -735,7 +772,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "groupId",
@@ -771,7 +809,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "groupId",
@@ -813,7 +852,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "groupId",
@@ -857,7 +897,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "groupId",
@@ -899,7 +940,8 @@
               "parameters": [
                   {
                     "name": "Authorization",
-                    "in": "header"
+                    "in": "header",
+                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
                   },
                 {
                   "name": "groupId",
@@ -969,6 +1011,16 @@
           }
         }
       },
+      "Email": {
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
       "Message": {
         "required": [
           "subject",
@@ -983,9 +1035,6 @@
           },
           "message": {
             "type": "string"
-          },
-          "MessageId": {
-            "type": "integer"
           },
           "parentMessageId": {
             "type": "integer"
@@ -1054,9 +1103,6 @@
           },
           "message": {
             "type": "string"
-          },
-          "MessageId": {
-            "type": "integer"
           },
           "parentMessageId": {
             "type": "integer"
