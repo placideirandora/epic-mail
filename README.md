@@ -30,7 +30,7 @@ EPIC Mail helps people exchange messages/information over the internet.
 
 - **SQL** - Database Data Processing Language
 
-- **Database System** - PostgreSQL. [Download And Install It](https://www.postgresql.org/)
+- **PostgreSQL** - Database System. [Download And Install It](https://www.postgresql.org/)
 
 
 
