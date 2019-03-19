@@ -4,7 +4,7 @@
   "description": "EPIC Mail helps people exchange messages/information over the internet.",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text mocha --require babel-polyfill --require @babel/register ./server/tests --timeout 1200 --exit",
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --require babel-polyfill --require @babel/register ./server/tests --timeout 1200 --exit",
     "start": "babel-node server/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
