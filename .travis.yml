@@ -12,7 +12,7 @@ env:
     - PRIVATE_KEY : secr3t!
 before_script:
   - psql -c 'create database travis;' -U postgres
-  - npm run create
+  - npm run migrate
 script: npm test
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
