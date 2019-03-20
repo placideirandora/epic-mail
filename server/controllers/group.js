@@ -36,12 +36,8 @@ const groups = {
               id, name, role,
             }],
           });
-        }).catch((error) => {
-          res.status(500).json({ error: "group not created", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ status: 500, error: "internal server error", error });
     });
   },
 
@@ -65,8 +61,6 @@ const groups = {
               data: response,
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       } else {
         const userGroups = database(sql.retrieveUserGroups, [user]);
@@ -80,12 +74,8 @@ const groups = {
               data: response,
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -107,8 +97,6 @@ const groups = {
               data: response,
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       } else {
         const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
@@ -127,16 +115,10 @@ const groups = {
                   data: response,
                 });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "error occured", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -167,12 +149,8 @@ const groups = {
                   id, name, role,
                 },
               });
-            }).catch((error) => {
-              res.status(500).json({ error: "failed to change the group name", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       } else {
         const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
@@ -197,20 +175,12 @@ const groups = {
                       id, name, role,
                     },
                   });
-                }).catch((error) => {
-                  res.status(500).json({ error: "failed to change the group name", error });
                 });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "error occured", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -233,12 +203,8 @@ const groups = {
               } else {
                 res.status(400).json({ status: 400, error: "admin, group not deleted" });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "failed to change the group name", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       } else {
         const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
@@ -253,16 +219,10 @@ const groups = {
               } else {
                 res.status(400).json({ status: 400, error: "group not deleted" });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "failed to change the group name", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -296,16 +256,10 @@ const groups = {
                   id, firstname, lastname, role, groupid,
                 }],
               });
-            }).catch((error) => {
-              res.status(500).json({ error: "group member not registered", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ status: 500, error: "registration failed", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -332,12 +286,8 @@ const groups = {
                   data: response,
                 });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "error occured", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       } else {
         const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
@@ -361,20 +311,12 @@ const groups = {
                       data: response,
                     });
                   }
-                }).catch((error) => {
-                  res.status(500).json({ error: "error occured", error });
                 });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "error occured", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -399,16 +341,10 @@ const groups = {
               } else {
                 res.status(400).json({ status: 400, error: "group member not retrieved" });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "failed to retrieve the group member", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -430,19 +366,11 @@ const groups = {
             query.then((response) => {
               if (response) {
                 res.status(200).json({ status: 200, success: "group member deleted" });
-              } else {
-                res.status(400).json({ status: 400, error: "group member not deleted" });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "failed to delete the group member", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -470,12 +398,8 @@ const groups = {
               id, subject, message, parentmessageid, status, groupid, createdon,
             }],
           });
-        }).catch((error) => {
-          res.status(500).json({ error: "group email not sent", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -502,12 +426,8 @@ const groups = {
                   data: response,
                 });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "error occured", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       } else {
         const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
@@ -526,16 +446,10 @@ const groups = {
                   data: response,
                 });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "error occured", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 };
