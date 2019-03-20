@@ -1,15 +1,20 @@
-env:
-  global:
-    - DATABASE_TEST=postgres://postgres@localhost:5000/epic-mail-test
+
 language: node_js
 node_js:
-  - "stable"
-services:
-  - postgresql
+- "stable"
+cache:
+  directories:
+    - "node_modules"
+
+env:
+  global:
+    - DATABASE_URL : postgres://travis@localhost:5432/travis
+    - PRIVATE_KEY : secr3t!
 before_script:
-  - psql -c 'create database epic-mail-test;' -U postgres
-  - NODE_ENV=test npm run
-script:
-  - npm test
-after_success:
-  - npm run coverage
+  - psql -c 'create database travis;' -U postgres
+script: npm test
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+services:
+- postgres
