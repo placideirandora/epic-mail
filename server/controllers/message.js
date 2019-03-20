@@ -37,12 +37,8 @@ const messages = {
               id, subject, message, parentmessageid, senderid, receiverid, status, createdon,
             }],
           });
-        }).catch((error) => {
-          res.status(500).json({ error: "email not sent", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "email not sent", error });
     });
   },
 
@@ -81,12 +77,8 @@ const messages = {
               data: response,
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -108,8 +100,6 @@ const messages = {
               data: response,
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       } else {
         const userSpecificEmail = database(sql.retrieveUserSpecificEmail, [emailId, user]);
@@ -123,12 +113,8 @@ const messages = {
               data: response,
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
-    }).catch((error) => {
-      res.status(500).json({ error: "error occured", error });
     });
   },
 
@@ -169,8 +155,6 @@ const messages = {
               }],
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
     });
@@ -213,8 +197,6 @@ const messages = {
               }],
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
     });
@@ -235,7 +217,7 @@ const messages = {
           } else if (response.length !== 0) {
             res.status(200).json({
               status: 200,
-              success: "unread emails retrieved",
+              success: "admin, unread emails retrieved",
               data: response,
             });
           }
@@ -257,8 +239,6 @@ const messages = {
               }],
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
     });
@@ -275,7 +255,7 @@ const messages = {
         const adminGetDraftEmails = database(sql.adminGetDraftEmails, [status]);
         adminGetDraftEmails.then((response) => {
           if (response.length === 0 || response.length === "undefined") {
-            res.status(404).json({ status: 404, error: "admin, no emails emails found" });
+            res.status(404).json({ status: 404, error: "admin, no draft emails emails found" });
           } else if (response.length !== 0) {
             res.status(200).json({
               status: 200,
@@ -301,8 +281,6 @@ const messages = {
               }],
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
     });
@@ -324,15 +302,9 @@ const messages = {
             deleteEmail.then((response) => {
               if (response) {
                 res.status(200).json({ status: 200, success: "email deleted by admin" });
-              } else {
-                res.status(400).json({ status: 400, error: "admin, the email is not deleted" });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "error occured", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       } else {
         const userSpecificEmail = database(sql.retrieveUserSpecificEmail, [emailId, user]);
@@ -344,15 +316,9 @@ const messages = {
             deleteEmail.then((response) => {
               if (response) {
                 res.status(200).json({ status: 200, success: "email deleted" });
-              } else {
-                res.status(400).json({ status: 400, error: "email not deleted" });
               }
-            }).catch((error) => {
-              res.status(500).json({ error: "error occured", error });
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: "error occured", error });
         });
       }
     });
