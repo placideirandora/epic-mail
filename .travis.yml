@@ -1,4 +1,5 @@
 language: node_js
+
 node_js: 
   - "stable"
 
@@ -17,4 +18,3 @@ addons:
 
   before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
-  - npm run migrate
