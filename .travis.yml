@@ -1,22 +1,20 @@
-
 language: node_js
-node_js:
-- "stable"
+node_js: 
+  - "stable"
+
 cache:
   directories:
     - "node_modules"
-
-env:
-  global:
-    - DATABASE_URL : postgres://travis@localhost:5432/travis
-    - PRIVATE_KEY : secr3t!
-before_script:
-  - psql -c 'create database travis;' -U postgres
-  - npm run migrate
-script: npm test
-after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-  - npm run coverage
+    
+after_success:
+- npm run coveralls
 
 services:
-- postgres
+  - postgresql
+  
+addons:
+  postgresql: "9.6"
+
+  before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - npm run migrate
