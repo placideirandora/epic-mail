@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --require babel-polyfill --require @babel/register ./server/tests --timeout 1600 --exit",
     "start": "babel-node server/server.js",
-    "migrate": "cross-env babel-node server/db/migration.js",
+    "migrate": "babel-node server/db/migration migrate",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
