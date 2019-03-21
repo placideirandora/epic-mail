@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import Joi from 'joi';
 
 const validate = {
@@ -14,12 +15,26 @@ const validate = {
         .required(),
     });
 
-    const { error } = Joi.validate(req.body, userSchema);
-    if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
-      return;
+    const { firstname, lastname, email } = req.body;
+
+    const firstnameArr = Array.from(firstname);
+    const lastnameArr = Array.from(lastname);
+    const emailArr = Array.from(email);
+
+    if (!isNaN(firstnameArr[0])) {
+      res.status(400).json({ error: 'firstname must not start with a number' });
+    } else if (!isNaN(lastnameArr[0])) {
+      res.status(400).json({ error: 'lastname must not start with a number' });
+    } else if (!isNaN(emailArr[0])) {
+      res.status(400).json({ error: 'email must not start with a number' });
+    } else {
+      const { error } = Joi.validate(req.body, userSchema);
+      if (error) {
+        res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
+        return;
+      }
+      next();
     }
-    next();
   },
 
   validateLogin(req, res, next) {
@@ -173,12 +188,23 @@ const validate = {
         .required(),
     });
 
-    const { error } = Joi.validate(req.body, groupMemberSchema);
-    if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
-      return;
+    const { firstname, lastname } = req.body;
+
+    const firstnameArr = Array.from(firstname);
+    const lastnameArr = Array.from(lastname);
+
+    if (!isNaN(firstnameArr[0])) {
+      res.status(400).json({ error: 'firstname must not start with a number' });
+    } else if (!isNaN(lastnameArr[0])) {
+      res.status(400).json({ error: 'lastname must not start with a number' });
+    } else {
+      const { error } = Joi.validate(req.body, groupMemberSchema);
+      if (error) {
+        res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
+        return;
+      }
+      next();
     }
-    next();
   },
 
   validateGroupEmail(req, res, next) {
