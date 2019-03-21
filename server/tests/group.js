@@ -51,7 +51,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       .send(newUserLogIn6)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        userToken1 = 'Bearer ' + res.body.token;
+        userToken1 = `Bearer ${res.body.token}`;
         res.body.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('success').eql('logged in');
@@ -68,7 +68,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       .send(newUserLogIn7)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        userToken2 = 'Bearer ' + res.body.token;
+        userToken2 = `Bearer ${res.body.token}`;
         res.body.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('success').eql('logged in');
@@ -85,7 +85,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       .send(admin)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        adminToken = 'Bearer ' + res.body.token;
+        adminToken = `Bearer ${res.body.token}`;
         res.body.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('success').eql('logged in');

@@ -26,6 +26,7 @@ const createGroup = 'INSERT INTO groups(name, role, owner) VALUES($1, $2, $3) RE
 const retrieveAllGroups = 'SELECT * FROM groups';
 const retrieveSpecificGroup = 'SELECT * FROM groups WHERE id = $1';
 const updateSpecificGroup = 'UPDATE groups SET name = $1 WHERE id = $2 RETURNING *';
+
 const deleteSpecificGroup = 'DELETE FROM groups WHERE id = $1';
 const registerGroupMember = 'INSERT INTO groupmembers(firstname, lastname, role, groupid) VALUES ($1, $2, $3, $4) RETURNING * ';
 const retrieveSpecificGroupOwner = 'SELECT * FROM groups WHERE id = $1 AND owner = $2';

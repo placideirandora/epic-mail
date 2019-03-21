@@ -11,7 +11,6 @@
             "functions": false
           }],
           "no-console": "off",
-          "linebreak-style": "off",
           "no-alert": "off"
     }
 }

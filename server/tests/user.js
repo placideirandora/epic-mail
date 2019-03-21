@@ -122,7 +122,7 @@ describe('USER ENDPOINT TESTS', () => {
       .send(admin)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        adminToken = 'Bearer ' + res.body.token;
+        adminToken = `Bearer ${res.body.token}`;
         res.body.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('success').eql('logged in');
