@@ -14,7 +14,6 @@
           "linebreak-style": "off",
           "no-alert": "off",
           "prefer-template": "off",
-          "no-cond-assign": "off",
-          "no-plusplus": "off"
+          "no-cond-assign": "off"
     }
 }
