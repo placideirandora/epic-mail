@@ -12,7 +12,6 @@
           }],
           "no-console": "off",
           "linebreak-style": "off",
-          "no-alert": "off",
-          "prefer-template": "off"
+          "no-alert": "off"
     }
 }
