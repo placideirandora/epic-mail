@@ -62,8 +62,6 @@ const messages = {
               data: response,
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: 'error occured', error });
         });
       } else {
         const specificUserEmails = database(sql.retrieveSpecificUserEmails, [user]);
