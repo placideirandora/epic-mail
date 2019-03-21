@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi from 'joi';
 
 const validate = {
 
@@ -16,7 +16,7 @@ const validate = {
 
     const { error } = Joi.validate(req.body, userSchema);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
@@ -32,7 +32,7 @@ const validate = {
 
     const { error } = Joi.validate(req.body, loginSchema);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(')/g, '') });
       return;
     }
     next();
@@ -49,13 +49,13 @@ const validate = {
         .required(),
       parentMessageId: Joi.number().integer()
         .required(),
-      status: Joi.string().alphanum().valid("sent", "draft", "read", "unread")
+      status: Joi.string().alphanum().valid('sent', 'draft', 'read', 'unread')
         .required(),
     });
 
     const { error } = Joi.validate(req.body, messageSchema);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
@@ -69,7 +69,7 @@ const validate = {
     const userId = req.params.id;
     const { error } = Joi.validate({ userId }, userParams);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
@@ -83,7 +83,7 @@ const validate = {
 
     const { error } = Joi.validate(req.body, emailSchema);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
@@ -97,7 +97,7 @@ const validate = {
     const emailId = req.params.id;
     const { error } = Joi.validate({ emailId }, emailParams);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
@@ -113,7 +113,7 @@ const validate = {
 
     const { error } = Joi.validate(req.body, groupSchema);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
@@ -127,7 +127,7 @@ const validate = {
     const groupId = req.params.id;
     const { error } = Joi.validate({ groupId }, groupIdParams);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
@@ -140,7 +140,7 @@ const validate = {
     });
     const { error } = Joi.validate(req.body, groupNameSchema);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
@@ -157,7 +157,7 @@ const validate = {
     const memberId = req.params.mid;
     const { error } = Joi.validate({ groupId, memberId }, groupMemberParams);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
@@ -175,7 +175,7 @@ const validate = {
 
     const { error } = Joi.validate(req.body, groupMemberSchema);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
@@ -190,13 +190,13 @@ const validate = {
         .required(),
       parentMessageId: Joi.number().integer()
         .required(),
-      status: Joi.string().alphanum().valid("sent", "draft", "read", "unread")
+      status: Joi.string().alphanum().valid('sent', 'draft', 'read', 'unread')
         .required(),
     });
 
     const { error } = Joi.validate(req.body, messageSchema);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, "") });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();

@@ -16,7 +16,6 @@
           "prefer-template": "off",
           "no-cond-assign": "off",
           "no-plusplus": "off",
-          "quotes": "off",
           "no-case-declarations": "off",
           "import/prefer-default-export": "off"
 
