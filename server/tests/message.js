@@ -237,6 +237,20 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
+  it('Should not retrieve a specific email, because it does not exist', (done) => {
+    chai.request(server)
+      .get('/api/v2/messages/111')
+      .set('authorization', adminToken)
+      .set('Accept', 'Application/JSON')
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property('status').eql(404);
+        res.body.should.have.property('error').eql('email not found');
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
   it('Should not retrieve unread emails', (done) => {
     chai.request(server)
       .get('/api/v2/messages/unread')
@@ -305,21 +319,6 @@ describe('MESSAGE ENDPOINT TESTS', () => {
         res.body.should.have.property('status').eql(404);
         res.body.should.have.property('error').eql('sorry! you have read no emails!');
         res.body.should.be.a('object');
-        done();
-      });
-  });
-
-  it('Should retrieve unread emails', (done) => {
-    chai.request(server)
-      .get('/api/v2/messages/unread')
-      .set('authorization', userToken1)
-      .set('Accept', 'Application/JSON')
-      .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('your unread emails retrieved');
-        res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
         done();
       });
   });
@@ -440,9 +439,23 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete a specific email', (done) => {
+  it('Should delete the first unread email', (done) => {
     chai.request(server)
       .delete('/api/v2/messages/5')
+      .set('authorization', adminToken)
+      .set('Accept', 'Application/JSON')
+      .end((err, res) => {
+        res.body.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('success').eql('email deleted by admin');
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('Should delete the second unread email', (done) => {
+    chai.request(server)
+      .delete('/api/v2/messages/7')
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
