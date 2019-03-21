@@ -1,10 +1,10 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-await */
-import { Pool } from "pg";
-import dotenv from "dotenv";
-import bcrypt from "bcryptjs";
-import moment from "moment";
-import sql from "../helpers/sql";
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
+import bcrypt from 'bcryptjs';
+import moment from 'moment';
+import sql from '../helpers/sql';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ if (process.env.DATABASE_URL) {
   newPool = new Pool({
     connectionString,
   });
-} else if (process.env.NODE_ENV === "test") {
+} else if (process.env.NODE_ENV === 'test') {
   newPool = new Pool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -42,7 +42,7 @@ const tables = async () => {
     process.env.ADMIN_EMAIL,
     hash,
     process.env.IS_ADMIN,
-    moment().format("LL"),
+    moment().format('LL'),
   ];
 
   const user = `CREATE TABLE IF NOT EXISTS
@@ -109,7 +109,7 @@ groupmessages(
 tables();
 
 if (tables) {
-  console.log("\n Database Tables Exist! \n");
+  console.log('\n Database Tables Exist! \n');
 }
 
 const database = async (sqli, data = []) => {

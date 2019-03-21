@@ -11,14 +11,6 @@
             "functions": false
           }],
           "no-console": "off",
-          "linebreak-style": "off",
-          "no-alert": "off",
-          "prefer-template": "off",
-          "no-cond-assign": "off",
-          "no-plusplus": "off",
-          "quotes": "off",
-          "no-case-declarations": "off",
-          "import/prefer-default-export": "off"
-
+          "no-alert": "off"
     }
 }
