@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable max-len */
 /* eslint-disable no-dupe-keys */
 /* eslint-disable no-shadow */
@@ -16,41 +17,52 @@ const users = {
     const {
       firstname, lastname, email, password,
     } = req.body;
-    const findUser = database(sql.findUser, [firstname, lastname]);
-    findUser.then((response) => {
-      if (response.length !== 0) {
-        res.status(400).json({ status: 400, error: 'user with the specified name is already registered' });
-      } else {
-        const findUserEmail = database(sql.findUserEmail, [email]);
-        findUserEmail.then((response) => {
-          if (response.length !== 0) {
-            res.status(400).json({ status: 400, error: 'the email is already taken. register with a unique email' });
-          } else {
-            const user = new User(firstname, lastname, email, password);
-            const hash = bcrypt.hashSync(user.password, 10);
-            user.password = hash;
-            const query = database(sql.registerUser, [user.firstname, user.lastname, user.email, user.password, moment().format('LL')]);
-            query.then((response) => {
-              jwt.sign({ response: response[0] }, process.env.SECRET_KEY, (err, token) => {
-                const {
-                  id, firstname, lastname, email, isadmin, registered,
-                } = response[0];
-                res.status(201).json({
-                  status: 201,
-                  success: 'user registered',
-                  data: [{
-                    token,
-                    user: {
-                      id, firstname, lastname, email, isadmin, registered,
-                    },
-                  }],
+    const firstnameArr = Array.from(firstname);
+    const lastnameArr = Array.from(lastname);
+    const emailArr = Array.from(email);
+    if (!isNaN(firstnameArr[0])) {
+      res.status(400).json({ error: 'firstname must not start with a number' });
+    } else if (!isNaN(lastnameArr[0])) {
+      res.status(400).json({ error: 'lastname must not start with a number' });
+    } else if (!isNaN(emailArr[0])) {
+      res.status(400).json({ error: 'email must not start with a number' });
+    } else {
+      const findUser = database(sql.findUser, [firstname, lastname]);
+      findUser.then((response) => {
+        if (response.length !== 0) {
+          res.status(400).json({ status: 400, error: 'user with the specified name is already registered' });
+        } else {
+          const findUserEmail = database(sql.findUserEmail, [email]);
+          findUserEmail.then((response) => {
+            if (response.length !== 0) {
+              res.status(400).json({ status: 400, error: 'the email is already taken. register with a unique email' });
+            } else {
+              const user = new User(firstname, lastname, email, password);
+              const hash = bcrypt.hashSync(user.password, 10);
+              user.password = hash;
+              const query = database(sql.registerUser, [user.firstname, user.lastname, user.email, user.password, moment().format('LL')]);
+              query.then((response) => {
+                jwt.sign({ response: response[0] }, process.env.SECRET_KEY, (err, token) => {
+                  const {
+                    id, firstname, lastname, email, isadmin, registered,
+                  } = response[0];
+                  res.status(201).json({
+                    status: 201,
+                    success: 'user registered',
+                    data: [{
+                      token,
+                      user: {
+                        id, firstname, lastname, email, isadmin, registered,
+                      },
+                    }],
+                  });
                 });
               });
-            });
-          }
-        });
-      }
-    });
+            }
+          });
+        }
+      });
+    }
   },
 
   loginUser(req, res) {

@@ -10,7 +10,7 @@ router.get('/groups', authenticate.verifyUser, controller.retrieveGroups);
 router.get('/groups/:id', authenticate.verifyUser, group.validateGroupId, controller.retrieveGroup);
 router.patch('/groups/:id/name', authenticate.verifyUser, group.validateGroupId, group.validateGroupName, controller.changeGroupName);
 router.delete('/groups/:id', authenticate.verifyUser, group.validateGroupId, controller.deleteGroup);
-router.post('/groups/:id/users', authenticate.verifyUser, group.validateGroupId, controller.addGroupMember);
+router.post('/groups/:id/users', authenticate.verifyUser, group.validateGroupId, group.validateGroupMember, controller.addGroupMember);
 router.get('/groups/:id/users', authenticate.verifyUser, group.validateGroupId, controller.retrieveGroupMembers);
 router.get('/groups/:id/:users/:mid', authenticate.verifyUser, group.validateGroupIdAndMemberId, controller.retrieveGroupMember);
 router.delete('/groups/:id/:users/:mid', authenticate.verifyUser, group.validateGroupIdAndMemberId, controller.deleteGroupMember);

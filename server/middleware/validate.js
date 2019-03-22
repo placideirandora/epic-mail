@@ -32,7 +32,7 @@ const validate = {
 
     const { error } = Joi.validate(req.body, loginSchema);
     if (error) {
-      res.status(400).json({ error: error.details[0].message.replace(/\\|(')/g, '') });
+      res.status(400).json({ error: error.details[0].message.replace(/\\|(")/g, '') });
       return;
     }
     next();
