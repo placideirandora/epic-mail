@@ -144,15 +144,10 @@ const messages = {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'sorry! you have sent no emails!' });
           } else {
-            const {
-              id, subject, message, parentmessageid, receiverid, status, createdon,
-            } = response[0];
             res.status(200).json({
               status: 200,
               success: 'your sent emails retrieved',
-              data: [{
-                id, subject, message, parentmessageid, receiverid, status, createdon,
-              }],
+              data: response,
             });
           }
         });
@@ -186,15 +181,10 @@ const messages = {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'sorry! you have read no emails!' });
           } else {
-            const {
-              id, subject, message, parentmessageid, senderid, status, createdon,
-            } = response[0];
             res.status(200).json({
               status: 200,
               success: 'your read emails retrieved',
-              data: [{
-                id, subject, message, parentmessageid, senderid, status, createdon,
-              }],
+              data: response,
             });
           }
         });
@@ -228,15 +218,10 @@ const messages = {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'sorry! you have no unread emails!' });
           } else {
-            const {
-              id, subject, message, parentmessageid, senderid, status, createdon,
-            } = response[0];
             res.status(200).json({
               status: 200,
               success: 'your unread emails retrieved',
-              data: [{
-                id, subject, message, parentmessageid, senderid, status, createdon,
-              }],
+              data: response,
             });
           }
         });
@@ -270,15 +255,10 @@ const messages = {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'sorry! you have no draft emails!' });
           } else {
-            const {
-              id, subject, message, parentmessageid, status, createdon,
-            } = response[0];
             res.status(200).json({
               status: 200,
               success: 'your draft emails retrieved',
-              data: [{
-                id, subject, message, parentmessageid, status, createdon,
-              }],
+              data: response,
             });
           }
         });
