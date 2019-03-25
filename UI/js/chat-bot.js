@@ -53,7 +53,7 @@ function newEntry() {
       `<b class='right'><i class='fa fa-user-circle'></i> ${botName}:</b> ${botMessage}`,
     );
     Speech(botMessage);
-    for (let i = 1; i < 15; i++) {
+    for (let i = 1; i < 15; i += 1) {
       if (messages[messages.length - i]) {
         document.querySelector(`#chatlog${i}`).innerHTML = messages[messages.length - i];
       }
