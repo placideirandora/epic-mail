@@ -1,3 +1,4 @@
+/* eslint-disable no-cond-assign */
 // File Upload
 
 function fileUpload() {
@@ -25,7 +26,7 @@ function fileUpload() {
 
     fileDragHover(e);
 
-    for (let i = 0, f; (f = files[i]); i++) {
+    for (let i = 0, f; (f = files[i]); i += 1) {
       parseFile(f);
     }
   }
