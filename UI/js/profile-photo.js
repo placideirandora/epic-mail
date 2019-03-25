@@ -37,7 +37,7 @@ function fileUpload() {
   }
 
   function parseFile(file) {
-    output('<strong>' + encodeURI(file.name) + '</strong>');
+    output(`<strong>${encodeURI(file.name)}</strong>`);
 
     const imageName = file.name;
 
