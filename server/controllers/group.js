@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable max-len */
 /* eslint-disable no-dupe-keys */
 /* eslint-disable no-shadow */
