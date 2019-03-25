@@ -46,16 +46,16 @@ function newEntry() {
     lastUserMessage = document.querySelector('#chatbox').value;
     document.querySelector('#chatbox').value = '';
     messages.push(
-      "<b class='left'><i class='fa fa-user-circle'></i> INNOCENT:&nbsp;</b> " + lastUserMessage,
+      `<b class='left'><i class='fa fa-user-circle'></i> INNOCENT:&nbsp;</b> ${lastUserMessage}`,
     );
     chatbotResponse();
     messages.push(
-      "<b class='right'><i class='fa fa-user-circle'></i> " + botName + ":</b> " + botMessage,
+      `<b class='right'><i class='fa fa-user-circle'></i> ${botName}:</b> ${botMessage}`,
     );
     Speech(botMessage);
     for (let i = 1; i < 15; i++) {
       if (messages[messages.length - i]) {
-        document.querySelector('#chatlog' + i).innerHTML = messages[messages.length - i];
+        document.querySelector(`#chatlog${i}`).innerHTML = messages[messages.length - i];
       }
     }
   }
