@@ -47,10 +47,10 @@ const tables = async () => {
 
   const user = `CREATE TABLE IF NOT EXISTS
 users(
-    id SERIAL PRIMARY KEY,
+    id SERIAL,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
-    email VARCHAR(60) UNIQUE NOT NULL,
+    email VARCHAR(60) UNIQUE NOT NULL PRIMARY KEY,
     password VARCHAR(200),
     isAdmin BOOLEAN NOT NULL default FALSE,
     registered DATE
