@@ -72,7 +72,7 @@ const users = {
     const query = database(sql.loginUser, [email]);
     query.then((response) => {
       if (response.length === 0 || response.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'invalid email' });
+        res.status(404).json({ status: 404, error: 'invalid email or password' });
       } else if (response[0].password === null) {
         res.status(404).json({
           status: 404,
@@ -98,7 +98,7 @@ const users = {
         } else {
           res.status(400).json({
             status: 400,
-            error: 'incorrect password',
+            error: 'invalid email or password',
           });
         }
       }
