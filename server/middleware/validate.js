@@ -45,11 +45,11 @@ const validate = {
       message: Joi.string().trim().min(10)
         .max(800)
         .required(),
-      receiverId: Joi.number().integer()
+      receiverEmail: Joi.string().email({ minDomainAtomas: 2 })
         .required(),
       parentMessageId: Joi.number().integer()
         .required(),
-      status: Joi.string().alphanum().valid('sent', 'draft', 'read', 'unread')
+      status: Joi.string().alphanum().valid('sent')
         .required(),
     });
 
