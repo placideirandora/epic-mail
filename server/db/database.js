@@ -56,14 +56,38 @@ users(
     registered DATE
 );`;
 
-  const email = `CREATE TABLE IF NOT EXISTS
-messages(
+  const draftemail = `CREATE TABLE IF NOT EXISTS
+draftemails(
     id SERIAL PRIMARY KEY,
     subject VARCHAR(20) NOT NULL,
     message TEXT NOT NULL,
     parentmessageid INTEGER NOT NULL,
-    senderid INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    receiverid INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    senderemail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    receiveremail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    status VARCHAR(10) NOT NULL,
+    createdon DATE
+);`;
+
+  const sentemail = `CREATE TABLE IF NOT EXISTS
+sentemails(
+    id SERIAL PRIMARY KEY,
+    subject VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    parentmessageid INTEGER NOT NULL,
+    senderemail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    receiveremail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    status VARCHAR(10) NOT NULL,
+    createdon DATE
+);`;
+
+  const recievedemail = `CREATE TABLE IF NOT EXISTS
+receivedemails(
+    id SERIAL PRIMARY KEY,
+    subject VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    parentmessageid INTEGER NOT NULL,
+    senderemail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    receiveremail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
     status VARCHAR(10) NOT NULL,
     createdon DATE
 );`;
@@ -98,7 +122,9 @@ groupmessages(
 
   const connection = await connect();
   await connection.query(user);
-  await connection.query(email);
+  await connection.query(draftemail);
+  await connection.query(sentemail);
+  await connection.query(recievedemail);
   await connection.query(group);
   await connection.query(groupmember);
   await connection.query(groupmail);
