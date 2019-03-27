@@ -4,9 +4,9 @@ const admin = 'INSERT INTO users(firstname, lastname, username, email, password,
 const registerUser = 'INSERT INTO users(firstname, lastname, username, email, password, registered) VALUES ($1, $2, $3, $4, $5, $6) RETURNING * ';
 const retrieveAllUsers = 'SELECT * FROM users';
 const loginUser = 'SELECT * FROM users WHERE email = $1';
-const retrieveSpecificUser = 'SELECT * FROM users WHERE id = $1';
+const retrieveSpecificUser = 'SELECT * FROM users WHERE email = $1';
 const deleteSpecificUser = 'DELETE FROM users WHERE id = $1';
-const sendEmail = 'INSERT INTO messages(subject, message, parentmessageid, senderid, receiverid, status, createdon) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+const sendEmail = 'INSERT INTO sentemails(subject, message, parentmessageid, senderemail, receiveremail, status, createdon) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
 const retrieveAllEmails = 'SELECT * FROM messages';
 const retrieveSpecificEmail = 'SELECT * FROM messages WHERE id = $1';
 const deleteSpecificEmail = 'DELETE FROM messages WHERE id = $1';
@@ -26,7 +26,6 @@ const createGroup = 'INSERT INTO groups(name, role, owner) VALUES($1, $2, $3) RE
 const retrieveAllGroups = 'SELECT * FROM groups';
 const retrieveSpecificGroup = 'SELECT * FROM groups WHERE id = $1';
 const updateSpecificGroup = 'UPDATE groups SET name = $1 WHERE id = $2 RETURNING *';
-
 const deleteSpecificGroup = 'DELETE FROM groups WHERE id = $1';
 const registerGroupMember = 'INSERT INTO groupmembers(firstname, lastname, role, groupid) VALUES ($1, $2, $3, $4) RETURNING * ';
 const retrieveSpecificGroupOwner = 'SELECT * FROM groups WHERE id = $1 AND owner = $2';
