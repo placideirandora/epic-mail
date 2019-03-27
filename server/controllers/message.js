@@ -170,11 +170,10 @@ const messages = {
   },
 
   retrieveReadEmails(req, res) {
-    const admin = req.userId;
+    const user = req.userEmail;
     const userAccess = 'true';
-    const receiverId = req.userId;
     const status = 'read';
-    const retrieveAdmin = database(sql.retrieveAdmin, [admin, userAccess]);
+    const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     retrieveAdmin.then((response) => {
       if (response.length !== 0) {
         const adminGetReadEmails = database(sql.adminGetReadEmails, [status]);
@@ -190,7 +189,7 @@ const messages = {
           }
         });
       } else {
-        const readEmails = database(sql.retrieveReadEmails, [status, receiverId]);
+        const readEmails = database(sql.retrieveReadEmails, [status, user]);
         readEmails.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'sorry! you have read no emails!' });
