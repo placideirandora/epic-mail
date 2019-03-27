@@ -120,14 +120,12 @@ const messages = {
   },
 
   retrieveSentEmails(req, res) {
-    const admin = req.userId;
+    const user = req.userEmail;
     const userAccess = 'true';
-    const senderId = req.userId;
-    const status = 'sent';
-    const retrieveAdmin = database(sql.retrieveAdmin, [admin, userAccess]);
+    const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     retrieveAdmin.then((response) => {
       if (response.length !== 0) {
-        const adminGetSentEmails = database(sql.adminGetSentEmails, [status]);
+        const adminGetSentEmails = database(sql.adminGetSentEmails);
         adminGetSentEmails.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'admin, no sent emails found' });
@@ -140,7 +138,7 @@ const messages = {
           }
         });
       } else {
-        const sentEmails = database(sql.retrieveSentEmails, [status, senderId]);
+        const sentEmails = database(sql.retrieveSentEmails, [user]);
         sentEmails.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'sorry! you have sent no emails!' });
