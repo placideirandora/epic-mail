@@ -64,8 +64,8 @@ draftemails(
     subject VARCHAR(20) NOT NULL,
     message TEXT NOT NULL,
     parentmessageid INTEGER NOT NULL,
-    senderemail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
-    receiveremail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    senderemail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    receiveremail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
     status VARCHAR(10) NOT NULL,
     createdon DATE
 );`;
@@ -76,8 +76,8 @@ sentemails(
     subject VARCHAR(20) NOT NULL,
     message TEXT NOT NULL,
     parentmessageid INTEGER NOT NULL,
-    senderemail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
-    receiveremail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    senderemail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    receiveremail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
     status VARCHAR(10) NOT NULL,
     createdon DATE
 );`;
@@ -88,8 +88,8 @@ receivedemails(
     subject VARCHAR(20) NOT NULL,
     message TEXT NOT NULL,
     parentmessageid INTEGER NOT NULL,
-    senderemail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
-    receiveremail VARCHAR(60) UNIQUE NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    senderemail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    receiveremail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
     status VARCHAR(10) NOT NULL,
     createdon DATE
 );`;
