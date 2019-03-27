@@ -39,6 +39,7 @@ const tables = async () => {
   const admin = [
     process.env.ADMIN_FIRSTNAME,
     process.env.ADMIN_LASTNAME,
+    process.env.ADMIN_USERNAME,
     process.env.ADMIN_EMAIL,
     hash,
     process.env.IS_ADMIN,
@@ -50,6 +51,7 @@ users(
     id SERIAL,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL,
     email VARCHAR(60) UNIQUE NOT NULL PRIMARY KEY,
     password VARCHAR(200),
     isAdmin BOOLEAN NOT NULL default FALSE,
