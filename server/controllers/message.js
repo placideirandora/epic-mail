@@ -92,12 +92,12 @@ const messages = {
 
   retrieveSpecificEmail(req, res) {
     const emailId = req.params.id;
-    const user = req.userId;
+    const user = req.userEmail;
     const userAccess = 'true';
     const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     findAdmin.then((response) => {
       if (response.length !== 0) {
-        const specificEmail = database(sql.retrieveSpecificEmail, [emailId]);
+        const specificEmail = database(sql.retrieveSpecificEmail, [emailId, user]);
         specificEmail.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'email not found' });
@@ -115,10 +115,18 @@ const messages = {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'email not found' });
           } else {
-            res.status(200).json({
-              status: 200,
-              success: 'email retrieved',
-              data: response,
+            const status = 'read';
+            const readEmail = database(sql.emailRead, [status, emailId]);
+            readEmail.then((response) => {
+              if (response) {
+                res.status(200).json({
+                  status: 200,
+                  success: 'email retrieved',
+                  data: response,
+                });
+              } else {
+                res.status(400).json({ status: 400, error: 'email not retrieved' });
+              }
             });
           }
         });
