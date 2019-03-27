@@ -26,18 +26,25 @@ const messages = {
         const messagee = new Message(
           subject, message, parentMessageId, senderEmail, receiverEmail, status,
         );
-        const query = database(sql.sendEmail, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderEmail, messagee.receiverEmail, messagee.status, moment().format('LL')]);
-        query.then((response) => {
-          const {
-            id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
-          } = response[0];
-          res.status(201).json({
-            status: 201,
-            success: 'email sent',
-            data: [{
-              id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
-            }],
-          });
+        const delivered = database(sql.delivered, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderEmail, messagee.receiverEmail, 'unread', moment().format('LL')]);
+        delivered.then((response) => {
+          if (response) {
+            const query = database(sql.sendEmail, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderEmail, messagee.receiverEmail, messagee.status, moment().format('LL')]);
+            query.then((response) => {
+              const {
+                id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
+              } = response[0];
+              res.status(201).json({
+                status: 201,
+                success: 'email sent',
+                data: [{
+                  id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
+                }],
+              });
+            });
+          } else {
+            res.status(400).json({ status: 400, error: 'email not sent' });
+          }
         });
       }
     });
