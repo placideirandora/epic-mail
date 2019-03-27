@@ -12,29 +12,30 @@ dotenv.config();
 const messages = {
   sendEmail(req, res) {
     const {
-      subject, message, parentMessageId, receiverId, status,
+      subject, message, parentMessageId, receiverEmail,
     } = req.body;
-    const senderId = req.userId;
-    const trueReceiver = database(sql.retrieveSpecificUser, [receiverId]);
+    const senderEmail = req.userEmail;
+    const trueReceiver = database(sql.retrieveSpecificUser, [receiverEmail]);
     trueReceiver.then((response) => {
       if (response.length === 0 || response.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'the receiver is not registered' });
-      } else if (senderId === receiverId) {
-        res.status(400).json({ status: 400, error: 'the sender and receiver id must not be the same' });
+      } else if (senderEmail === receiverEmail) {
+        res.status(400).json({ status: 400, error: 'the sender and receiver email must not be the same' });
       } else {
+        const status = 'sent';
         const messagee = new Message(
-          subject, message, parentMessageId, senderId, receiverId, status,
+          subject, message, parentMessageId, senderEmail, receiverEmail, status,
         );
-        const query = database(sql.sendEmail, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderId, messagee.receiverId, messagee.status, moment().format('LL')]);
+        const query = database(sql.sendEmail, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderEmail, messagee.receiverEmail, messagee.status, moment().format('LL')]);
         query.then((response) => {
           const {
-            id, subject, message, parentmessageid, senderid, receiverid, status, createdon,
+            id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
           } = response[0];
           res.status(201).json({
             status: 201,
             success: 'email sent',
             data: [{
-              id, subject, message, parentmessageid, senderid, receiverid, status, createdon,
+              id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
             }],
           });
         });
