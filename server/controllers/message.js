@@ -192,11 +192,10 @@ const messages = {
   },
 
   retrieveUnReadEmails(req, res) {
-    const admin = req.userId;
+    const user = req.userEmail;
     const userAccess = 'true';
-    const receiverId = req.userId;
     const status = 'unread';
-    const retrieveAdmin = database(sql.retrieveAdmin, [admin, userAccess]);
+    const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     retrieveAdmin.then((response) => {
       if (response.length !== 0) {
         const adminGetUnreadEmails = database(sql.adminGetUnreadEmails, [status]);
@@ -212,7 +211,7 @@ const messages = {
           }
         });
       } else {
-        const unreadEmails = database(sql.retrieveUnreadEmails, [status, receiverId]);
+        const unreadEmails = database(sql.retrieveUnreadEmails, [status, user]);
         unreadEmails.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'sorry! you have no unread emails!' });
