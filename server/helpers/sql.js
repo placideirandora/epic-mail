@@ -1,7 +1,7 @@
 const sql = {};
 
-const admin = 'INSERT INTO users(firstname, lastname, email, password, isadmin, registered) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (email) DO NOTHING';
-const registerUser = 'INSERT INTO users(firstname, lastname, email, password, registered) VALUES ($1, $2, $3, $4, $5) RETURNING * ';
+const admin = 'INSERT INTO users(firstname, lastname, username, email, password, isadmin, registered) VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT (email) DO NOTHING';
+const registerUser = 'INSERT INTO users(firstname, lastname, username, email, password, registered) VALUES ($1, $2, $3, $4, $5, $6) RETURNING * ';
 const retrieveAllUsers = 'SELECT * FROM users';
 const loginUser = 'SELECT * FROM users WHERE email = $1';
 const retrieveSpecificUser = 'SELECT * FROM users WHERE id = $1';
@@ -15,7 +15,7 @@ const retrieveReadEmails = 'SELECT * FROM messages WHERE status = $1 AND receive
 const retrieveUnreadEmails = 'SELECT * FROM messages WHERE status = $1 AND receiverid = $2';
 const retrieveDraftEmails = 'SELECT * FROM messages WHERE status = $1 AND senderid = $2';
 const findUser = 'SELECT * FROM users WHERE firstname = $1 AND lastname = $2';
-const findUserEmail = 'SELECT * FROM users WHERE email = $1';
+const findUsername = 'SELECT * FROM users WHERE username = $1';
 const retrieveAdmin = 'SELECT * FROM users WHERE id = $1 AND isadmin = $2';
 const retrieveUserSpecificEmail = 'SELECT * FROM messages WHERE id = $1 AND (receiverid = $2 OR senderid = $2)';
 const adminGetSentEmails = 'SELECT * FROM messages WHERE status = $1';
@@ -59,7 +59,7 @@ sql.retrieveReadEmails = retrieveReadEmails;
 sql.retrieveUnreadEmails = retrieveUnreadEmails;
 sql.retrieveDraftEmails = retrieveDraftEmails;
 sql.findUser = findUser;
-sql.findUserEmail = findUserEmail;
+sql.findUsername = findUsername;
 sql.retrieveAdmin = retrieveAdmin;
 sql.retrieveUserSpecificEmail = retrieveUserSpecificEmail;
 sql.adminGetSentEmails = adminGetSentEmails;
