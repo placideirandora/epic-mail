@@ -12,7 +12,7 @@ const verifyAdmin = (req, res, next) => {
       if (error) {
         res.status(400).json({ status: 400, error: 'failed to decode the token or it has expired' });
       } else if (decoded.response.isadmin === true) {
-        req.userId = decoded.response.id;
+        req.userEmail = decoded.response.email;
         next();
       } else if (decoded.response.isadmin === false) {
         res.status(403).json({
@@ -41,10 +41,10 @@ const verifyUser = (req, res, next) => {
       if (error) {
         res.status(403).json({ status: 403, error: 'failed to decode the token or it has expired' });
       } else if (decoded.response.isadmin === false) {
-        req.userId = decoded.response.id;
+        req.userEmail = decoded.response.email;
         next();
       } else if (decoded.response.isadmin === true) {
-        req.userId = decoded.response.id;
+        req.userEmail = decoded.response.email;
         next();
       } else {
         res.status(403).json({
