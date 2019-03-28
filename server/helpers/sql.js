@@ -16,6 +16,7 @@ const retrieveSpecificSentEmail = 'SELECT * FROM sentemails WHERE id = $1 AND se
 const retrieveSpecificDraftEmail = 'SELECT * FROM draftemails WHERE id = $1 AND senderemail = $2';
 const deleteSpecificEmail = 'DELETE FROM receivedemails WHERE id = $1';
 const deleteSpecificSentEmail = 'DELETE FROM sentemails WHERE id = $1';
+const deleteSpecificDraftEmail = 'DELETE FROM draftemails WHERE id = $1';
 const retrieveSentEmails = 'SELECT * FROM sentemails WHERE senderemail = $1';
 const retrieveReadEmails = 'SELECT * FROM receivedemails WHERE status = $1 AND receiveremail = $2';
 const retrieveUnreadEmails = 'SELECT * FROM receivedemails WHERE status = $1 AND receiveremail = $2';
@@ -67,6 +68,7 @@ sql.retrieveSpecificSentEmail = retrieveSpecificSentEmail;
 sql.retrieveSpecificDraftEmail = retrieveSpecificDraftEmail;
 sql.deleteSpecificEmail = deleteSpecificEmail;
 sql.deleteSpecificSentEmail = deleteSpecificSentEmail;
+sql.deleteSpecificDraftEmail = deleteSpecificDraftEmail;
 sql.retrieveSentEmails = retrieveSentEmails;
 sql.retrieveReadEmails = retrieveReadEmails;
 sql.retrieveUnreadEmails = retrieveUnreadEmails;
