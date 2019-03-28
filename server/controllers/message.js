@@ -65,7 +65,7 @@ const messages = {
     });
   },
 
-  retrieveMails(req, res) {
+  retrieveReceivedEmails(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
     const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
