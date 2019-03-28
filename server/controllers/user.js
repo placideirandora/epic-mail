@@ -157,15 +157,22 @@ const users = {
       if (response.length === 0 || response.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'invalid email' });
       } else {
-        const deleteUserPassword = database(sql.deleteSpecificUserPassword, [email]);
-        deleteUserPassword.then((response) => {
+        const checkPassReset = database(sql.passResetCheck, [email]);
+        checkPassReset.then((response) => {
           if (response) {
-            res.status(200).json({
-              status: 200,
-              data: [{
-                message: 'check your email for a password reset link',
-                email,
-              }],
+            res.status(400).json({ status: 400, error: 'you have already reset the password. check the password reset link instead' });
+          } else {
+            const deleteUserPassword = database(sql.deleteSpecificUserPassword, [email]);
+            deleteUserPassword.then((response) => {
+              if (response) {
+                res.status(200).json({
+                  status: 200,
+                  data: [{
+                    message: 'check your email for a password reset link',
+                    email,
+                  }],
+                });
+              }
             });
           }
         });
