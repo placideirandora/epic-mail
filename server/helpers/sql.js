@@ -48,7 +48,7 @@ const retrieveUserGroup = 'SELECT * FROM groups WHERE id = $1 AND owner = $2';
 const retrieveSpecificGroupMembers = 'SELECT * FROM groupmembers WHERE groupid = $1';
 const retrieveSpecificGroupEmails = 'SELECT * FROM groupmessages WHERE groupid = $1';
 const retrievePassResetUsers = 'SELECT * FROM users WHERE password isNull';
-const retrieveMember = 'SELECT * FROM groupmembers WHERE username = $1 AND groupid = $2';
+const retrieveMember = 'SELECT * FROM groupmembers WHERE email = $1 AND groupid = $2';
 const findGroup = 'SELECT * FROM groups WHERE name = $1 AND owner = $2';
 const retrieveSpecificUserEmails = 'SELECT * FROM receivedemails WHERE receiveremail = $1';
 const passResetCheck = 'SELECT * FROM users WHERE email = $1 AND password = null';
