@@ -133,7 +133,7 @@ const users = {
 
   deleteUser(req, res) {
     const userId = req.params.id;
-    const findUser = database(sql.retrieveSpecificUser, [userId]);
+    const findUser = database(sql.retrieveSpecificUserById, [userId]);
     findUser.then((response) => {
       if (response.length === 0 || response.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'user with the specified id, not found' });
