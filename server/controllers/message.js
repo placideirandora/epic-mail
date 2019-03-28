@@ -76,7 +76,7 @@ const messages = {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({
               status: 404,
-              error: 'no emails found',
+              error: 'received emails not found',
             });
           } else {
             res.status(200).json({
@@ -85,18 +85,16 @@ const messages = {
               data: response,
             });
           }
-        }).catch((error) => {
-          res.status(500).json({ error: 'error occured', error });
         });
       } else {
         const specificUserEmails = database(sql.retrieveSpecificUserEmails, [user]);
         specificUserEmails.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'no emails found' });
+            res.status(404).json({ status: 404, error: 'received emails not found' });
           } else {
             res.status(200).json({
               status: 200,
-              success: 'emails retrieved',
+              success: 'received emails retrieved',
               data: response,
             });
           }
