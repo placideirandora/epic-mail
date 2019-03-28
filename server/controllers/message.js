@@ -299,7 +299,7 @@ const messages = {
     const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     retrieveAdmin.then((response) => {
       if (response.length !== 0) {
-        const specificEmail = database(sql.retrieveSpecificEmail, [emailId]);
+        const specificEmail = database(sql.retrieveSpecificReceivedEmail, [emailId]);
         specificEmail.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'admin, email not found' });
@@ -313,7 +313,7 @@ const messages = {
           }
         });
       } else {
-        const userSpecificEmail = database(sql.retrieveUserSpecificEmail, [emailId, user]);
+        const userSpecificEmail = database(sql.retrieveUserSpecificReceivedEmail, [emailId, user]);
         userSpecificEmail.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'email not found' });
