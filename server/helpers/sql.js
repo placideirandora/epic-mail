@@ -12,7 +12,7 @@ const delivered = 'INSERT INTO receivedemails(subject, message, parentmessageid,
 const emailRead = 'UPDATE receivedemails SET status = $1 WHERE id = $2 RETURNING *';
 const retrieveAllEmails = 'SELECT * FROM messages';
 const retrieveSpecificEmail = 'SELECT * FROM receivedemails WHERE id = $1 AND receiveremail = $2';
-const deleteSpecificEmail = 'DELETE FROM messages WHERE id = $1';
+const deleteSpecificEmail = 'DELETE FROM receivedemails WHERE id = $1';
 const retrieveSentEmails = 'SELECT * FROM sentemails WHERE senderemail = $1';
 const retrieveReadEmails = 'SELECT * FROM receivedemails WHERE status = $1 AND receiveremail = $2';
 const retrieveUnreadEmails = 'SELECT * FROM receivedemails WHERE status = $1 AND receiveremail = $2';
