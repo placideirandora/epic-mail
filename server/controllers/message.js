@@ -292,7 +292,7 @@ const messages = {
     });
   },
 
-  deleteSpecificEmail(req, res) {
+  deleteSpecificReceivedEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
     const userAccess = 'true';
