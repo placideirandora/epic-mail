@@ -268,7 +268,7 @@ const groups = {
                 }
               });
             } else {
-              res.status(404).json({ status: 404, error: 'user with the specified email is not even registered' });
+              res.status(404).json({ status: 404, error: 'user with the specified email is not even registered. the email is invalid' });
             }
           });
         }
