@@ -99,7 +99,7 @@ groups(
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     role VARCHAR(100) NOT NULL,
-    owner INTEGER REFERENCES users(id) ON DELETE CASCADE
+    owner VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE
 );`;
 
   const groupmember = `CREATE TABLE IF NOT EXISTS
