@@ -27,39 +27,32 @@ const users = {
     } else if (!isNaN(usernameArr[0])) {
       res.status(400).json({ error: 'username must not start with a number' });
     } else {
-      const email = `${username}@epicmail.com`;
-      const findUser = database(sql.findUser, [firstname, lastname]);
-      findUser.then((response) => {
+      const findUsername = database(sql.findUsername, [username]);
+      findUsername.then((response) => {
         if (response.length !== 0) {
-          res.status(400).json({ status: 400, error: 'user with the specified name is already registered' });
+          res.status(400).json({ status: 400, error: 'the username is already taken. register with a unique username' });
         } else {
-          const findUsername = database(sql.findUsername, [username]);
-          findUsername.then((response) => {
-            if (response.length !== 0) {
-              res.status(400).json({ status: 400, error: 'the username is already taken. register with a unique email' });
-            } else {
-              const user = new User(firstname, lastname, username, email, password);
-              const hash = bcrypt.hashSync(user.password, 10);
-              user.password = hash;
-              const query = database(sql.registerUser, [user.firstname, user.lastname, user.username, user.email, user.password, moment().format('LL')]);
-              query.then((response) => {
-                jwt.sign({ response: response[0] }, process.env.SECRET_KEY, (err, token) => {
-                  const {
+          const email = `${username}@epicmail.com`;
+          const user = new User(firstname, lastname, username, email, password);
+          const hash = bcrypt.hashSync(user.password, 10);
+          user.password = hash;
+          const query = database(sql.registerUser, [user.firstname, user.lastname, user.username, user.email, user.password, moment().format('LL')]);
+          query.then((response) => {
+            jwt.sign({ response: response[0] }, process.env.SECRET_KEY, (err, token) => {
+              const {
+                id, firstname, lastname, username, email, isadmin, registered,
+              } = response[0];
+              res.status(201).json({
+                status: 201,
+                success: 'user registered',
+                data: [{
+                  token,
+                  user: {
                     id, firstname, lastname, username, email, isadmin, registered,
-                  } = response[0];
-                  res.status(201).json({
-                    status: 201,
-                    success: 'user registered',
-                    data: [{
-                      token,
-                      user: {
-                        id, firstname, lastname, username, email, isadmin, registered,
-                      },
-                    }],
-                  });
-                });
+                  },
+                }],
               });
-            }
+            });
           });
         }
       });
