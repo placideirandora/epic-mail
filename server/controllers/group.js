@@ -17,7 +17,7 @@ const groups = {
     const {
       name, role,
     } = req.body;
-    const user = req.userId;
+    const user = req.userEmail;
     const findGroup = database(sql.findGroup, [name]);
     findGroup.then((response) => {
       if (response.length !== 0) {
