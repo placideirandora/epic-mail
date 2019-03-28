@@ -50,6 +50,7 @@ const retrievePassResetUsers = 'SELECT * FROM users WHERE password isNull';
 const retrieveMember = 'SELECT * FROM groupmembers WHERE firstname = $1 AND lastname = $2';
 const findGroup = 'SELECT * FROM groups WHERE name = $1';
 const retrieveSpecificUserEmails = 'SELECT * FROM receivedemails WHERE receiveremail = $1';
+const passResetCheck = 'SELECT * FROM users WHERE email = $1 AND password = null';
 
 
 sql.admin = admin;
@@ -102,5 +103,6 @@ sql.retrievePassResetUsers = retrievePassResetUsers;
 sql.retrieveMember = retrieveMember;
 sql.findGroup = findGroup;
 sql.retrieveSpecificUserEmails = retrieveSpecificUserEmails;
+sql.passResetCheck = passResetCheck;
 
 export default sql;
