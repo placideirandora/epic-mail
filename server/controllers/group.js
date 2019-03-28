@@ -230,14 +230,11 @@ const groups = {
   addGroupMember(req, res) {
     const groupId = req.params.id;
     const {
-      firstname, lastname, role,
+      username, email,
     } = req.body;
-    const firstnameArr = Array.from(firstname);
-    const lastnameArr = Array.from(lastname);
-    if (!isNaN(firstnameArr[0])) {
-      res.status(400).json({ error: 'firstname must not start with a number' });
-    } else if (!isNaN(lastnameArr[0])) {
-      res.status(400).json({ error: 'lastname must not start with a number' });
+    const usernameArr = Array.from(username);
+    if (!isNaN(usernameArr[0])) {
+      res.status(400).json({ error: 'usernname must not start with a number' });
     } else {
       const owner = req.userEmail;
       const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
@@ -245,26 +242,33 @@ const groups = {
         if (response.length === 0 || response.length === 'undefined') {
           res.status(404).json({ status: 404, error: 'group not found' });
         } else {
-          const findMember = database(sql.retrieveMember, [firstname, lastname]);
-          findMember.then((response) => {
+          const findUser = database(sql.retrieveSpecificUser, [email]);
+          findUser.then((response) => {
             if (response.length !== 0) {
-              res.status(400).json({ status: 400, error: 'user with the specified name is already registered' });
-            } else {
-              const memberGroup = groupId;
-              const member = new Member(firstname, lastname, role, memberGroup);
-              const query = database(sql.registerGroupMember, [member.firstname, member.lastname, member.role, member.memberGroup]);
-              query.then((response) => {
-                const {
-                  id, firstname, lastname, role, groupid,
-                } = response[0];
-                res.status(201).json({
-                  status: 201,
-                  success: 'group member registered',
-                  data: [{
-                    id, firstname, lastname, role, groupid,
-                  }],
-                });
+              const findMember = database(sql.retrieveMember, [username, groupId]);
+              findMember.then((response) => {
+                if (response.length !== 0) {
+                  res.status(400).json({ status: 400, error: 'user with the specified username is already registered' });
+                } else {
+                  const memberGroup = groupId;
+                  const member = new Member(username, email, memberGroup);
+                  const query = database(sql.registerGroupMember, [member.username, member.email, member.memberGroup]);
+                  query.then((response) => {
+                    const {
+                      id, username, email, groupid,
+                    } = response[0];
+                    res.status(201).json({
+                      status: 201,
+                      success: 'group member registered',
+                      data: [{
+                        id, username, email, groupid,
+                      }],
+                    });
+                  });
+                }
               });
+            } else {
+              res.status(404).json({ status: 404, error: 'user with the specified email is not even registered' });
             }
           });
         }
