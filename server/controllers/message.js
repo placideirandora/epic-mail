@@ -326,6 +326,42 @@ const messages = {
     });
   },
 
+  retrieveSpecificDraftEmail(req, res) {
+    const emailId = req.params.id;
+    const user = req.userEmail;
+    const userAccess = 'true';
+    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    findAdmin.then((response) => {
+      if (response.length !== 0) {
+        const specificEmail = database(sql.retrieveSpecificDraftEmail, [emailId, user]);
+        specificEmail.then((response) => {
+          if (response.length === 0 || response.length === 'undefined') {
+            res.status(404).json({ status: 404, error: 'draft email not found' });
+          } else {
+            res.status(200).json({
+              status: 200,
+              success: 'draft email retrieved',
+              data: response,
+            });
+          }
+        });
+      } else {
+        const userSpecificEmail = database(sql.retrieveUserSpecificDraftEmail, [emailId, user]);
+        userSpecificEmail.then((response) => {
+          if (response.length === 0 || response.length === 'undefined') {
+            res.status(404).json({ status: 404, error: 'draft email not found' });
+          } else {
+            res.status(200).json({
+              status: 200,
+              success: 'draft email retrieved',
+              data: response,
+            });
+          }
+        });
+      }
+    });
+  },
+
   deleteSpecificReceivedEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
