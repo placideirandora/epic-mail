@@ -245,10 +245,10 @@ const groups = {
           const findUser = database(sql.retrieveSpecificUser, [email]);
           findUser.then((response) => {
             if (response.length !== 0) {
-              const findMember = database(sql.retrieveMember, [username, groupId]);
+              const findMember = database(sql.retrieveMember, [email, groupId]);
               findMember.then((response) => {
                 if (response.length !== 0) {
-                  res.status(400).json({ status: 400, error: 'user with the specified username is already registered as a group member' });
+                  res.status(400).json({ status: 400, error: 'user with the specified email is already registered as a group member' });
                 } else {
                   const memberGroup = groupId;
                   const member = new Member(username, email, memberGroup);
