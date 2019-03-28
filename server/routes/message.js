@@ -15,5 +15,6 @@ router.get('/messages/:id', authenticate.verifyUser, email.validateEmailId, cont
 router.delete('/messages/:id', authenticate.verifyUser, email.validateEmailId, controller.deleteSpecificReceivedEmail);
 router.get('/messages/sent/:id', authenticate.verifyUser, email.validateEmailId, controller.retrieveSpecificSentEmail);
 router.get('/messages/draft/:id', authenticate.verifyUser, email.validateEmailId, controller.retrieveSpecificDraftEmail);
+router.delete('/messages/sent/:id', authenticate.verifyUser, email.validateEmailId, controller.deleteSpecificSentEmail);
 
 export default router;
