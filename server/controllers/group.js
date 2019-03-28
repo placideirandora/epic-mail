@@ -128,7 +128,7 @@ const groups = {
     const {
       name,
     } = req.body;
-    const user = req.userId;
+    const user = req.userEmail;
     const userAccess = 'true';
     const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     findAdmin.then((response) => {
@@ -159,7 +159,7 @@ const groups = {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'group not found' });
           } else {
-            const findGroup = database(sql.findGroup, [name]);
+            const findGroup = database(sql.findGroup, [name, user]);
             findGroup.then((response) => {
               if (response.length !== 0 || response.length === 'undefined') {
                 res.status(400).json({ status: 400, error: 'the specified group name is already taken' });
