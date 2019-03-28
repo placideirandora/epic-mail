@@ -372,12 +372,12 @@ const messages = {
         const specificEmail = database(sql.retrieveSpecificReceivedEmail, [emailId]);
         specificEmail.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, email not found' });
+            res.status(404).json({ status: 404, error: 'admin, received email not found' });
           } else {
             const deleteEmail = database(sql.deleteSpecificEmail, [emailId]);
             deleteEmail.then((response) => {
               if (response) {
-                res.status(200).json({ status: 200, success: 'email deleted by admin' });
+                res.status(200).json({ status: 200, success: 'received email deleted by admin' });
               }
             });
           }
@@ -386,12 +386,12 @@ const messages = {
         const userSpecificEmail = database(sql.retrieveUserSpecificReceivedEmail, [emailId, user]);
         userSpecificEmail.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'email not found' });
+            res.status(404).json({ status: 404, error: 'received email not found' });
           } else {
             const deleteEmail = database(sql.deleteSpecificEmail, [emailId]);
             deleteEmail.then((response) => {
               if (response) {
-                res.status(200).json({ status: 200, success: 'email deleted' });
+                res.status(200).json({ status: 200, success: 'received email deleted' });
               }
             });
           }
