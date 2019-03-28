@@ -18,7 +18,7 @@ const groups = {
       name, role,
     } = req.body;
     const user = req.userEmail;
-    const findGroup = database(sql.findGroup, [name]);
+    const findGroup = database(sql.findGroup, [name, user]);
     findGroup.then((response) => {
       if (response.length !== 0) {
         res.status(400).json({ status: 400, error: 'group with the specified name already exists' });
