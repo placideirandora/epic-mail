@@ -5,6 +5,7 @@ const registerUser = 'INSERT INTO users(firstname, lastname, username, email, pa
 const retrieveAllUsers = 'SELECT * FROM users';
 const loginUser = 'SELECT * FROM users WHERE email = $1';
 const retrieveSpecificUser = 'SELECT * FROM users WHERE email = $1';
+const retrieveSpecificUserById = 'SELECT * FROM users WHERE id = $1';
 const deleteSpecificUser = 'DELETE FROM users WHERE id = $1';
 const sendEmail = 'INSERT INTO sentemails(subject, message, parentmessageid, senderemail, receiveremail, status, createdon) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
 const draftEmail = 'INSERT INTO draftemails(subject, message, parentmessageid, senderemail, receiveremail, status, createdon) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
@@ -58,6 +59,7 @@ sql.registerUser = registerUser;
 sql.loginUser = loginUser;
 sql.retrieveAllUsers = retrieveAllUsers;
 sql.retrieveSpecificUser = retrieveSpecificUser;
+sql.retrieveSpecificUserById = retrieveSpecificUserById;
 sql.deleteSpecificUser = deleteSpecificUser;
 sql.sendEmail = sendEmail;
 sql.delivered = delivered;
