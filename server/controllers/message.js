@@ -399,6 +399,44 @@ const messages = {
       }
     });
   },
+
+  deleteSpecificSentEmail(req, res) {
+    const emailId = req.params.id;
+    const user = req.userEmail;
+    const userAccess = 'true';
+    const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    retrieveAdmin.then((response) => {
+      if (response.length !== 0) {
+        const specificEmail = database(sql.retrieveSpecificSentEmail, [emailId]);
+        specificEmail.then((response) => {
+          if (response.length === 0 || response.length === 'undefined') {
+            res.status(404).json({ status: 404, error: 'admin, sent email not found' });
+          } else {
+            const deleteEmail = database(sql.deleteSpecificSentEmail, [emailId]);
+            deleteEmail.then((response) => {
+              if (response) {
+                res.status(200).json({ status: 200, success: 'sent email deleted by admin' });
+              }
+            });
+          }
+        });
+      } else {
+        const userSpecificEmail = database(sql.retrieveUserSpecificSentEmail, [emailId, user]);
+        userSpecificEmail.then((response) => {
+          if (response.length === 0 || response.length === 'undefined') {
+            res.status(404).json({ status: 404, error: 'sent email not found' });
+          } else {
+            const deleteEmail = database(sql.deleteSpecificSentEmail, [emailId]);
+            deleteEmail.then((response) => {
+              if (response) {
+                res.status(200).json({ status: 200, success: 'sent email deleted' });
+              }
+            });
+          }
+        });
+      }
+    });
+  },
 };
 
 export default messages;
