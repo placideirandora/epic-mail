@@ -239,7 +239,7 @@ const groups = {
     } else if (!isNaN(lastnameArr[0])) {
       res.status(400).json({ error: 'lastname must not start with a number' });
     } else {
-      const owner = req.userId;
+      const owner = req.userEmail;
       const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
       specificGroupOwner.then((response) => {
         if (response.length === 0 || response.length === 'undefined') {
