@@ -294,7 +294,7 @@ const messages = {
 
   deleteSpecificEmail(req, res) {
     const emailId = req.params.id;
-    const user = req.userId;
+    const user = req.userEmail;
     const userAccess = 'true';
     const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     retrieveAdmin.then((response) => {
