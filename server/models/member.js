@@ -1,8 +1,7 @@
 class member {
-  constructor(firstname, lastname, role, memberGroup) {
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.role = role;
+  constructor(username, email, memberGroup) {
+    this.username = username;
+    this.email = email;
     this.memberGroup = memberGroup;
   }
 }
