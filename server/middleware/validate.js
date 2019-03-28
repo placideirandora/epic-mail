@@ -165,11 +165,9 @@ const validate = {
 
   validateGroupMember(req, res, next) {
     const groupMemberSchema = Joi.object().keys({
-      firstname: Joi.string().alphanum().min(5).max(15)
+      username: Joi.string().alphanum().min(5).max(15)
         .required(),
-      lastname: Joi.string().alphanum().min(5).max(15)
-        .required(),
-      role: Joi.string().trim().min(5).max(60)
+      email: Joi.string().email({ minDomainAtomas: 2 })
         .required(),
     });
 
