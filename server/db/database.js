@@ -105,9 +105,8 @@ groups(
   const groupmember = `CREATE TABLE IF NOT EXISTS
 groupmembers(
   id SERIAL PRIMARY KEY,
-  firstname VARCHAR(20),
-  lastname VARCHAR(20),
-  role VARCHAR(100) NOT NULL,
+  username VARCHAR(50),
+  email VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
   groupid INTEGER REFERENCES groups(id) ON DELETE CASCADE
 );`;
 
