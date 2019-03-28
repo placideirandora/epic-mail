@@ -49,6 +49,8 @@ const validate = {
         .required(),
       parentMessageId: Joi.number().integer()
         .required(),
+      status: Joi.string().valid('sent', 'draft')
+        .required(),
     });
 
     const { error } = Joi.validate(req.body, messageSchema);
