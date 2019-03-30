@@ -1,9 +1,8 @@
 class groupmessage {
-  constructor(subject, message, parentMessageId, status, groupId) {
+  constructor(subject, message, parentMessageId, groupId) {
     this.subject = subject;
     this.message = message;
     this.parentMessageId = parentMessageId;
-    this.status = status;
     this.groupId = groupId;
   }
 }

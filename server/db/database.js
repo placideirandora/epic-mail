@@ -116,7 +116,6 @@ groupmessages(
   subject VARCHAR(20) NOT NULL,
   message TEXT NOT NULL,
   parentmessageid INTEGER NOT NULL,
-  status VARCHAR(10) NOT NULL,
   createdon DATE,
   groupid INTEGER REFERENCES groups(id) ON DELETE CASCADE
 );`;

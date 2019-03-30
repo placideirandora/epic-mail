@@ -41,7 +41,7 @@ const registerGroupMember = 'INSERT INTO groupmembers(username, email, groupid) 
 const retrieveSpecificGroupOwner = 'SELECT * FROM groups WHERE id = $1 AND owner = $2';
 const retrieveSpecificGroupMember = 'SELECT * FROM groupmembers WHERE id = $1 AND groupid = $2';
 const deleteSpecificGroupMember = 'DELETE FROM groupmembers WHERE id = $1 AND groupid = $2';
-const sendGroupEmail = 'INSERT INTO groupmessages(subject, message, parentmessageid, status, createdon, groupid) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+const sendGroupEmail = 'INSERT INTO groupmessages(subject, message, parentmessageid, createdon, groupid) VALUES ($1, $2, $3, $4, $5) RETURNING *';
 const deleteSpecificUserPassword = 'UPDATE users SET password = null WHERE email = $1 ';
 const retrieveUserGroups = 'SELECT * FROM groups WHERE owner = $1';
 const retrieveUserGroup = 'SELECT * FROM groups WHERE id = $1 AND owner = $2';

@@ -188,8 +188,6 @@ const validate = {
         .required(),
       parentMessageId: Joi.number().integer()
         .required(),
-      status: Joi.string().alphanum().valid('sent', 'draft', 'read', 'unread')
-        .required(),
     });
 
     const { error } = Joi.validate(req.body, messageSchema);
