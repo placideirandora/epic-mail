@@ -336,7 +336,7 @@ const groups = {
   retrieveGroupMember(req, res) {
     const groupId = req.params.id;
     const groupMemberId = req.params.mid;
-    const owner = req.userId;
+    const owner = req.userEmail;
     const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
     specificGroupOwner.then((response) => {
       if (response.length === 0 || response.length === 'undefined') {
