@@ -390,25 +390,25 @@ const groups = {
   sendGroupEmail(req, res) {
     const groupId = req.params.id;
     const {
-      subject, message, parentMessageId, status,
+      subject, message, parentMessageId,
     } = req.body;
-    const owner = req.userId;
+    const owner = req.userEmail;
     const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
     specificGroupOwner.then((response) => {
       if (response.length === 0 || response.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'group not found' });
       } else {
-        const groupmessage = new Groupmessage(subject, message, parentMessageId, status, groupId);
-        const query = database(sql.sendGroupEmail, [groupmessage.subject, groupmessage.message, groupmessage.parentMessageId, groupmessage.status, moment().format('LL'), groupmessage.groupId]);
+        const groupmessage = new Groupmessage(subject, message, parentMessageId, groupId);
+        const query = database(sql.sendGroupEmail, [groupmessage.subject, groupmessage.message, groupmessage.parentMessageId, moment().format('LL'), groupmessage.groupId]);
         query.then((response) => {
           const {
-            id, subject, message, parentmessageid, status, groupid, createdon,
+            id, subject, message, parentmessageid, groupid, createdon,
           } = response[0];
           res.status(201).json({
             status: 201,
             success: 'group email sent',
             data: [{
-              id, subject, message, parentmessageid, status, groupid, createdon,
+              id, subject, message, parentmessageid, groupid, createdon,
             }],
           });
         });
