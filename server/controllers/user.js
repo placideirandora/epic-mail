@@ -112,7 +112,7 @@ const users = {
 
   retrieveUser(req, res) {
     const userId = req.params.id;
-    const specificUser = database(sql.retrieveSpecificUser, [userId]);
+    const specificUser = database(sql.retrieveSpecificUserById, [userId]);
     specificUser.then((response) => {
       if (response.length === 0 || response.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'user with the specified id, not found' });
