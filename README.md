@@ -87,10 +87,6 @@ $ DB_PORT = 5000 (custom) or 5432 (default)
 ```
 
 ```
-$ DB_HOST = "localhost"
-```
-
-```
 $ ADMIN_FIRSTNAME = "someone"
 ```
 
@@ -103,7 +99,7 @@ $ ADMIN_EMAIL = "someone@epicmail.com"
 ```
 
 ```
-$ ADMIN_PASSWORD = "*xxxxxxxxxx"
+$ ADMIN_PASSWORD = "xxxxxxxxxx"
 ```
 
 ```
