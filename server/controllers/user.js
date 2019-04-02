@@ -159,7 +159,7 @@ const users = {
       } else {
         const checkPassReset = database(sql.passResetCheck, [email]);
         checkPassReset.then((response) => {
-          if (response) {
+          if (response.length !== 0) {
             res.status(400).json({ status: 400, error: 'you have already reset the password. check the password reset link instead' });
           } else {
             const deleteUserPassword = database(sql.deleteSpecificUserPassword, [email]);
