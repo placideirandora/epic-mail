@@ -22,7 +22,7 @@ EPIC Mail helps people exchange messages/information over the internet.
 
 - **Code Climate** - Continuous Integration Code Quality
 
-- **Heroku** - Deployment. [Visit The App](https://epic-mail-ch3.herokuapp.com/)
+- **Heroku** - Deployment. [Visit The App](https://epic-mail-final.herokuapp.com/)
 
 - **GIT** - Version Control System
 
@@ -51,7 +51,7 @@ $ npm install
 ### Download And Install A Database Management System
 
 ```
-$ PostgreSQL 
+$ PostgreSQL
 ```
 
 ### PostgreSQL Databases
@@ -95,15 +95,15 @@ $ ADMIN_FIRSTNAME = "someone"
 ```
 
 ```
-$ ADMIN_LASTNAME = "someone" 
+$ ADMIN_LASTNAME = "someone"
 ```
 
 ```
-$ ADMIN_EMAIL = "someone@epicmail.com" 
+$ ADMIN_EMAIL = "someone@epicmail.com"
 ```
 
 ```
-$ ADMIN_PASSWORD = "*xxxxxxxxxx"  
+$ ADMIN_PASSWORD = "*xxxxxxxxxx"
 ```
 
 ```
