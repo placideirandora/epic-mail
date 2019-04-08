@@ -76,12 +76,12 @@ const messages = {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({
               status: 404,
-              error: 'received emails not found',
+              error: 'admin, received emails not found',
             });
           } else {
             res.status(200).json({
               status: 200,
-              success: 'received emails retrieved',
+              success: 'admin, received emails retrieved',
               data: response,
             });
           }
