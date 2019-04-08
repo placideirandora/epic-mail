@@ -446,7 +446,25 @@ const groups = {
         const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
         userGroup.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'group not found' });
+            const findMember = database(sql.retrieveSpecificGroupMember, [user, groupId]);
+            findMember.then((response) => {
+              if (response.length === 0) {
+                res.status(404).json({ status: 404, error: 'you are not a member of the group' });
+              } else {
+                const memberEmails = database(sql.retrieveMemberEmails, [groupId]);
+                memberEmails.then((response) => {
+                  if (response.length === 0 || response.length === 'undefined') {
+                    res.status(404).json({ status: 404, error: 'no group emails found' });
+                  } else {
+                    res.status(200).json({
+                      status: 200,
+                      success: 'group emails found',
+                      data: response,
+                    });
+                  }
+                });
+              }
+            });
           } else {
             const groupEmails = database(sql.retrieveSpecificGroupEmails, [groupId]);
             groupEmails.then((response) => {
