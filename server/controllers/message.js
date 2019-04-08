@@ -407,7 +407,7 @@ const messages = {
     const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     retrieveAdmin.then((response) => {
       if (response.length !== 0) {
-        const specificEmail = database(sql.retrieveSpecificSentEmail, [emailId]);
+        const specificEmail = database(sql.adminRetrieveUserSpecificSentEmail, [emailId]);
         specificEmail.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'admin, sent email not found' });
