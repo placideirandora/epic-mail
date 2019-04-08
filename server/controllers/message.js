@@ -445,7 +445,7 @@ const messages = {
     const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     retrieveAdmin.then((response) => {
       if (response.length !== 0) {
-        const specificEmail = database(sql.retrieveSpecificDraftEmail, [emailId]);
+        const specificEmail = database(sql.adminRetrieveUserSpecificDraftEmail, [emailId]);
         specificEmail.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'admin, draft email not found' });
