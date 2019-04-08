@@ -30,6 +30,7 @@ const adminRetrieveUserSpecificReceivedEmail = 'SELECT * FROM receivedemails WHE
 const retrieveUserSpecificSentEmail = 'SELECT * FROM sentemails WHERE id = $1 AND senderemail = $2';
 const adminRetrieveUserSpecificSentEmail = 'SELECT * FROM sentemails WHERE id = $1';
 const retrieveUserSpecificDraftEmail = 'SELECT * FROM draftemails WHERE id = $1 AND senderemail = $2';
+const adminRetrieveUserSpecificDraftEmail = 'SELECT * FROM draftemails WHERE id = $1';
 const adminGetSentEmails = 'SELECT * FROM sentemails';
 const adminGetReadEmails = 'SELECT * FROM receivedemails WHERE status = $1';
 const adminGetUnreadEmails = 'SELECT * FROM receivedemails WHERE status = $1';
@@ -87,6 +88,7 @@ sql.adminRetrieveUserSpecificReceivedEmail = adminRetrieveUserSpecificReceivedEm
 sql.retrieveUserSpecificSentEmail = retrieveUserSpecificSentEmail;
 sql.adminRetrieveUserSpecificSentEmail = adminRetrieveUserSpecificSentEmail;
 sql.retrieveUserSpecificDraftEmail = retrieveUserSpecificDraftEmail;
+sql.adminRetrieveUserSpecificDraftEmail = adminRetrieveUserSpecificDraftEmail;
 sql.adminGetSentEmails = adminGetSentEmails;
 sql.adminGetReadEmails = adminGetReadEmails;
 sql.adminGetUnreadEmails = adminGetUnreadEmails;
