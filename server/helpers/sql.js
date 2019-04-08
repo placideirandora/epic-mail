@@ -52,6 +52,7 @@ const retrieveMember = 'SELECT * FROM groupmembers WHERE email = $1 AND groupid 
 const findGroup = 'SELECT * FROM groups WHERE name = $1 AND owner = $2';
 const retrieveSpecificUserEmails = 'SELECT * FROM receivedemails WHERE receiveremail = $1';
 const passResetCheck = 'SELECT * FROM users WHERE email = $1 AND password isNull';
+const retrieveMemberEmails = 'SELECT * FROM groupmessages WHERE groupid = $1';
 
 
 sql.admin = admin;
@@ -101,6 +102,7 @@ sql.retrieveUserGroups = retrieveUserGroups;
 sql.retrieveUserGroup = retrieveUserGroup;
 sql.retrieveSpecificGroupMembers = retrieveSpecificGroupMembers;
 sql.retrieveSpecificGroupEmails = retrieveSpecificGroupEmails;
+sql.retrieveMemberEmails = retrieveMemberEmails;
 sql.retrievePassResetUsers = retrievePassResetUsers;
 sql.retrieveMember = retrieveMember;
 sql.findGroup = findGroup;
