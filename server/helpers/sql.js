@@ -11,7 +11,7 @@ const sendEmail = 'INSERT INTO sentemails(subject, message, parentmessageid, sen
 const draftEmail = 'INSERT INTO draftemails(subject, message, parentmessageid, senderemail, receiveremail, status, createdon) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
 const delivered = 'INSERT INTO receivedemails(subject, message, parentmessageid, senderemail, receiveremail, status, createdon) VALUES ($1, $2, $3, $4, $5, $6, $7)';
 const emailRead = 'UPDATE receivedemails SET status = $1 WHERE id = $2 RETURNING *';
-const retrieveAllEmails = 'SELECT * FROM messages';
+const retrieveAllEmails = 'SELECT * FROM receivedemails';
 const retrieveSpecificReceivedEmail = 'SELECT * FROM receivedemails WHERE id = $1 AND receiveremail = $2';
 const retrieveSpecificSentEmail = 'SELECT * FROM sentemails WHERE id = $1 AND senderemail = $2';
 const retrieveSpecificDraftEmail = 'SELECT * FROM draftemails WHERE id = $1 AND senderemail = $2';
