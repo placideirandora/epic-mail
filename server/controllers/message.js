@@ -369,7 +369,7 @@ const messages = {
     const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
     retrieveAdmin.then((response) => {
       if (response.length !== 0) {
-        const specificEmail = database(sql.retrieveSpecificReceivedEmail, [emailId]);
+        const specificEmail = database(sql.adminRetrieveUserSpecificReceivedEmail, [emailId]);
         specificEmail.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'admin, received email not found' });
