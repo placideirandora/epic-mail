@@ -33,7 +33,7 @@ const retrieveUserSpecificDraftEmail = 'SELECT * FROM draftemails WHERE id = $1 
 const adminGetSentEmails = 'SELECT * FROM sentemails';
 const adminGetReadEmails = 'SELECT * FROM receivedemails WHERE status = $1';
 const adminGetUnreadEmails = 'SELECT * FROM receivedemails WHERE status = $1';
-const adminGetDraftEmails = 'SELECT * FROM messages WHERE status = $1';
+const adminGetDraftEmails = 'SELECT * FROM draftemails WHERE status = $1';
 const createGroup = 'INSERT INTO groups(name, role, owner) VALUES($1, $2, $3) RETURNING *';
 const retrieveAllGroups = 'SELECT * FROM groups';
 const retrieveSpecificGroup = 'SELECT * FROM groups WHERE id = $1';
