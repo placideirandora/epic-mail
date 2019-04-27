@@ -1,5 +1,11 @@
+/**
+ * an sql object for storing all sql queries
+ */
 const sql = {};
 
+/**
+ * sql queries for processing data
+ */
 const admin = 'INSERT INTO users(firstname, lastname, username, email, password, isadmin, registered) VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT (email) DO NOTHING';
 const registerUser = 'INSERT INTO users(firstname, lastname, username, email, password, registered) VALUES ($1, $2, $3, $4, $5, $6) RETURNING * ';
 const retrieveAllUsers = 'SELECT * FROM users';
@@ -58,6 +64,9 @@ const passResetCheck = 'SELECT * FROM users WHERE email = $1 AND password isNull
 const retrieveMemberEmails = 'SELECT * FROM groupmessages WHERE groupid = $1';
 
 
+/**
+ * assigning object keys their corresponding values
+ */
 sql.admin = admin;
 sql.registerUser = registerUser;
 sql.loginUser = loginUser;
