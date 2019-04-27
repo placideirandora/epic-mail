@@ -1,3 +1,6 @@
+/**
+ *a class for creating an object to store group member information
+ */
 class member {
   constructor(username, email, memberGroup) {
     this.username = username;
