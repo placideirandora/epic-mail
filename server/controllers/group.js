@@ -13,6 +13,11 @@ import sql from '../helpers/sql';
 dotenv.config();
 
 const groups = {
+  /**
+   * create group endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   createGroup(req, res) {
     const {
       name, role,
@@ -42,6 +47,11 @@ const groups = {
     });
   },
 
+  /**
+   * retrieve all groups endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveGroups(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
@@ -80,6 +90,11 @@ const groups = {
     });
   },
 
+  /**
+   * retrieve a single group endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveGroup(req, res) {
     const groupId = req.params.id;
     const user = req.userEmail;
@@ -123,6 +138,11 @@ const groups = {
     });
   },
 
+  /**
+   * change group name endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   changeGroupName(req, res) {
     const groupId = req.params.id;
     const {
@@ -185,6 +205,11 @@ const groups = {
     });
   },
 
+  /**
+   * delete a single group endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   deleteGroup(req, res) {
     const groupId = req.params.id;
     const user = req.userEmail;
@@ -227,6 +252,11 @@ const groups = {
     });
   },
 
+  /**
+   * register group member endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   addGroupMember(req, res) {
     const groupId = req.params.id;
     const {
@@ -276,6 +306,11 @@ const groups = {
     }
   },
 
+  /**
+   * retrieve all group members endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveGroupMembers(req, res) {
     const groupId = req.params.id;
     const user = req.userEmail;
@@ -333,6 +368,11 @@ const groups = {
     });
   },
 
+  /**
+   * retrieve a single group member endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveGroupMember(req, res) {
     const groupId = req.params.id;
     const groupMemberId = req.params.mid;
@@ -361,6 +401,11 @@ const groups = {
     });
   },
 
+  /**
+   * delete a single group member endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   deleteGroupMember(req, res) {
     const groupId = req.params.id;
     const groupMemberId = req.params.mid;
@@ -387,6 +432,11 @@ const groups = {
     });
   },
 
+  /**
+   * send group email endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   sendGroupEmail(req, res) {
     const groupId = req.params.id;
     const {
@@ -416,6 +466,11 @@ const groups = {
     });
   },
 
+  /**
+   * retrieve all group emails endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveGroupEmails(req, res) {
     const groupId = req.params.id;
     const user = req.userEmail;
