@@ -13,6 +13,11 @@ import sql from '../helpers/sql';
 dotenv.config();
 
 const users = {
+  /**
+   * user registration endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   registerUser(req, res) {
     const {
       firstname, lastname, username, password,
@@ -59,6 +64,11 @@ const users = {
     }
   },
 
+  /**
+   * user login endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   loginUser(req, res) {
     const {
       email, password,
@@ -99,6 +109,11 @@ const users = {
     });
   },
 
+  /**
+   * retrieve all registered users endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveUsers(req, res) {
     const allUsers = database(sql.retrieveAllUsers);
     allUsers.then((response) => {
@@ -110,6 +125,11 @@ const users = {
     });
   },
 
+  /**
+   * retrieve a single registered user endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveUser(req, res) {
     const userId = req.params.id;
     const specificUser = database(sql.retrieveSpecificUserById, [userId]);
@@ -131,6 +151,11 @@ const users = {
     });
   },
 
+  /**
+   * delete a single registered user endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   deleteUser(req, res) {
     const userId = req.params.id;
     const findUser = database(sql.retrieveSpecificUserById, [userId]);
@@ -148,6 +173,11 @@ const users = {
     });
   },
 
+  /**
+   * user password reset endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   resetPassword(req, res) {
     const {
       email,
@@ -180,6 +210,11 @@ const users = {
     });
   },
 
+  /**
+   * retrieve users who reset their passwords endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrievePassResetUsers(req, res) {
     const passResetUsers = database(sql.retrievePassResetUsers);
     passResetUsers.then((response) => {
