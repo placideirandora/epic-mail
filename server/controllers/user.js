@@ -26,11 +26,11 @@ const users = {
     const lastnameArr = Array.from(lastname);
     const usernameArr = Array.from(username);
     if (!isNaN(firstnameArr[0])) {
-      res.status(400).json({ error: 'firstname must not start with a number' });
+      res.status(400).json({ status: 400, error: 'firstname must not start with a number' });
     } else if (!isNaN(lastnameArr[0])) {
-      res.status(400).json({ error: 'lastname must not start with a number' });
+      res.status(400).json({ status: 400, error: 'lastname must not start with a number' });
     } else if (!isNaN(usernameArr[0])) {
-      res.status(400).json({ error: 'username must not start with a number' });
+      res.status(400).json({ status: 400, error: 'username must not start with a number' });
     } else {
       const findUsername = database(sql.findUsername, [username]);
       findUsername.then((response) => {
