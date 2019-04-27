@@ -10,6 +10,11 @@ import sql from '../helpers/sql';
 dotenv.config();
 
 const messages = {
+  /**
+   * send email endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   sendEmail(req, res) {
     const {
       subject, message, parentMessageId, receiverEmail, status,
@@ -65,6 +70,11 @@ const messages = {
     });
   },
 
+  /**
+   * retrieve all received emails endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveReceivedEmails(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
@@ -103,6 +113,11 @@ const messages = {
     });
   },
 
+  /**
+   * retrieve a single received email endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveSpecificReceivedEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
@@ -147,6 +162,11 @@ const messages = {
     });
   },
 
+  /**
+   * retrieve all sent emails endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveSentEmails(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
@@ -182,6 +202,11 @@ const messages = {
     });
   },
 
+  /**
+   * retrieve a single sent email endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveSpecificSentEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
@@ -218,6 +243,11 @@ const messages = {
     });
   },
 
+  /**
+   * retrieve all read emails endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveReadEmails(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
@@ -254,6 +284,11 @@ const messages = {
     });
   },
 
+  /**
+   * retrieve all unread emails endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveUnReadEmails(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
@@ -290,6 +325,11 @@ const messages = {
     });
   },
 
+  /**
+   * retrieve all draft emails endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveDraftEmails(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
@@ -326,6 +366,11 @@ const messages = {
     });
   },
 
+  /**
+   * retrieve a single draft email endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   retrieveSpecificDraftEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
@@ -362,6 +407,11 @@ const messages = {
     });
   },
 
+  /**
+   * delete a single received email endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   deleteSpecificReceivedEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
@@ -400,6 +450,11 @@ const messages = {
     });
   },
 
+  /**
+   * delete a single sent email endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   deleteSpecificSentEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
@@ -438,6 +493,11 @@ const messages = {
     });
   },
 
+  /**
+   * delete a single draft email endpoint
+   * @param {object} req
+   * @param {object} res
+   */
   deleteSpecificDraftEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
