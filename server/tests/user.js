@@ -6,7 +6,8 @@ import server from '../server';
 import database from '../db/database';
 import {
   newUser, newUser2, admin, newUserLogIn, passReset, falsePassReset, falseAdminPass,
-  newUserLogIn2, falseAdminEmail, newUserEmailTaken, newUserNameTaken,
+  newUserLogIn2, falseAdminEmail, newUserEmailTaken, falseFirstNameNewUser,
+  falseLastNameNewUser, falseUserNameNewUser,
 } from './dummy';
 
 chai.use(chaiHTTP);
@@ -44,7 +45,7 @@ describe('USER ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not register the third new user, because the email will have been already taken', (done) => {
+  it('Should not register the third new user, because the username will have been already taken', (done) => {
     chai.request(server)
       .post('/api/v2/auth/signup')
       .send(newUserEmailTaken)
@@ -52,21 +53,49 @@ describe('USER ENDPOINT TESTS', () => {
       .end((err, res) => {
         res.body.should.have.status(400);
         res.body.should.have.property('status').eql(400);
-        res.body.should.have.property('error').eql('the email is already taken. register with a unique email');
+        res.body.should.have.property('error').eql('the username is already taken. register with a unique username');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  it('Should not register the third new user, because the name will have been already taken', (done) => {
+  it('Should not register the third new user, because the firstname starts with a number', (done) => {
     chai.request(server)
       .post('/api/v2/auth/signup')
-      .send(newUserNameTaken)
+      .send(falseFirstNameNewUser)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
         res.body.should.have.status(400);
         res.body.should.have.property('status').eql(400);
-        res.body.should.have.property('error').eql('user with the specified name is already registered');
+        res.body.should.have.property('error').eql('firstname must not start with a number');
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('Should not register the third new user, because the lastname starts with a number', (done) => {
+    chai.request(server)
+      .post('/api/v2/auth/signup')
+      .send(falseLastNameNewUser)
+      .set('Accept', 'Application/JSON')
+      .end((err, res) => {
+        res.body.should.have.status(400);
+        res.body.should.have.property('status').eql(400);
+        res.body.should.have.property('error').eql('lastname must not start with a number');
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('Should not register the third new user, because the username starts with a number', (done) => {
+    chai.request(server)
+      .post('/api/v2/auth/signup')
+      .send(falseUserNameNewUser)
+      .set('Accept', 'Application/JSON')
+      .end((err, res) => {
+        res.body.should.have.status(400);
+        res.body.should.have.property('status').eql(400);
+        res.body.should.have.property('error').eql('username must not start with a number');
         res.body.should.be.a('object');
         done();
       });
@@ -88,34 +117,6 @@ describe('USER ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not login the admin, because the email is invalid', (done) => {
-    chai.request(server)
-      .post('/api/v2/auth/login')
-      .send(falseAdminEmail)
-      .set('Accept', 'Application/JSON')
-      .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('invalid email');
-        res.body.should.be.a('object');
-        done();
-      });
-  });
-
-  it('Should not login the admin, because the password is incorrect', (done) => {
-    chai.request(server)
-      .post('/api/v2/auth/login')
-      .send(falseAdminPass)
-      .set('Accept', 'Application/JSON')
-      .end((err, res) => {
-        res.body.should.have.status(400);
-        res.body.should.have.property('status').eql(400);
-        res.body.should.have.property('error').eql('incorrect password');
-        res.body.should.be.a('object');
-        done();
-      });
-  });
-
   it('Should login the admin', (done) => {
     chai.request(server)
       .post('/api/v2/auth/login')
@@ -129,6 +130,34 @@ describe('USER ENDPOINT TESTS', () => {
         res.body.should.have.property('token');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
+        done();
+      });
+  });
+
+  it('Should not login the admin, because the email is invalid', (done) => {
+    chai.request(server)
+      .post('/api/v2/auth/login')
+      .send(falseAdminEmail)
+      .set('Accept', 'Application/JSON')
+      .end((err, res) => {
+        res.body.should.have.status(404);
+        res.body.should.have.property('status').eql(404);
+        res.body.should.have.property('error').eql('invalid email or password');
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('Should not login the admin, because the password is incorrect', (done) => {
+    chai.request(server)
+      .post('/api/v2/auth/login')
+      .send(falseAdminPass)
+      .set('Accept', 'Application/JSON')
+      .end((err, res) => {
+        res.body.should.have.status(400);
+        res.body.should.have.property('status').eql(400);
+        res.body.should.have.property('error').eql('invalid email or password');
+        res.body.should.be.a('object');
         done();
       });
   });
@@ -185,7 +214,7 @@ describe('USER ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should reset a password of a specific user of id = 3', (done) => {
+  it('Should reset a password of a specific user of id = 2', (done) => {
     chai.request(server)
       .post('/api/v2/auth/reset')
       .send(passReset)
@@ -207,6 +236,19 @@ describe('USER ENDPOINT TESTS', () => {
         res.should.have.status(200);
         res.body.should.have.property('status').eql(200);
         res.body.should.have.property('success').eql('admin, the users who reset their passwords are retrieved');
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('Should not reset a password of a specific user of id = 2, because they have already reset the password', (done) => {
+    chai.request(server)
+      .post('/api/v2/auth/reset')
+      .send(passReset)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.body.should.have.property('status').eql(400);
+        res.body.should.have.property('error').eql('you have already reset the password. check the password reset link instead');
         res.body.should.be.a('object');
         done();
       });
@@ -253,61 +295,9 @@ describe('USER ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete a specific user of id = 4', (done) => {
+  it('Should not delete the user of id = 2, because they will have been already deleted', (done) => {
     chai.request(server)
-      .delete('/api/v2/users/4')
-      .set('authorization', adminToken)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('user deleted');
-        res.body.should.be.a('object');
-        done();
-      });
-  });
-
-  it('Should delete a specific user of id = 5', (done) => {
-    chai.request(server)
-      .delete('/api/v2/users/5')
-      .set('authorization', adminToken)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('user deleted');
-        res.body.should.be.a('object');
-        done();
-      });
-  });
-
-  it('Should delete a specific user of id = 6', (done) => {
-    chai.request(server)
-      .delete('/api/v2/users/6')
-      .set('authorization', adminToken)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('user deleted');
-        res.body.should.be.a('object');
-        done();
-      });
-  });
-
-  it('Should delete a specific user of id = 7', (done) => {
-    chai.request(server)
-      .delete('/api/v2/users/7')
-      .set('authorization', adminToken)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('user deleted');
-        res.body.should.be.a('object');
-        done();
-      });
-  });
-
-  it('Should not delete the user of id = 3, because they will have been already deleted', (done) => {
-    chai.request(server)
-      .delete('/api/v2/users/3')
+      .delete('/api/v2/users/2')
       .set('authorization', adminToken)
       .end((err, res) => {
         res.should.have.status(404);
