@@ -1,3 +1,6 @@
+/**
+ *a class for creating an object to store message/email information
+ */
 class Message {
   constructor(subject, message, parentMessageId, senderEmail, receiverEmail, status) {
     this.subject = subject;
