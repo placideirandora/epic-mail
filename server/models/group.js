@@ -1,3 +1,6 @@
+/**
+ *a class for creating an object to store group creation information
+ */
 class group {
   constructor(name, role, owner) {
     this.name = name;
