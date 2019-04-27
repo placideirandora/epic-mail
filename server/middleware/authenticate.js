@@ -10,7 +10,7 @@ const verifyAdmin = (req, res, next) => {
     req.token = bearerToken;
     jwt.verify(req.token, process.env.SECRET_KEY, (error, decoded) => {
       if (error) {
-        res.status(400).json({ status: 400, error: 'failed to decode the token or it has expired' });
+        res.status(400).json({ status: 400, error: `${error.message}` });
       } else if (decoded.response.isadmin === true) {
         req.userEmail = decoded.response.email;
         next();
@@ -39,7 +39,7 @@ const verifyUser = (req, res, next) => {
     req.token = bearerToken;
     jwt.verify(req.token, process.env.SECRET_KEY, (error, decoded) => {
       if (error) {
-        res.status(403).json({ status: 403, error: 'failed to decode the token or it has expired' });
+        res.status(403).json({ status: 403, error: `${error.message}` });
       } else if (decoded.response.isadmin === false) {
         req.userEmail = decoded.response.email;
         next();
