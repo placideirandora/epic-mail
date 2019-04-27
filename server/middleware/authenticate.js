@@ -1,5 +1,13 @@
 import jwt from 'jsonwebtoken';
 
+/**
+ * verify if the user trying to access the specified endpoint is admin
+ * and grant them access by passing the request to the next endpoint
+ * or denies it if they are not
+ * @param {object} req
+ * @param {object} res
+ * @param {request} next
+ */
 const verifyAdmin = (req, res, next) => {
   const bearerHeader = req.headers.authorization;
   if (typeof bearerHeader === 'undefined' || !bearerHeader) {
@@ -29,6 +37,14 @@ const verifyAdmin = (req, res, next) => {
   }
 };
 
+/**
+ * verify it the user trying to access the endpoint is registered
+ * and grant them access by passing the request to the next endpoint
+ * or denies it if they are not
+ * @param {object} req
+ * @param {object} res
+ * @param {request} next
+ */
 const verifyUser = (req, res, next) => {
   const bearerHeader = req.headers.authorization;
   if (typeof bearerHeader === 'undefined' || !bearerHeader) {
