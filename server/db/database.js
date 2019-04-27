@@ -8,6 +8,13 @@ import sql from '../helpers/sql';
 
 dotenv.config();
 
+/**
+ * create a new pool for connecting to
+ * online heroku database or
+ * local test database or
+ * local development database
+ * according to the corresponding environment
+ */
 let newPool;
 if (process.env.DATABASE_URL) {
   const connectionString = process.env.DATABASE_URL;
@@ -32,6 +39,11 @@ if (process.env.DATABASE_URL) {
   });
 }
 
+/**
+ * create an async await function for connecting to the specified database
+ * and create queries for creating tables to store information
+ * with a default admin user account in the users table
+ */
 const connect = async () => await newPool.connect();
 
 const tables = async () => {
@@ -120,6 +132,10 @@ groupmessages(
   groupid INTEGER REFERENCES groups(id) ON DELETE CASCADE
 );`;
 
+  /**
+   * execute the sql queries for creating the tables
+   * by connecting to the database with the async await function
+   */
   const connection = await connect();
   await connection.query(user);
   await connection.query(draftemail);
@@ -132,12 +148,21 @@ groupmessages(
 };
 
 
+/**
+ * execute the function for creating tables
+ * and display a console message if successfuly created
+ */
 tables();
 
 if (tables) {
   console.log('\n Database Tables Exist! \n');
 }
 
+/**
+ * async await database function for processing sql queries' requests
+ * @param {sql query} sqli
+ * @param {information} data
+ */
 const database = async (sqli, data = []) => {
   const connection = await connect();
   try {
