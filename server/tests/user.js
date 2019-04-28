@@ -295,6 +295,32 @@ describe('USER ENDPOINT TESTS', () => {
       });
   });
 
+  it('Should delete a specific user of id = 4', (done) => {
+    chai.request(server)
+      .delete('/api/v2/users/4')
+      .set('authorization', adminToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('success').eql('user deleted');
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
+  it('Should delete a specific user of id = 5', (done) => {
+    chai.request(server)
+      .delete('/api/v2/users/5')
+      .set('authorization', adminToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('status').eql(200);
+        res.body.should.have.property('success').eql('user deleted');
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+
   it('Should not delete the user of id = 2, because they will have been already deleted', (done) => {
     chai.request(server)
       .delete('/api/v2/users/2')
