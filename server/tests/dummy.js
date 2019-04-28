@@ -38,24 +38,31 @@ const falseUserNameNewUser = {
   password: '123456',
 };
 
+const newUser4 = {
+  firstname: 'Emmanuel4',
+  lastname: 'CYUBAHIRO4',
+  username: 'emmanuelcyubahiro4',
+  password: '123456',
+};
+
 const newUser5 = {
   firstname: 'Emmanuel5',
   lastname: 'CYUBAHIRO5',
-  email: 'emmanuelcyubahiro5@gmail.com',
+  username: 'emmanuelcyubahiro5',
   password: '123456',
 };
 
 const newUser6 = {
   firstname: 'Emmanuel6',
   lastname: 'CYUBAHIRO6',
-  email: 'emmanuelcyubahiro6@gmail.com',
+  username: 'emmanuelcyubahiro6',
   password: '123456',
 };
 
 const newUser7 = {
   firstname: 'Emmanuel7',
   lastname: 'CYUBAHIRO7',
-  email: 'emmanuelcyubahiro7@gmail.com',
+  username: 'emmanuelcyubahiro7',
   password: '123456',
 };
 
@@ -106,18 +113,23 @@ const newUserLogIn2 = {
   password: newUser2.password,
 };
 
+const newUserLogIn4 = {
+  email: 'emmanuelcyubahiro4@epicmail.com',
+  password: newUser4.password,
+};
+
 const newUserLogIn5 = {
-  email: newUser5.email,
+  email: 'emmanuelcyubahiro5@epicmail.com',
   password: newUser5.password,
 };
 
 const newUserLogIn6 = {
-  email: newUser6.email,
+  email: 'emmanuelcyubahiro6@epicmail.com',
   password: newUser6.password,
 };
 
 const newUserLogIn7 = {
-  email: newUser7.email,
+  email: 'placideirandora7@epicmail.com',
   password: newUser7.password,
 };
 
@@ -125,7 +137,7 @@ const message = {
   subject: 'test',
   message: 'test mic check mic check',
   parentMessageId: 1,
-  receiverId: 1,
+  receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
   status: 'sent',
 };
 
@@ -133,8 +145,24 @@ const message2 = {
   subject: 'test',
   message: 'test mic check mic check',
   parentMessageId: 2,
-  receiverId: 1,
-  status: 'read',
+  receiverEmail: 'emmanuelcyubahiro4@epicmail.com',
+  status: 'sent',
+};
+
+const message3 = {
+  subject: 'test',
+  message: 'test mic check mic check',
+  parentMessageId: 2,
+  receiverEmail: 'emmanuelcyubahiro44@epicmail.com',
+  status: 'sent',
+};
+
+const message4 = {
+  subject: 'test',
+  message: 'test mic check mic check',
+  parentMessageId: 2,
+  receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
+  status: 'sent',
 };
 
 const sentEmail = {
@@ -157,7 +185,15 @@ const draftEmail = {
   subject: 'test',
   message: 'test mic check mic check',
   parentMessageId: 2,
-  receiverId: 1,
+  receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
+  status: 'draft',
+};
+
+const draftEmail2 = {
+  subject: 'test',
+  message: 'test mic check mic check',
+  parentMessageId: 2,
+  receiverEmail: 'emmanuelcyubahiro4@epicmail.com',
   status: 'draft',
 };
 
@@ -236,18 +272,23 @@ export {
   falseAdminEmail,
   message,
   message2,
+  message3,
+  message4,
   sentEmail,
   readEmail,
   draftEmail,
+  draftEmail2,
   unreadEmail,
   unreadEmail2,
   readEmail2,
   falseFirstNameNewUser,
   falseLastNameNewUser,
   falseUserNameNewUser,
+  newUser4,
   newUser5,
   newUser6,
   newUser7,
+  newUserLogIn4,
   newUserLogIn5,
   newUserLogIn6,
   newUserLogIn7,
