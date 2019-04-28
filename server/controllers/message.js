@@ -152,8 +152,6 @@ const messages = {
                   success: 'received email retrieved',
                   data: response,
                 });
-              } else {
-                res.status(400).json({ status: 400, error: 'received email not retrieved' });
               }
             });
           }
