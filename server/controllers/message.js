@@ -141,7 +141,7 @@ const messages = {
         const userSpecificEmail = database(sql.retrieveUserSpecificReceivedEmail, [emailId, user]);
         userSpecificEmail.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'email not found' });
+            res.status(404).json({ status: 404, error: 'received email not found' });
           } else {
             const status = 'read';
             const readEmail = database(sql.emailRead, [status, emailId]);
@@ -149,11 +149,11 @@ const messages = {
               if (response) {
                 res.status(200).json({
                   status: 200,
-                  success: 'email retrieved',
+                  success: 'received email retrieved',
                   data: response,
                 });
               } else {
-                res.status(400).json({ status: 400, error: 'email not retrieved' });
+                res.status(400).json({ status: 400, error: 'received email not retrieved' });
               }
             });
           }
