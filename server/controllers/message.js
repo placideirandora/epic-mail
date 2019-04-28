@@ -340,7 +340,7 @@ const messages = {
         const adminGetDraftEmails = database(sql.adminGetDraftEmails, [status]);
         adminGetDraftEmails.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, no draft emails emails found' });
+            res.status(404).json({ status: 404, error: 'admin, no draft emails found' });
           } else if (response.length !== 0) {
             res.status(200).json({
               status: 200,
