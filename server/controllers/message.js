@@ -47,8 +47,6 @@ const messages = {
                   }],
                 });
               });
-            } else {
-              res.status(400).json({ status: 400, error: 'email not sent' });
             }
           });
         } else if (status === 'draft') {
