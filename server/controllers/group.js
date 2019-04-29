@@ -275,25 +275,32 @@ const groups = {
           const findUser = database(sql.retrieveSpecificUser, [email]);
           findUser.then((response) => {
             if (response.length !== 0) {
-              const findMember = database(sql.retrieveMember, [email, groupId]);
-              findMember.then((response) => {
+              const findMemberByUsername = database(sql.retrieveMemberByUsername, [username, groupId]);
+              findMemberByUsername.then((response) => {
                 if (response.length !== 0) {
-                  res.status(400).json({ status: 400, error: 'user with the specified email is already registered as a group member' });
+                  res.status(400).json({ status: 400, error: 'the specified username is already taken. choose another unique name' });
                 } else {
-                  const memberGroup = groupId;
-                  const member = new Member(username, email, memberGroup);
-                  const query = database(sql.registerGroupMember, [member.username, member.email, member.memberGroup]);
-                  query.then((response) => {
-                    const {
-                      id, username, email, groupid,
-                    } = response[0];
-                    res.status(201).json({
-                      status: 201,
-                      success: 'group member registered',
-                      data: [{
-                        id, username, email, groupid,
-                      }],
-                    });
+                  const findMemberByEmail = database(sql.retrieveMemberByEmail, [email, groupId]);
+                  findMemberByEmail.then((response) => {
+                    if (response.length !== 0) {
+                      res.status(400).json({ status: 400, error: 'user with the specified email is already registered' });
+                    } else {
+                      const memberGroup = groupId;
+                      const member = new Member(username, email, memberGroup);
+                      const query = database(sql.registerGroupMember, [member.username, member.email, member.memberGroup]);
+                      query.then((response) => {
+                        const {
+                          id, username, email, groupid,
+                        } = response[0];
+                        res.status(201).json({
+                          status: 201,
+                          success: 'group member registered',
+                          data: [{
+                            id, username, email, groupid,
+                          }],
+                        });
+                      });
+                    }
                   });
                 }
               });
@@ -504,7 +511,7 @@ const groups = {
             const findMember = database(sql.retrieveSpecificGroupMember, [user, groupId]);
             findMember.then((response) => {
               if (response.length === 0) {
-                res.status(404).json({ status: 404, error: 'you are not a member of the group' });
+                res.status(404).json({ status: 404, error: 'you are not a member of the group or it does not exist' });
               } else {
                 const memberEmails = database(sql.retrieveMemberEmails, [groupId]);
                 memberEmails.then((response) => {
