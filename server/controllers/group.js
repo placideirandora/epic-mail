@@ -264,7 +264,7 @@ const groups = {
     } = req.body;
     const usernameArr = Array.from(username);
     if (!isNaN(usernameArr[0])) {
-      res.status(400).json({ error: 'usernname must not start with a number' });
+      res.status(400).json({ error: 'username must not start with a number' });
     } else {
       const owner = req.userEmail;
       const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
