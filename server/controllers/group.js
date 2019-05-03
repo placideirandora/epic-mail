@@ -394,7 +394,7 @@ const groups = {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'group member not found' });
           } else {
-            res.status(400).json({ status: 400, success: 'group member retrieved', response });
+            res.status(200).json({ status: 200, success: 'group member retrieved', response });
           }
         });
       }
