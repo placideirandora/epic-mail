@@ -142,9 +142,13 @@ $ npm test
 |  GET   | api/v2/messages/{messageId} | Retrieve A Specific Email | Private |
 |  DELETE | api/v2/messages/{messageId} | Delete A Specific Email | Private |
 |  GET   | api/v2/messages/sent | Retrieve Sent Emails | Private |
+|  GET   | api/v2/messages/sent/{messageId} | Retrieve A Specific Sent Email | Private |
+|  DELETE   | api/v2/messages/sent/{messageId} | Delete A Specific Sent Email | Private |
 |  GET   | api/v2/messages/read | Retrieve Read Emails | Private |
 |  GET   | api/v2/messages/unread | Retrieve Unread Emails | Private |
 |  GET   | api/v2/messages/draft | Retrieve Draft Emails | Private |
+|  GET   | api/v2/messages/draft/{messageId} | Retrieve A Specific Draft Email | Private |
+|  DELETE   | api/v2/messages/draft/{messageId} | Delete A Specific Draft Email | Private |
 |  POST   | api/v2/groups | Create A Group | Private |
 |  GET   | api/v2/groups | Retrieve Groups | Private |
 |  GET   | api/v2/groups/{groupId} | Retrieve A Specific Group | Private |
