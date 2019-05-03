@@ -22,7 +22,7 @@ EPIC Mail helps people exchange messages/information over the internet.
 
 - **Code Climate** - Continuous Integration Code Quality
 
-- **Heroku** - Deployment. [Visit The App](https://epic-mail-final.herokuapp.com/)
+- **Heroku** - Deployment. [Visit The App](https://epic-mail-ch3.herokuapp.com/)
 
 - **GIT** - Version Control System
 
