@@ -335,9 +335,9 @@ const groups = {
               if (response.length === 0 || response.length === 'undefined') {
                 res.status(404).json({ status: 404, error: 'admin, no group members found' });
               } else {
-                res.status(404).json({
-                  status: 404,
-                  error: 'admin, group members retrieved',
+                res.status(200).json({
+                  status: 200,
+                  success: 'admin, group members retrieved',
                   data: response,
                 });
               }
