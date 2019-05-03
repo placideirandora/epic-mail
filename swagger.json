@@ -230,6 +230,9 @@
                 "400": {
                   "description": "Password Reset Failed"
                 },
+                "404": {
+                  "description": "User Not Registered"
+                },
                 "500": {
                   "description": "Internal Server Error"
                 }
@@ -293,7 +296,7 @@
               ],
               "responses": {
                 "201": {
-                  "description": "Email Sent"
+                  "description": "Email Sent Or Drafted"
                 },
                 "400": {
                   "description": "Email NoT Sent"
@@ -353,6 +356,78 @@
                 },
                 "404": {
                   "description": "Sent Emails Not Found"
+                },
+                "500": {
+                  "description": "Internal Server Error"
+                }
+              }
+            }
+          },
+          "/messages/sent/{messageId}": {
+            "get": {
+              "tags": [
+                "MESSAGE ENDPOINT ROUTES"
+              ],
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+                },
+              {
+                "name": "messageId",
+                "in": "path",
+                "description": "ID of a message",
+                "required": true,
+                "type": "integer",
+                "format": "int64"
+              }
+            ],
+              "summary": "Retrieve a specific sent email",
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "200": {
+                  "description": "Sent Email Retrieved"
+                },
+                "404": {
+                  "description": "Sent Email Not Found"
+                },
+                "500": {
+                  "description": "Internal Server Error"
+                }
+              }
+            },
+            "delete": {
+              "tags": [
+                "MESSAGE ENDPOINT ROUTES"
+              ],
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+                },
+              {
+                "name": "messageId",
+                "in": "path",
+                "description": "ID of a message",
+                "required": true,
+                "type": "integer",
+                "format": "int64"
+              }
+            ],
+              "summary": "Delete a specific sent email",
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "200": {
+                  "description": "Sent Email Deleted"
+                },
+                "404": {
+                  "description": "Sent Email Not Found"
                 },
                 "500": {
                   "description": "Internal Server Error"
@@ -440,6 +515,78 @@
                 },
                 "404": {
                   "description": "Draft Emails Not Found"
+                },
+                "500": {
+                  "description": "Internal Server Error"
+                }
+              }
+            }
+          },
+          "/messages/draft/{messageId}": {
+            "get": {
+              "tags": [
+                "MESSAGE ENDPOINT ROUTES"
+              ],
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+                },
+              {
+                "name": "messageId",
+                "in": "path",
+                "description": "ID of a message",
+                "required": true,
+                "type": "integer",
+                "format": "int64"
+              }
+            ],
+              "summary": "Retrieve a specific draft email",
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "200": {
+                  "description": "Draft Email Retrieved"
+                },
+                "404": {
+                  "description": "Draft Email Not Found"
+                },
+                "500": {
+                  "description": "Internal Server Error"
+                }
+              }
+            },
+            "delete": {
+              "tags": [
+                "MESSAGE ENDPOINT ROUTES"
+              ],
+              "parameters": [
+                {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+                },
+              {
+                "name": "messageId",
+                "in": "path",
+                "description": "ID of a message",
+                "required": true,
+                "type": "integer",
+                "format": "int64"
+              }
+            ],
+              "summary": "Delete a specific draft email",
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "200": {
+                  "description": "Draft Email Deleted"
+                },
+                "404": {
+                  "description": "Draft Email Not Found"
                 },
                 "500": {
                   "description": "Internal Server Error"
@@ -979,7 +1126,7 @@
         "required": [
           "firstname",
           "lastname",
-          "email",
+          "username",
           "password"
         ],
         "properties": {
@@ -1027,7 +1174,7 @@
           "subject",
           "message",
           "parentMessageId",
-          "receiverId",
+          "receiverEmail",
           "status"
         ],
         "properties": {
@@ -1074,9 +1221,8 @@
       },
       "GroupMember": {
         "required": [
-          "firstname",
-          "lastname",
-          "role"
+          "username",
+          "email"
         ],
         "properties": {
           "firstname": {
@@ -1095,8 +1241,7 @@
         "required": [
           "subject",
           "message",
-          "parentMessageId",
-          "status"
+          "parentMessageId"
         ],
         "properties": {
           "subject": {
