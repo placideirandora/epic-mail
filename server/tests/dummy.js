@@ -5,7 +5,7 @@ dotenv.config();
 const newUser = {
   firstname: 'Emmanuel',
   lastname: 'CYUBAHIRO',
-  email: 'emmanuelcyubahiro@gmail.com',
+  username: 'emmanuelcyubahiro',
   password: '123456',
 };
 
@@ -13,35 +13,63 @@ const newUser = {
 const newUser2 = {
   firstname: 'Emmanuel2',
   lastname: 'CYUBAHIRO2',
-  email: 'emmanuelcyubahiro2@gmail.com',
+  username: 'emmanuelcyubahiro2',
+  password: '123456',
+};
+
+const falseFirstNameNewUser = {
+  firstname: '1Emmanuel4',
+  lastname: 'CYUBAHIRO4',
+  username: 'emmanuelcyubahiro4',
+  password: '123456',
+};
+
+const falseLastNameNewUser = {
+  firstname: 'Emmanuel4',
+  lastname: '1CYUBAHIRO4',
+  username: 'emmanuelcyubahiro4',
+  password: '123456',
+};
+
+const falseUserNameNewUser = {
+  firstname: 'Emmanuel4',
+  lastname: 'CYUBAHIRO4',
+  username: '1emmanuelcyubahiro4',
   password: '123456',
 };
 
 const newUser4 = {
   firstname: 'Emmanuel4',
   lastname: 'CYUBAHIRO4',
-  email: 'emmanuelcyubahiro4@gmail.com',
+  username: 'emmanuelcyubahiro4',
   password: '123456',
 };
 
 const newUser5 = {
   firstname: 'Emmanuel5',
   lastname: 'CYUBAHIRO5',
-  email: 'emmanuelcyubahiro5@gmail.com',
+  username: 'emmanuelcyubahiro5',
   password: '123456',
 };
 
 const newUser6 = {
   firstname: 'Emmanuel6',
   lastname: 'CYUBAHIRO6',
-  email: 'emmanuelcyubahiro6@gmail.com',
+  username: 'emmanuelcyubahiro6',
   password: '123456',
 };
 
 const newUser7 = {
   firstname: 'Emmanuel7',
   lastname: 'CYUBAHIRO7',
-  email: 'emmanuelcyubahiro7@gmail.com',
+  username: 'emmanuelcyubahiro7',
+  password: '123456',
+};
+
+const newUser8 = {
+  firstname: 'Emmanuel8',
+  lastname: 'CYUBAHIRO8',
+  username: 'emmanuelcyubahiro8',
   password: '123456',
 };
 
@@ -55,25 +83,25 @@ const newUserNameTaken = {
 const newUserEmailTaken = {
   firstname: 'Emmanuel',
   lastname: 'CYUBAHIRO2',
-  email: 'emmanuelcyubahiro2@gmail.com',
+  username: 'emmanuelcyubahiro2',
   password: '123456',
 };
 
 const passReset = {
-  email: newUser2.email,
+  email: 'emmanuelcyubahiro2@epicmail.com',
 };
 
 const falsePassReset = {
-  email: 'emmanuel@gmail.com',
+  email: 'emmanuel@epicmail.com',
 };
 
 const admin = {
-  email: 'placideirandora@gmail.com',
+  email: 'placideirandora@epicmail.com',
   password: process.env.ADMIN_PASSWORD,
 };
 
 const falseAdminPass = {
-  email: 'placideirandora@gmail.com',
+  email: 'placideirandora@epicmail.com',
   password: 'xxxxxxxxxxxxx',
 };
 
@@ -83,40 +111,45 @@ const falseAdminEmail = {
 };
 
 const newUserLogIn = {
-  email: newUser.email,
+  email: 'emmanuelcyubahiro@epicmail.com',
   password: newUser.password,
 };
 
 const newUserLogIn2 = {
-  email: newUser2.email,
+  email: 'emmanuelcyubahiro2@epicmail.com',
   password: newUser2.password,
 };
 
 const newUserLogIn4 = {
-  email: newUser4.email,
+  email: 'emmanuelcyubahiro4@epicmail.com',
   password: newUser4.password,
 };
 
 const newUserLogIn5 = {
-  email: newUser5.email,
+  email: 'emmanuelcyubahiro5@epicmail.com',
   password: newUser5.password,
 };
 
 const newUserLogIn6 = {
-  email: newUser6.email,
+  email: 'emmanuelcyubahiro6@epicmail.com',
   password: newUser6.password,
 };
 
 const newUserLogIn7 = {
-  email: newUser7.email,
+  email: 'emmanuelcyubahiro7@epicmail.com',
   password: newUser7.password,
+};
+
+const newUserLogIn8 = {
+  email: 'emmanuelcyubahiro8@epicmail.com',
+  password: newUser8.password,
 };
 
 const message = {
   subject: 'test',
   message: 'test mic check mic check',
   parentMessageId: 1,
-  receiverId: 1,
+  receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
   status: 'sent',
 };
 
@@ -124,8 +157,24 @@ const message2 = {
   subject: 'test',
   message: 'test mic check mic check',
   parentMessageId: 2,
-  receiverId: 1,
-  status: 'read',
+  receiverEmail: 'emmanuelcyubahiro4@epicmail.com',
+  status: 'sent',
+};
+
+const message3 = {
+  subject: 'test',
+  message: 'test mic check mic check',
+  parentMessageId: 2,
+  receiverEmail: 'emmanuelcyubahiro44@epicmail.com',
+  status: 'sent',
+};
+
+const message4 = {
+  subject: 'test',
+  message: 'test mic check mic check',
+  parentMessageId: 2,
+  receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
+  status: 'sent',
 };
 
 const sentEmail = {
@@ -148,7 +197,15 @@ const draftEmail = {
   subject: 'test',
   message: 'test mic check mic check',
   parentMessageId: 2,
-  receiverId: 1,
+  receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
+  status: 'draft',
+};
+
+const draftEmail2 = {
+  subject: 'test',
+  message: 'test mic check mic check',
+  parentMessageId: 2,
+  receiverEmail: 'emmanuelcyubahiro4@epicmail.com',
   status: 'draft',
 };
 
@@ -200,16 +257,24 @@ const newGroupName2 = {
 };
 
 const newGroupMember = {
-  firstname: 'someone',
-  lastname: 'someoni',
-  role: 'testing',
+  username: 'testing',
+  email: 'emmanuelcyubahiro6@epicmail.com',
+};
+
+const newGroupMember2 = {
+  username: 'testing',
+  email: 'emmanuelcyubahiro10@epicmail.com',
+};
+
+const newGroupMember3 = {
+  username: 'test',
+  email: 'emmanuelcyubahiro6@epicmail.com',
 };
 
 const groupMessage = {
   subject: 'test',
   message: 'test mic check mic check',
   parentMessageId: 1,
-  status: 'sent',
 };
 
 
@@ -227,25 +292,35 @@ export {
   falseAdminEmail,
   message,
   message2,
+  message3,
+  message4,
   sentEmail,
   readEmail,
   draftEmail,
+  draftEmail2,
   unreadEmail,
   unreadEmail2,
   readEmail2,
+  falseFirstNameNewUser,
+  falseLastNameNewUser,
+  falseUserNameNewUser,
   newUser4,
   newUser5,
   newUser6,
   newUser7,
+  newUser8,
   newUserLogIn4,
   newUserLogIn5,
   newUserLogIn6,
   newUserLogIn7,
+  newUserLogIn8,
   newGroup,
   newGroup2,
   newGroup3,
   newGroupName,
   newGroupName2,
   newGroupMember,
+  newGroupMember2,
+  newGroupMember3,
   groupMessage,
 };

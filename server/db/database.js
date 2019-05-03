@@ -8,6 +8,13 @@ import sql from '../helpers/sql';
 
 dotenv.config();
 
+/**
+ * create a new pool for connecting to
+ * online heroku database or
+ * local test database or
+ * local development database
+ * according to the corresponding environment
+ */
 let newPool;
 if (process.env.DATABASE_URL) {
   const connectionString = process.env.DATABASE_URL;
@@ -32,6 +39,11 @@ if (process.env.DATABASE_URL) {
   });
 }
 
+/**
+ * create an async await function for connecting to the specified database
+ * and create queries for creating tables to store information
+ * with a default admin user account in the users table
+ */
 const connect = async () => await newPool.connect();
 
 const tables = async () => {
@@ -39,6 +51,7 @@ const tables = async () => {
   const admin = [
     process.env.ADMIN_FIRSTNAME,
     process.env.ADMIN_LASTNAME,
+    process.env.ADMIN_USERNAME,
     process.env.ADMIN_EMAIL,
     hash,
     process.env.IS_ADMIN,
@@ -47,23 +60,48 @@ const tables = async () => {
 
   const user = `CREATE TABLE IF NOT EXISTS
 users(
-    id SERIAL PRIMARY KEY,
+    id SERIAL,
     firstname VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
-    email VARCHAR(60) UNIQUE NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(60) UNIQUE NOT NULL PRIMARY KEY,
     password VARCHAR(200),
     isAdmin BOOLEAN NOT NULL default FALSE,
     registered DATE
 );`;
 
-  const email = `CREATE TABLE IF NOT EXISTS
-messages(
+  const draftemail = `CREATE TABLE IF NOT EXISTS
+draftemails(
     id SERIAL PRIMARY KEY,
     subject VARCHAR(20) NOT NULL,
     message TEXT NOT NULL,
     parentmessageid INTEGER NOT NULL,
-    senderid INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    receiverid INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    senderemail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    receiveremail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    status VARCHAR(10) NOT NULL,
+    createdon DATE
+);`;
+
+  const sentemail = `CREATE TABLE IF NOT EXISTS
+sentemails(
+    id SERIAL PRIMARY KEY,
+    subject VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    parentmessageid INTEGER NOT NULL,
+    senderemail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    receiveremail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    status VARCHAR(10) NOT NULL,
+    createdon DATE
+);`;
+
+  const recievedemail = `CREATE TABLE IF NOT EXISTS
+receivedemails(
+    id SERIAL PRIMARY KEY,
+    subject VARCHAR(20) NOT NULL,
+    message TEXT NOT NULL,
+    parentmessageid INTEGER NOT NULL,
+    senderemail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+    receiveremail VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
     status VARCHAR(10) NOT NULL,
     createdon DATE
 );`;
@@ -73,15 +111,14 @@ groups(
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     role VARCHAR(100) NOT NULL,
-    owner INTEGER REFERENCES users(id) ON DELETE CASCADE
+    owner VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE
 );`;
 
   const groupmember = `CREATE TABLE IF NOT EXISTS
 groupmembers(
   id SERIAL PRIMARY KEY,
-  firstname VARCHAR(20),
-  lastname VARCHAR(20),
-  role VARCHAR(100) NOT NULL,
+  username VARCHAR(50),
+  email VARCHAR(60) NOT NULL REFERENCES users(email) ON DELETE CASCADE,
   groupid INTEGER REFERENCES groups(id) ON DELETE CASCADE
 );`;
 
@@ -91,14 +128,19 @@ groupmessages(
   subject VARCHAR(20) NOT NULL,
   message TEXT NOT NULL,
   parentmessageid INTEGER NOT NULL,
-  status VARCHAR(10) NOT NULL,
   createdon DATE,
   groupid INTEGER REFERENCES groups(id) ON DELETE CASCADE
 );`;
 
+  /**
+   * execute the sql queries for creating the tables
+   * by connecting to the database with the async await function
+   */
   const connection = await connect();
   await connection.query(user);
-  await connection.query(email);
+  await connection.query(draftemail);
+  await connection.query(sentemail);
+  await connection.query(recievedemail);
   await connection.query(group);
   await connection.query(groupmember);
   await connection.query(groupmail);
@@ -106,12 +148,21 @@ groupmessages(
 };
 
 
+/**
+ * execute the function for creating tables
+ * and display a console message if successfuly created
+ */
 tables();
 
 if (tables) {
   console.log('\n Database Tables Exist! \n');
 }
 
+/**
+ * async await database function for processing sql queries' requests
+ * @param {sql query} sqli
+ * @param {information} data
+ */
 const database = async (sqli, data = []) => {
   const connection = await connect();
   try {

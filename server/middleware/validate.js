@@ -1,14 +1,20 @@
 import Joi from 'joi';
 
 const validate = {
-
+  /**
+   * validate user submitted information
+   * prior to a successful user registration
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateRegistration(req, res, next) {
     const userSchema = Joi.object().keys({
       firstname: Joi.string().alphanum().min(4).max(15)
         .required(),
       lastname: Joi.string().alphanum().min(4).max(15)
         .required(),
-      email: Joi.string().email({ minDomainAtomas: 2 })
+      username: Joi.string().alphanum().min(4).max(25)
         .required(),
       password: Joi.string().alphanum().min(3).max(15)
         .required(),
@@ -22,6 +28,13 @@ const validate = {
     next();
   },
 
+  /**
+   * validate user submitted information
+   * prior to a successful user login
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateLogin(req, res, next) {
     const loginSchema = Joi.object().keys({
       email: Joi.string().email({ minDomainAtomas: 2 })
@@ -38,6 +51,13 @@ const validate = {
     next();
   },
 
+  /**
+   * validate user submitted information
+   * prior to a successful send email
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateEmail(req, res, next) {
     const messageSchema = Joi.object().keys({
       subject: Joi.string().trim().min(2).max(25)
@@ -45,11 +65,11 @@ const validate = {
       message: Joi.string().trim().min(10)
         .max(800)
         .required(),
-      receiverId: Joi.number().integer()
+      receiverEmail: Joi.string().email({ minDomainAtomas: 2 })
         .required(),
       parentMessageId: Joi.number().integer()
         .required(),
-      status: Joi.string().alphanum().valid('sent', 'draft', 'read', 'unread')
+      status: Joi.string().valid('sent', 'draft')
         .required(),
     });
 
@@ -61,6 +81,12 @@ const validate = {
     next();
   },
 
+  /**
+   * validate user id to be an integer number
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateUserId(req, res, next) {
     const userParams = Joi.object().keys({
       userId: Joi.number().integer()
@@ -75,6 +101,12 @@ const validate = {
     next();
   },
 
+  /**
+   * validate email address to be in a correct format
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateEmailAddr(req, res, next) {
     const emailSchema = Joi.object().keys({
       email: Joi.string().email({ minDomainAtomas: 2 })
@@ -89,6 +121,12 @@ const validate = {
     next();
   },
 
+  /**
+   * validate email id to be an integer number
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateEmailId(req, res, next) {
     const emailParams = Joi.object().keys({
       emailId: Joi.number().integer()
@@ -103,6 +141,13 @@ const validate = {
     next();
   },
 
+  /**
+   * validate user submitted information
+   * prior to a successful group creation
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateGroup(req, res, next) {
     const groupSchema = Joi.object().keys({
       name: Joi.string().trim().min(6).max(30)
@@ -119,6 +164,12 @@ const validate = {
     next();
   },
 
+  /**
+   * validate group id to be an integer number
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateGroupId(req, res, next) {
     const groupIdParams = Joi.object().keys({
       groupId: Joi.number().integer()
@@ -133,6 +184,12 @@ const validate = {
     next();
   },
 
+  /**
+   * validate group name to not be less than 6 or greater than 30 letters
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateGroupName(req, res, next) {
     const groupNameSchema = Joi.object().keys({
       name: Joi.string().trim().min(6).max(30)
@@ -146,6 +203,12 @@ const validate = {
     next();
   },
 
+  /**
+   * validate group id and group member id to be integer numbers
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateGroupIdAndMemberId(req, res, next) {
     const groupMemberParams = Joi.object().keys({
       groupId: Joi.number().integer()
@@ -163,13 +226,18 @@ const validate = {
     next();
   },
 
+  /**
+   * validate user submitted information
+   * prior to a successful group member registration
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateGroupMember(req, res, next) {
     const groupMemberSchema = Joi.object().keys({
-      firstname: Joi.string().alphanum().min(5).max(15)
+      username: Joi.string().alphanum().min(5).max(15)
         .required(),
-      lastname: Joi.string().alphanum().min(5).max(15)
-        .required(),
-      role: Joi.string().trim().min(5).max(60)
+      email: Joi.string().email({ minDomainAtomas: 2 })
         .required(),
     });
 
@@ -181,6 +249,13 @@ const validate = {
     next();
   },
 
+  /**
+   * validate user submitted information
+   * prior to a successful send group email
+   * @param {object} req
+   * @param {object} res
+   * @param {request} next
+   */
   validateGroupEmail(req, res, next) {
     const messageSchema = Joi.object().keys({
       subject: Joi.string().trim().min(2).max(25)
@@ -189,8 +264,6 @@ const validate = {
         .max(800)
         .required(),
       parentMessageId: Joi.number().integer()
-        .required(),
-      status: Joi.string().alphanum().valid('sent', 'draft', 'read', 'unread')
         .required(),
     });
 

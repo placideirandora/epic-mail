@@ -22,7 +22,7 @@ EPIC Mail helps people exchange messages/information over the internet.
 
 - **Code Climate** - Continuous Integration Code Quality
 
-- **Heroku** - Deployment. [Visit The App](https://epic-mail-ch3.herokuapp.com/)
+- **Heroku** - Deployment. [Visit The App](https://epic-mail-final.herokuapp.com/)
 
 - **GIT** - Version Control System
 
@@ -51,7 +51,7 @@ $ npm install
 ### Download And Install A Database Management System
 
 ```
-$ PostgreSQL 
+$ PostgreSQL
 ```
 
 ### PostgreSQL Databases
@@ -87,23 +87,23 @@ $ DB_PORT = 5000 (custom) or 5432 (default)
 ```
 
 ```
-$ DB_HOST = "localhost"
-```
-
-```
 $ ADMIN_FIRSTNAME = "someone"
 ```
 
 ```
-$ ADMIN_LASTNAME = "someone" 
+$ ADMIN_LASTNAME = "someone"
 ```
 
 ```
-$ ADMIN_EMAIL = "someone@epicmail.com" 
+$ ADMIN_USERNAME = "someone"
 ```
 
 ```
-$ ADMIN_PASSWORD = "*xxxxxxxxxx"  
+$ ADMIN_EMAIL = "someone@epicmail.com"
+```
+
+```
+$ ADMIN_PASSWORD = "xxxxxxxxxx"
 ```
 
 ```
@@ -165,21 +165,22 @@ $ npm test
 
 ```
 {
-  "status": 201,
-  "success": "user registered",
-  "data": [
-    {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNwb25zZSI6eyJpZCI6MTgsImZpcnN0bmFtZSI6InNvbWVvbmVsc2UiLCJsYXN0bmFtZSI6InNvbWVvbmVsc2UiLCJlbWFpbCI6InNvbWVvbmVsc2VAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkZ3pmU2pHQ3JBWldNcXp2VnV0V1hjdW1SWmRyajNBbTBNbHhWQ0dxcno5WGkzOUVsR0tQNDYiLCJpc2FkbWluIjpmYWxzZSwicmVnaXN0ZXJlZCI6IjIwMTktMDMtMTlUMDA6MDA6MDAuMDAwWiJ9LCJpYXQiOjE1NTMwMDQ4Nzd9.AcQCo1E10_ASqKEKruchDEK3tRIVwC9drZVDgMh6jRc",
-      "user": {
-        "id": 18,
-        "firstname": "someonelse",
-        "lastname": "someonelse",
-        "email": "someonelse@gmail.com",
-        "isadmin": false,
-        "registered": "2019-03-19T00:00:00.000Z"
-      }
-    }
-  ]
+    "status": 201,
+    "success": "user registered",
+    "data": [
+        {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNwb25zZSI6eyJpZCI6NDI1LCJmaXJzdG5hbWUiOiJzb21lb25lIiwibGFzdG5hbWUiOiJzb21lb25lIiwidXNlcm5hbWUiOiJzb21lb25lIiwiZW1haWwiOiJzb21lb25lQGVwaWNtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJDNleFVENUtnUDJza3J0MzloYTdPQS5CdVZVa1E1alQvbk9na1hjeE4uNk04MFB6cXBSVUFlIiwiaXNhZG1pbiI6ZmFsc2UsInJlZ2lzdGVyZWQiOiIyMDE5LTA0LTAxVDIyOjAwOjAwLjAwMFoifSwiaWF0IjoxNTU0MjM1NjczfQ.VHgTeFNx4FRbNPENp0JY2Q6lK5cT5QaBZ-RMIH6kIag",
+            "user": {
+                "id": 425,
+                "firstname": "someone",
+                "lastname": "someone",
+                "username": "someone",
+                "email": "someone@epicmail.com",
+                "isadmin": false,
+                "registered": "2019-04-01T22:00:00.000Z"
+            }
+        }
+    ]
 }
 ```
 
@@ -187,21 +188,20 @@ $ npm test
 
 ```
 {
-  "status": 200,
-  "success": "logged in",
-  "data": [
-    {
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNwb25zZSI6eyJpZCI6MTgsImZpcnN0bmFtZSI6InNvbWVvbmVsc2UiLCJsYXN0bmFtZSI6InNvbWVvbmVsc2UiLCJlbWFpbCI6InNvbWVvbmVsc2VAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkZ3pmU2pHQ3JBWldNcXp2VnV0V1hjdW1SWmRyajNBbTBNbHhWQ0dxcno5WGkzOUVsR0tQNDYiLCJpc2FkbWluIjpmYWxzZSwicmVnaXN0ZXJlZCI6IjIwMTktMDMtMTlUMDA6MDA6MDAuMDAwWiJ9LCJpYXQiOjE1NTMwMDQ5NzYsImV4cCI6MTU1MzAxNTc3Nn0._kSiN_cAXacgafWZhv65gL7a9HIZai_abWnBCZaXzNQ",
-      "data": {
-        "id": 18,
-        "firstname": "someonelse",
-        "lastname": "someonelse",
-        "email": "someonelse@gmail.com",
-        "isadmin": false,
-        "registered": "2019-03-19T00:00:00.000Z"
-      }
-    }
-  ]
+    "status": 200,
+    "success": "logged in",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNwb25zZSI6eyJpZCI6NDI1LCJmaXJzdG5hbWUiOiJzb21lb25lIiwibGFzdG5hbWUiOiJzb21lb25lIiwidXNlcm5hbWUiOiJzb21lb25lIiwiZW1haWwiOiJzb21lb25lQGVwaWNtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJDNleFVENUtnUDJza3J0MzloYTdPQS5CdVZVa1E1alQvbk9na1hjeE4uNk04MFB6cXBSVUFlIiwiaXNhZG1pbiI6ZmFsc2UsInJlZ2lzdGVyZWQiOiIyMDE5LTA0LTAxVDIyOjAwOjAwLjAwMFoifSwiaWF0IjoxNTU0MjM1NzI5LCJleHAiOjE1NTQyNDY1Mjl9.tE3In1DmIvG8V4x7qePcSEAlKLCUIdlCaqKCzI5XaoY",
+    "data": [
+        {
+            "id": 425,
+            "firstname": "someone",
+            "lastname": "someone",
+            "username": "someone",
+            "email": "someone@epicmail.com",
+            "isadmin": false,
+            "registered": "2019-04-01T22:00:00.000Z"
+        }
+    ]
 }
 ```
 
@@ -209,41 +209,114 @@ $ npm test
 
 ```
 {
-  "status": 201,
-  "success": "email sent",
-  "data": [
-    {
-      "id": 2,
-      "subject": "Hello World",
-      "message": "The first program in every programming language",
-      "parentmessageid": 1,
-      "senderid": 18,
-      "receiverid": 2,
-      "status": "read",
-      "createdon": "2019-03-19T00:00:00.000Z"
-    }
-  ]
+    "status": 201,
+    "success": "email sent",
+    "data": [
+        {
+            "id": 8,
+            "subject": "Hello World",
+            "message": "The first program in every programming language",
+            "parentmessageid": 1,
+            "senderemail": "someone@epicmail.com",
+            "receiveremail": "fredmanzi@epicmail.com",
+            "status": "sent",
+            "createdon": "2019-04-01T22:00:00.000Z"
+        }
+    ]
 }
 ```
 
-### GET messages
+### GET messages | fredmanzi@epicmail.com
 
 ```
 {
-  "status": 200,
-  "success": "emails retrieved",
-  "data": [
-    {
-      "id": 2,
-      "subject": "Hello World",
-      "message": "The first program in every programming language",
-      "parentmessageid": 1,
-      "senderid": 18,
-      "receiverid": 2,
-      "status": "read",
-      "createdon": "2019-03-19T00:00:00.000Z"
-    }
-  ]
+    "status": 200,
+    "success": "received emails retrieved",
+    "data": [
+        {
+            "id": 2,
+            "subject": "WHAT'S UP!",
+            "message": "How did you do it man?!",
+            "parentmessageid": 1,
+            "senderemail": "emmanuelcyubahiro@epicmail.com",
+            "receiveremail": "fredmanzi@epicmail.com",
+            "status": "read",
+            "createdon": "2019-03-26T22:00:00.000Z"
+        },
+        {
+            "id": 8,
+            "subject": "Hello World",
+            "message": "The first program in every programming language",
+            "parentmessageid": 1,
+            "senderemail": "someone@epicmail.com",
+            "receiveremail": "fredmanzi@epicmail.com",
+            "status": "unread",
+            "createdon": "2019-04-01T22:00:00.000Z"
+        }
+    ]
+}
+```
+
+### GET messages/unread | fredmanzi@epicmail.com
+
+```
+{
+    "status": 200,
+    "success": "your unread emails retrieved",
+    "data": [
+        {
+            "id": 8,
+            "subject": "Hello World",
+            "message": "The first program in every programming language",
+            "parentmessageid": 1,
+            "senderemail": "someone@epicmail.com",
+            "receiveremail": "fredmanzi@epicmail.com",
+            "status": "unread",
+            "createdon": "2019-04-01T22:00:00.000Z"
+        }
+    ]
+}
+```
+
+### GET messages/8 | fredmanzi@epicmail.com
+
+```
+{
+    "status": 200,
+    "success": "email retrieved",
+    "data": [
+        {
+            "id": 8,
+            "subject": "Hello World",
+            "message": "The first program in every programming language",
+            "parentmessageid": 1,
+            "senderemail": "someone@epicmail.com",
+            "receiveremail": "fredmanzi@epicmail.com",
+            "status": "read",
+            "createdon": "2019-04-01T22:00:00.000Z"
+        }
+    ]
+}
+```
+
+### GET messages/sent | someone@epicmail.com
+
+```
+{
+    "status": 200,
+    "success": "your sent emails retrieved",
+    "data": [
+        {
+            "id": 8,
+            "subject": "Hello World",
+            "message": "The first program in every programming language",
+            "parentmessageid": 1,
+            "senderemail": "someone@epicmail.com",
+            "receiveremail": "fredmanzi@epicmail.com",
+            "status": "sent",
+            "createdon": "2019-04-01T22:00:00.000Z"
+        }
+    ]
 }
 ```
 
@@ -251,15 +324,15 @@ $ npm test
 
 ```
 {
-  "status": 201,
-  "success": "group created",
-  "data": [
-    {
-      "id": 3,
-      "name": "Group 1",
-      "role": "Studying Computer Programming"
-    }
-  ]
+    "status": 201,
+    "success": "group created",
+    "data": [
+        {
+            "id": 5,
+            "name": "Developers",
+            "role": "Coding"
+        }
+    ]
 }
 ```
 
@@ -267,30 +340,16 @@ $ npm test
 
 ```
 {
-  "status": 200,
-  "success": "groups retrieved",
-  "data": [
-    {
-      "id": 3,
-      "name": "Group 1",
-      "role": "Studying Computer Programming",
-      "owner": 18
-    }
-  ]
-}
-```
-
-### PATCH groups/3/name
-
-```
-{
-  "status": 200,
-  "success": "group name changed",
-  "data": {
-    "id": 3,
-    "name": "Group One",
-    "role": "Studying Computer Programming"
-  }
+    "status": 200,
+    "success": "groups retrieved",
+    "data": [
+        {
+            "id": 5,
+            "name": "Developers",
+            "role": "Coding",
+            "owner": "someone@epicmail.com"
+        }
+    ]
 }
 ```
 
@@ -298,17 +357,16 @@ $ npm test
 
 ```
 {
-  "status": 201,
-  "success": "group member registered",
-  "data": [
-    {
-      "id": 3,
-      "firstname": "ibelongtosomeone",
-      "lastname": "ibelongtosomeone",
-      "role": "programming",
-      "groupid": 3
-    }
-  ]
+    "status": 201,
+    "success": "group member registered",
+    "data": [
+        {
+            "id": 3,
+            "username": "fredmanzi",
+            "email": "fredmanzi@epicmail.com",
+            "groupid": 5
+        }
+    ]
 }
 ```
 
@@ -316,19 +374,18 @@ $ npm test
 
 ```
 {
-  "status": 201,
-  "success": "group email sent",
-  "data": [
-    {
-      "id": 2,
-      "subject": "CODING",
-      "message": "It is a process of telling a computer what to do.",
-      "parentmessageid": 1,
-      "status": "sent",
-      "groupid": 3,
-      "createdon": "2019-03-19T00:00:00.000Z"
-    }
-  ]
+    "status": 201,
+    "success": "group email sent",
+    "data": [
+        {
+            "id": 3,
+            "subject": "CODING",
+            "message": "It is a process of telling a computer what to do.",
+            "parentmessageid": 1,
+            "groupid": 5,
+            "createdon": "2019-04-01T22:00:00.000Z"
+        }
+    ]
 }
 ```
 
