@@ -389,19 +389,12 @@ const groups = {
       if (response.length === 0 || response.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'group not found' });
       } else {
-        const specificGroupMember = database(sql.retrieveSpecificGroupMember, [groupMemberId, groupId]);
+        const specificGroupMember = database(sql.retrieveSpecificGroupMemberById, [groupMemberId, groupId]);
         specificGroupMember.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'group member not found' });
           } else {
-            const query = database(sql.retrieveSpecificGroupMember, [groupMemberId, groupId]);
-            query.then((response) => {
-              if (response) {
-                res.status(200).json({ status: 200, success: 'group member retrieved', response });
-              } else {
-                res.status(400).json({ status: 400, error: 'group member not retrieved' });
-              }
-            });
+            res.status(400).json({ status: 400, success: 'group member retrieved', response });
           }
         });
       }
