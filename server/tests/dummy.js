@@ -66,6 +66,13 @@ const newUser7 = {
   password: '123456',
 };
 
+const newUser8 = {
+  firstname: 'Emmanuel8',
+  lastname: 'CYUBAHIRO8',
+  username: 'emmanuelcyubahiro8',
+  password: '123456',
+};
+
 const newUserNameTaken = {
   firstname: 'Emmanuel',
   lastname: 'CYUBAHIRO',
@@ -129,8 +136,13 @@ const newUserLogIn6 = {
 };
 
 const newUserLogIn7 = {
-  email: 'placideirandora7@epicmail.com',
+  email: 'emmanuelcyubahiro7@epicmail.com',
   password: newUser7.password,
+};
+
+const newUserLogIn8 = {
+  email: 'emmanuelcyubahiro8@epicmail.com',
+  password: newUser8.password,
 };
 
 const message = {
@@ -245,16 +257,24 @@ const newGroupName2 = {
 };
 
 const newGroupMember = {
-  firstname: 'someone',
-  lastname: 'someoni',
-  role: 'testing',
+  username: 'testing',
+  email: 'emmanuelcyubahiro6@epicmail.com',
+};
+
+const newGroupMember2 = {
+  username: 'testing',
+  email: 'emmanuelcyubahiro10@epicmail.com',
+};
+
+const newGroupMember3 = {
+  username: 'test',
+  email: 'emmanuelcyubahiro6@epicmail.com',
 };
 
 const groupMessage = {
   subject: 'test',
   message: 'test mic check mic check',
   parentMessageId: 1,
-  status: 'sent',
 };
 
 
@@ -288,15 +308,19 @@ export {
   newUser5,
   newUser6,
   newUser7,
+  newUser8,
   newUserLogIn4,
   newUserLogIn5,
   newUserLogIn6,
   newUserLogIn7,
+  newUserLogIn8,
   newGroup,
   newGroup2,
   newGroup3,
   newGroupName,
   newGroupName2,
   newGroupMember,
+  newGroupMember2,
+  newGroupMember3,
   groupMessage,
 };
