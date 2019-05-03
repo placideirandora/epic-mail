@@ -415,7 +415,7 @@ const groups = {
       if (response.length === 0 || response.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'group not found' });
       } else {
-        const specificGroupMember = database(sql.retrieveSpecificGroupMember, [groupMemberId, groupId]);
+        const specificGroupMember = database(sql.retrieveSpecificGroupMemberById, [groupMemberId, groupId]);
         specificGroupMember.then((response) => {
           if (response.length === 0 || response.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'group member not found' });
