@@ -1136,7 +1136,7 @@
           "lastname": {
             "type": "string"
           },
-          "email": {
+          "username": {
             "type": "string",
             "uniqueItems": true
           },
@@ -1187,8 +1187,8 @@
           "parentMessageId": {
             "type": "integer"
           },
-          "receiverId": {
-            "type": "integer"
+          "receiverEmail": {
+            "type": "string"
           },
           "status": {
             "type": "string"
@@ -1225,13 +1225,10 @@
           "email"
         ],
         "properties": {
-          "firstname": {
+          "username": {
             "type": "string"
           },
-          "lastname": {
-            "type": "string"
-          },
-          "role": {
+          "email": {
             "type": "string",
             "uniqueItems": true
           }
@@ -1252,9 +1249,6 @@
           },
           "parentMessageId": {
             "type": "integer"
-          },
-          "status": {
-            "type": "string"
           }
         }
       }
