@@ -8,10 +8,11 @@
     "contact": {
       "email": "placideirandora@gmail.com"
     },
-    "host": "epic-mail-ch3.herokuapp.com",
+    "host": "localhost:3000",
     "basePath": "/api/v2",
     "schemes": [
-      "https"
+      "https",
+      "http"
     ],
     "consumes": [
       "application/json"
@@ -264,7 +265,7 @@
                 }
               }
             }
-          
+
           },
           "/messages": {
             "post": {
@@ -964,7 +965,7 @@
                 }
               }
             }
-          }    
+          }
     },
     "securityDefinitions": {
       "jsonwebtoken": {
