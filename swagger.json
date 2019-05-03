@@ -8,7 +8,7 @@
     "contact": {
       "email": "placideirandora@gmail.com"
     },
-    "host": "localhost:3000",
+    "host": "epic-mail-ch3.herokuapp.com",
     "basePath": "/api/v2",
     "schemes": [
       "https",
