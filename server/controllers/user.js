@@ -102,7 +102,7 @@ const users = {
         } else {
           res.status(400).json({
             status: 400,
-            error: 'invalid email or password',
+            error: 'incorrect email or password',
           });
         }
       }
