@@ -75,6 +75,10 @@ $ DB_USER = "postgres"
 ```
 
 ```
+$ DB_PASSWORD = "xxxxxxxxxx"
+```
+
+```
 $ DB_NAME = "epic-mail"
 ```
 

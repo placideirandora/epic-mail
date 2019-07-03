@@ -142,7 +142,7 @@ describe('USER ENDPOINT TESTS', () => {
       .end((err, res) => {
         res.body.should.have.status(404);
         res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('invalid email or password');
+        res.body.should.have.property('error').eql('incorrect email or password');
         res.body.should.be.a('object');
         done();
       });
@@ -156,7 +156,7 @@ describe('USER ENDPOINT TESTS', () => {
       .end((err, res) => {
         res.body.should.have.status(400);
         res.body.should.have.property('status').eql(400);
-        res.body.should.have.property('error').eql('invalid email or password');
+        res.body.should.have.property('error').eql('incorrect email or password');
         res.body.should.be.a('object');
         done();
       });
