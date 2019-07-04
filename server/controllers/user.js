@@ -67,44 +67,43 @@ const users = {
    * @param {object} req
    * @param {object} res
    */
-  loginUser(req, res) {
+  async loginUser(req, res) {
     const {
       email, password,
     } = req.body;
     const query = database(sql.loginUser, [email]);
-    query.then((response) => {
-      if (response.length === 0 || response.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'incorrect email or password' });
-      } else if (response[0].password === null) {
-        res.status(404).json({
-          status: 404,
-          error: 'sorry! you have recently reset your password. '
+    const responseOne = await query;
+    if (responseOne.length === 0 || responseOne.length === 'undefined') {
+      res.status(404).json({ status: 404, error: 'incorrect email or password' });
+    } else if (responseOne[0].password === null) {
+      res.status(404).json({
+        status: 404,
+        error: 'sorry! you have recently reset your password. '
             + 'check your email for the password reset link',
+      });
+    } else {
+      const truePass = bcrypt.compareSync(password, responseOne[0].password);
+      if (truePass) {
+        jwt.sign({ response: responseOne[0] }, process.env.SECRET_KEY, { expiresIn: '3h' }, (err, token) => {
+          const {
+            id, firstname, lastname, username, email, isadmin, registered,
+          } = responseOne[0];
+          res.status(200).json({
+            status: 200,
+            success: 'logged in',
+            token,
+            data: [{
+              id, firstname, lastname, username, email, isadmin, registered,
+            }],
+          });
         });
       } else {
-        const truePass = bcrypt.compareSync(password, response[0].password);
-        if (truePass) {
-          jwt.sign({ response: response[0] }, process.env.SECRET_KEY, { expiresIn: '3h' }, (err, token) => {
-            const {
-              id, firstname, lastname, username, email, isadmin, registered,
-            } = response[0];
-            res.status(200).json({
-              status: 200,
-              success: 'logged in',
-              token,
-              data: [{
-                id, firstname, lastname, username, email, isadmin, registered,
-              }],
-            });
-          });
-        } else {
-          res.status(400).json({
-            status: 400,
-            error: 'incorrect email or password',
-          });
-        }
+        res.status(400).json({
+          status: 400,
+          error: 'incorrect email or password',
+        });
       }
-    });
+    }
   },
 
   /**
