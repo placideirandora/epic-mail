@@ -76,8 +76,8 @@ const users = {
     if (responseOne.length === 0 || responseOne.length === 'undefined') {
       res.status(404).json({ status: 404, error: 'incorrect email or password' });
     } else if (responseOne[0].password === null) {
-      res.status(404).json({
-        status: 404,
+      res.status(400).json({
+        status: 400,
         error: 'sorry! you have recently reset your password. '
             + 'check your email for the password reset link',
       });
