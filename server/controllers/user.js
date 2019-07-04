@@ -126,25 +126,24 @@ const users = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveUser(req, res) {
+  async retrieveUser(req, res) {
     const userId = req.params.id;
     const specificUser = database(sql.retrieveSpecificUserById, [userId]);
-    specificUser.then((response) => {
-      if (response.length === 0 || response.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'user with the specified id, not found' });
-      } else {
-        const {
+    const responseOne = await specificUser;
+    if (responseOne.length === 0 || responseOne.length === 'undefined') {
+      res.status(404).json({ status: 404, error: 'user with the specified id, not found' });
+    } else {
+      const {
+        id, firstname, lastname, email, isadmin, registered,
+      } = responseOne[0];
+      res.status(200).json({
+        status: 200,
+        success: 'user retrieved',
+        data: [{
           id, firstname, lastname, email, isadmin, registered,
-        } = response[0];
-        res.status(200).json({
-          status: 200,
-          success: 'user retrieved',
-          data: [{
-            id, firstname, lastname, email, isadmin, registered,
-          }],
-        });
-      }
-    });
+        }],
+      });
+    }
   },
 
   /**
