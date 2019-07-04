@@ -111,15 +111,14 @@ const users = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveUsers(req, res) {
+  async retrieveUsers(req, res) {
     const allUsers = database(sql.retrieveAllUsers);
-    allUsers.then((response) => {
-      if (response.length === 0 || response.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'no users found' });
-      } else {
-        res.status(200).json({ status: 200, success: 'users retrieved', data: response });
-      }
-    });
+    const responseOne = await allUsers;
+    if (responseOne.length === 0 || responseOne.length === 'undefined') {
+      res.status(404).json({ status: 404, error: 'no users found' });
+    } else {
+      res.status(200).json({ status: 200, success: 'users retrieved', data: responseOne });
+    }
   },
 
   /**
