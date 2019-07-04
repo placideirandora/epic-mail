@@ -18,7 +18,7 @@ const users = {
    * @param {object} req
    * @param {object} res
    */
-  registerUser(req, res) {
+  async registerUser(req, res) {
     const {
       firstname, lastname, username, password,
     } = req.body;
@@ -33,34 +33,32 @@ const users = {
       res.status(400).json({ status: 400, error: 'username must not start with a number' });
     } else {
       const findUsername = database(sql.findUsername, [username]);
-      findUsername.then((response) => {
-        if (response.length !== 0) {
-          res.status(400).json({ status: 400, error: 'the username is already taken. register with a unique username' });
-        } else {
-          const email = `${username}@epicmail.com`;
-          const user = new User(firstname, lastname, username, email, password);
-          const hash = bcrypt.hashSync(user.password, 10);
-          user.password = hash;
-          const query = database(sql.registerUser, [user.firstname, user.lastname, user.username, user.email, user.password, moment().format('LL')]);
-          query.then((response) => {
-            jwt.sign({ response: response[0] }, process.env.SECRET_KEY, (err, token) => {
-              const {
+      const responseOne = await findUsername;
+      if (responseOne.length !== 0) {
+        res.status(400).json({ status: 400, error: 'the username is already taken. register with a unique username' });
+      } else {
+        const email = `${username}@epicmail.com`;
+        const user = new User(firstname, lastname, username, email, password);
+        const hash = bcrypt.hashSync(user.password, 10);
+        user.password = hash;
+        const query = database(sql.registerUser, [user.firstname, user.lastname, user.username, user.email, user.password, moment().format('LL')]);
+        const responseTwo = await query;
+        jwt.sign({ response: responseTwo[0] }, process.env.SECRET_KEY, (err, token) => {
+          const {
+            id, firstname, lastname, username, email, isadmin, registered,
+          } = responseTwo[0];
+          res.status(201).json({
+            status: 201,
+            success: 'user registered',
+            data: [{
+              token,
+              user: {
                 id, firstname, lastname, username, email, isadmin, registered,
-              } = response[0];
-              res.status(201).json({
-                status: 201,
-                success: 'user registered',
-                data: [{
-                  token,
-                  user: {
-                    id, firstname, lastname, username, email, isadmin, registered,
-                  },
-                }],
-              });
-            });
+              },
+            }],
           });
-        }
-      });
+        });
+      }
     }
   },
 
