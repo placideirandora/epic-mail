@@ -151,21 +151,19 @@ const users = {
    * @param {object} req
    * @param {object} res
    */
-  deleteUser(req, res) {
+  async deleteUser(req, res) {
     const userId = req.params.id;
     const findUser = database(sql.retrieveSpecificUserById, [userId]);
-    findUser.then((response) => {
-      if (response.length === 0 || response.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'user with the specified id, not found' });
-      } else {
-        const deleteUser = database(sql.deleteSpecificUser, [userId]);
-        deleteUser.then((response) => {
-          if (response) {
-            res.status(200).json({ status: 200, success: 'user deleted' });
-          }
-        });
+    const responseOne = await findUser;
+    if (responseOne.length === 0 || responseOne.length === 'undefined') {
+      res.status(404).json({ status: 404, error: 'user with the specified id, not found' });
+    } else {
+      const deleteUser = database(sql.deleteSpecificUser, [userId]);
+      const responseTwo = await deleteUser;
+      if (responseTwo) {
+        res.status(200).json({ status: 200, success: 'user deleted' });
       }
-    });
+    }
   },
 
   /**
