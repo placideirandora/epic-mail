@@ -455,42 +455,37 @@ const messages = {
    * @param {object} req
    * @param {object} res
    */
-  deleteSpecificDraftEmail(req, res) {
+  async deleteSpecificDraftEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
     const userAccess = 'true';
     const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    retrieveAdmin.then((response) => {
-      if (response.length !== 0) {
-        const specificEmail = database(sql.adminRetrieveUserSpecificDraftEmail, [emailId]);
-        specificEmail.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, draft email not found' });
-          } else {
-            const deleteEmail = database(sql.deleteSpecificDraftEmail, [emailId]);
-            deleteEmail.then((response) => {
-              if (response) {
-                res.status(200).json({ status: 200, success: 'draft email deleted by admin' });
-              }
-            });
-          }
-        });
+    const responseOne = await retrieveAdmin;
+    if (responseOne.length !== 0) {
+      const specificEmail = database(sql.adminRetrieveUserSpecificDraftEmail, [emailId]);
+      const responseTwo = await specificEmail;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'admin, draft email not found' });
       } else {
-        const userSpecificEmail = database(sql.retrieveUserSpecificDraftEmail, [emailId, user]);
-        userSpecificEmail.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'draft email not found' });
-          } else {
-            const deleteEmail = database(sql.deleteSpecificDraftEmail, [emailId]);
-            deleteEmail.then((response) => {
-              if (response) {
-                res.status(200).json({ status: 200, success: 'draft email deleted' });
-              }
-            });
-          }
-        });
+        const deleteEmail = database(sql.deleteSpecificDraftEmail, [emailId]);
+        const responseThree = await deleteEmail;
+        if (responseThree) {
+          res.status(200).json({ status: 200, success: 'draft email deleted by admin' });
+        }
       }
-    });
+    } else {
+      const userSpecificEmail = database(sql.retrieveUserSpecificDraftEmail, [emailId, user]);
+      const responseFour = await userSpecificEmail;
+      if (responseFour.length === 0 || responseFour.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'draft email not found' });
+      } else {
+        const deleteEmail = database(sql.deleteSpecificDraftEmail, [emailId]);
+        const responseFive = await deleteEmail;
+        if (responseFive) {
+          res.status(200).json({ status: 200, success: 'draft email deleted' });
+        }
+      }
+    }
   },
 };
 
