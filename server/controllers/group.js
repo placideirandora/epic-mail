@@ -427,72 +427,65 @@ const groups = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveGroupEmails(req, res) {
+  async retrieveGroupEmails(req, res) {
     const groupId = req.params.id;
     const user = req.userEmail;
     const userAccess = 'true';
     const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    findAdmin.then((response) => {
-      if (response.length !== 0) {
-        const specificGroup = database(sql.retrieveSpecificGroup, [groupId]);
-        specificGroup.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, group not found' });
-          } else {
-            const groupEmails = database(sql.retrieveSpecificGroupEmails, [groupId]);
-            groupEmails.then((response) => {
-              if (response.length === 0 || response.length === 'undefined') {
-                res.status(404).json({ status: 404, error: 'admin, no group emails found' });
-              } else {
-                res.status(200).json({
-                  status: 200,
-                  success: 'admin, group emails found',
-                  data: response,
-                });
-              }
-            });
-          }
-        });
+    const responseOne = await findAdmin;
+    if (responseOne.length !== 0) {
+      const specificGroup = database(sql.retrieveSpecificGroup, [groupId]);
+      const responseTwo = await specificGroup;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'admin, group not found' });
       } else {
-        const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
-        userGroup.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            const findMember = database(sql.retrieveSpecificGroupMember, [user, groupId]);
-            findMember.then((response) => {
-              if (response.length === 0) {
-                res.status(404).json({ status: 404, error: 'you are not a member of the group or it does not exist' });
-              } else {
-                const memberEmails = database(sql.retrieveMemberEmails, [groupId]);
-                memberEmails.then((response) => {
-                  if (response.length === 0 || response.length === 'undefined') {
-                    res.status(404).json({ status: 404, error: 'no group emails found' });
-                  } else {
-                    res.status(200).json({
-                      status: 200,
-                      success: 'group emails found',
-                      data: response,
-                    });
-                  }
-                });
-              }
-            });
+        const groupEmails = database(sql.retrieveSpecificGroupEmails, [groupId]);
+        const responseThree = await groupEmails;
+        if (responseThree.length === 0 || responseThree.length === 'undefined') {
+          res.status(404).json({ status: 404, error: 'admin, no group emails found' });
+        } else {
+          res.status(200).json({
+            status: 200,
+            success: 'admin, group emails found',
+            data: responseThree,
+          });
+        }
+      }
+    } else {
+      const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
+      const responseFour = await userGroup;
+      if (responseFour.length === 0 || responseFour.length === 'undefined') {
+        const findMember = database(sql.retrieveSpecificGroupMember, [user, groupId]);
+        const responseFive = await findMember;
+        if (responseFive.length === 0) {
+          res.status(404).json({ status: 404, error: 'you are not a member of the group or it does not exist' });
+        } else {
+          const memberEmails = database(sql.retrieveMemberEmails, [groupId]);
+          const responseSix = await memberEmails;
+          if (responseSix.length === 0 || responseSix.length === 'undefined') {
+            res.status(404).json({ status: 404, error: 'no group emails found' });
           } else {
-            const groupEmails = database(sql.retrieveSpecificGroupEmails, [groupId]);
-            groupEmails.then((response) => {
-              if (response.length === 0 || response.length === 'undefined') {
-                res.status(404).json({ status: 404, error: 'no group emails found' });
-              } else {
-                res.status(200).json({
-                  status: 200,
-                  success: 'group emails found',
-                  data: response,
-                });
-              }
+            res.status(200).json({
+              status: 200,
+              success: 'group emails found',
+              data: responseSix,
             });
           }
-        });
+        }
+      } else {
+        const groupEmails = database(sql.retrieveSpecificGroupEmails, [groupId]);
+        const responseSeven = await groupEmails;
+        if (responseSeven.length === 0 || responseSeven.length === 'undefined') {
+          res.status(404).json({ status: 404, error: 'no group emails found' });
+        } else {
+          res.status(200).json({
+            status: 200,
+            success: 'group emails found',
+            data: responseSeven,
+          });
+        }
       }
-    });
+    }
   },
 };
 
