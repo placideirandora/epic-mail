@@ -265,40 +265,37 @@ const messages = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveUnReadEmails(req, res) {
+  async retrieveUnReadEmails(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
     const status = 'unread';
     const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    retrieveAdmin.then((response) => {
-      if (response.length !== 0) {
-        const adminGetUnreadEmails = database(sql.adminGetUnreadEmails, [status]);
-        adminGetUnreadEmails.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, no unread emails found' });
-          } else if (response.length !== 0) {
-            res.status(200).json({
-              status: 200,
-              success: 'admin, unread emails retrieved',
-              data: response,
-            });
-          }
-        });
-      } else {
-        const unreadEmails = database(sql.retrieveUnreadEmails, [status, user]);
-        unreadEmails.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'sorry! you have no unread emails!' });
-          } else {
-            res.status(200).json({
-              status: 200,
-              success: 'your unread emails retrieved',
-              data: response,
-            });
-          }
+    const responseOne = await retrieveAdmin;
+    if (responseOne.length !== 0) {
+      const adminGetUnreadEmails = database(sql.adminGetUnreadEmails, [status]);
+      const responseTwo = await adminGetUnreadEmails;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'admin, no unread emails found' });
+      } else if (responseTwo.length !== 0) {
+        res.status(200).json({
+          status: 200,
+          success: 'admin, unread emails retrieved',
+          data: responseTwo,
         });
       }
-    });
+    } else {
+      const unreadEmails = database(sql.retrieveUnreadEmails, [status, user]);
+      const responseThree = await unreadEmails;
+      if (responseThree.length === 0 || responseThree.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'sorry! you have no unread emails!' });
+      } else {
+        res.status(200).json({
+          status: 200,
+          success: 'your unread emails retrieved',
+          data: responseThree,
+        });
+      }
+    }
   },
 
   /**
