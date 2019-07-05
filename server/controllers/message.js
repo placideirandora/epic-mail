@@ -109,46 +109,42 @@ const messages = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveSpecificReceivedEmail(req, res) {
+  async retrieveSpecificReceivedEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
     const userAccess = 'true';
     const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    findAdmin.then((response) => {
-      if (response.length !== 0) {
-        const specificEmail = database(sql.adminRetrieveUserSpecificReceivedEmail, [emailId]);
-        specificEmail.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, received email not found' });
-          } else {
-            res.status(200).json({
-              status: 200,
-              success: 'admin, received email retrieved',
-              data: response,
-            });
-          }
-        });
+    const responseOne = await findAdmin;
+    if (responseOne.length !== 0) {
+      const specificEmail = database(sql.adminRetrieveUserSpecificReceivedEmail, [emailId]);
+      const responseTwo = await specificEmail;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'admin, received email not found' });
       } else {
-        const userSpecificEmail = database(sql.retrieveUserSpecificReceivedEmail, [emailId, user]);
-        userSpecificEmail.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'received email not found' });
-          } else {
-            const status = 'read';
-            const readEmail = database(sql.emailRead, [status, emailId]);
-            readEmail.then((response) => {
-              if (response) {
-                res.status(200).json({
-                  status: 200,
-                  success: 'received email retrieved',
-                  data: response,
-                });
-              }
-            });
-          }
+        res.status(200).json({
+          status: 200,
+          success: 'admin, received email retrieved',
+          data: responseTwo,
         });
       }
-    });
+    } else {
+      const userSpecificEmail = database(sql.retrieveUserSpecificReceivedEmail, [emailId, user]);
+      const responseThree = await userSpecificEmail;
+      if (responseThree.length === 0 || responseThree.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'received email not found' });
+      } else {
+        const status = 'read';
+        const readEmail = database(sql.emailRead, [status, emailId]);
+        const responseFour = await readEmail;
+        if (responseFour) {
+          res.status(200).json({
+            status: 200,
+            success: 'received email retrieved',
+            data: responseFour,
+          });
+        }
+      }
+    }
   },
 
   /**
