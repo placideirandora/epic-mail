@@ -52,42 +52,39 @@ const groups = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveGroups(req, res) {
+  async retrieveGroups(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
     const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    findAdmin.then((response) => {
-      if (response.length !== 0) {
-        const allGroups = database(sql.retrieveAllGroups);
-        allGroups.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({
-              status: 404,
-              error: 'admin, no groups found',
-            });
-          } else {
-            res.status(200).json({
-              status: 200,
-              success: 'admin, groups retrieved',
-              data: response,
-            });
-          }
+    const responseOne = await findAdmin;
+    if (responseOne.length !== 0) {
+      const allGroups = database(sql.retrieveAllGroups);
+      const responseTwo = await allGroups;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({
+          status: 404,
+          error: 'admin, no groups found',
         });
       } else {
-        const userGroups = database(sql.retrieveUserGroups, [user]);
-        userGroups.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'no groups found' });
-          } else {
-            res.status(200).json({
-              status: 200,
-              success: 'groups retrieved',
-              data: response,
-            });
-          }
+        res.status(200).json({
+          status: 200,
+          success: 'admin, groups retrieved',
+          data: responseTwo,
         });
       }
-    });
+    } else {
+      const userGroups = database(sql.retrieveUserGroups, [user]);
+      const responseThree = await userGroups;
+      if (responseThree.length === 0 || responseThree.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'no groups found' });
+      } else {
+        res.status(200).json({
+          status: 200,
+          success: 'groups retrieved',
+          data: responseThree,
+        });
+      }
+    }
   },
 
   /**
