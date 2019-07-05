@@ -134,7 +134,7 @@ describe('USER ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not login the admin, because the email is invalid', (done) => {
+  it('Should not login the admin, because the email is incorrect', (done) => {
     chai.request(server)
       .post('/api/v2/auth/login')
       .send(falseAdminEmail)
@@ -201,14 +201,14 @@ describe('USER ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not reset a password of an invalid email', (done) => {
+  it('Should not reset a password of an incorrect email', (done) => {
     chai.request(server)
       .post('/api/v2/auth/reset')
       .send(falsePassReset)
       .end((err, res) => {
         res.should.have.status(404);
         res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('invalid email');
+        res.body.should.have.property('error').eql('incorrect email');
         res.body.should.be.a('object');
         done();
       });
@@ -260,8 +260,8 @@ describe('USER ENDPOINT TESTS', () => {
       .send(newUserLogIn2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.body.should.have.status(400);
+        res.body.should.have.property('status').eql(400);
         res.body.should.have.property('error').eql('sorry! you have recently reset your password. '
         + 'check your email for the password reset link');
         res.body.should.be.a('object');
