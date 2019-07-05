@@ -227,40 +227,37 @@ const messages = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveReadEmails(req, res) {
+  async retrieveReadEmails(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
     const status = 'read';
     const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    retrieveAdmin.then((response) => {
-      if (response.length !== 0) {
-        const adminGetReadEmails = database(sql.adminGetReadEmails, [status]);
-        adminGetReadEmails.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, no read emails found' });
-          } else if (response.length !== 0) {
-            res.status(200).json({
-              status: 200,
-              success: 'admin, read emails retrieved',
-              data: response,
-            });
-          }
-        });
-      } else {
-        const readEmails = database(sql.retrieveReadEmails, [status, user]);
-        readEmails.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'sorry! you have read no emails!' });
-          } else {
-            res.status(200).json({
-              status: 200,
-              success: 'your read emails retrieved',
-              data: response,
-            });
-          }
+    const responseOne = await retrieveAdmin;
+    if (responseOne.length !== 0) {
+      const adminGetReadEmails = database(sql.adminGetReadEmails, [status]);
+      const responseTwo = await adminGetReadEmails;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'admin, no read emails found' });
+      } else if (responseTwo.length !== 0) {
+        res.status(200).json({
+          status: 200,
+          success: 'admin, read emails retrieved',
+          data: responseTwo,
         });
       }
-    });
+    } else {
+      const readEmails = database(sql.retrieveReadEmails, [status, user]);
+      const responseThree = await readEmails;
+      if (responseThree.length === 0 || responseThree.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'sorry! you have read no emails!' });
+      } else {
+        res.status(200).json({
+          status: 200,
+          success: 'your read emails retrieved',
+          data: responseThree,
+        });
+      }
+    }
   },
 
   /**
