@@ -247,7 +247,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       .end((err, res) => {
         res.body.should.have.status(404);
         res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('user with the specified email is not even registered. the email is invalid');
+        res.body.should.have.property('error').eql('user with the specified email is not even registered. the email is incorrect');
         res.body.should.be.a('object');
         done();
       });
