@@ -15,57 +15,53 @@ const messages = {
    * @param {object} req
    * @param {object} res
    */
-  sendEmail(req, res) {
+  async sendEmail(req, res) {
     const {
       subject, message, parentMessageId, receiverEmail, status,
     } = req.body;
     const senderEmail = req.userEmail;
     const trueReceiver = database(sql.retrieveSpecificUser, [receiverEmail]);
-    trueReceiver.then((response) => {
-      if (response.length === 0 || response.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'the receiver is not registered' });
-      } else if (senderEmail === receiverEmail) {
-        res.status(400).json({ status: 400, error: 'the sender and receiver email must not be the same' });
-      } else {
-        const messagee = new Message(
-          subject, message, parentMessageId, senderEmail, receiverEmail, status,
-        );
-        if (status === 'sent') {
-          const delivered = database(sql.delivered, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderEmail, messagee.receiverEmail, 'unread', moment().format('LL')]);
-          delivered.then((response) => {
-            if (response) {
-              const query = database(sql.sendEmail, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderEmail, messagee.receiverEmail, messagee.status, moment().format('LL')]);
-              query.then((response) => {
-                const {
-                  id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
-                } = response[0];
-                res.status(201).json({
-                  status: 201,
-                  success: 'email sent',
-                  data: [{
-                    id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
-                  }],
-                });
-              });
-            }
-          });
-        } else if (status === 'draft') {
-          const query = database(sql.draftEmail, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderEmail, messagee.receiverEmail, messagee.status, moment().format('LL')]);
-          query.then((response) => {
-            const {
+    const responseOne = await trueReceiver;
+    if (responseOne.length === 0 || responseOne.length === 'undefined') {
+      res.status(404).json({ status: 404, error: 'the receiver is not registered' });
+    } else if (senderEmail === receiverEmail) {
+      res.status(400).json({ status: 400, error: 'the sender and receiver email must not be the same' });
+    } else {
+      const messagee = new Message(
+        subject, message, parentMessageId, senderEmail, receiverEmail, status,
+      );
+      if (status === 'sent') {
+        const delivered = database(sql.delivered, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderEmail, messagee.receiverEmail, 'unread', moment().format('LL')]);
+        const responseTwo = await delivered;
+        if (responseTwo) {
+          const query = database(sql.sendEmail, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderEmail, messagee.receiverEmail, messagee.status, moment().format('LL')]);
+          const responseThree = await query;
+          const {
+            id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
+          } = responseThree[0];
+          res.status(201).json({
+            status: 201,
+            success: 'email sent',
+            data: [{
               id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
-            } = response[0];
-            res.status(201).json({
-              status: 201,
-              success: 'email drafted',
-              data: [{
-                id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
-              }],
-            });
+            }],
           });
         }
+      } else if (status === 'draft') {
+        const query = database(sql.draftEmail, [messagee.subject, messagee.message, messagee.parentMessageId, messagee.senderEmail, messagee.receiverEmail, messagee.status, moment().format('LL')]);
+        const responseFour = await query;
+        const {
+          id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
+        } = responseFour[0];
+        res.status(201).json({
+          status: 201,
+          success: 'email drafted',
+          data: [{
+            id, subject, message, parentmessageid, senderemail, receiveremail, status, createdon,
+          }],
+        });
       }
-    });
+    }
   },
 
   /**
