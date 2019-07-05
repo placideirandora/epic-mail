@@ -189,40 +189,37 @@ const messages = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveSpecificSentEmail(req, res) {
+  async retrieveSpecificSentEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
     const userAccess = 'true';
     const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    findAdmin.then((response) => {
-      if (response.length !== 0) {
-        const specificEmail = database(sql.adminRetrieveUserSpecificSentEmail, [emailId]);
-        specificEmail.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, sent email not found' });
-          } else {
-            res.status(200).json({
-              status: 200,
-              success: 'admin, sent email retrieved',
-              data: response,
-            });
-          }
-        });
+    const responseOne = await findAdmin;
+    if (responseOne.length !== 0) {
+      const specificEmail = database(sql.adminRetrieveUserSpecificSentEmail, [emailId]);
+      const responseTwo = await specificEmail;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'admin, sent email not found' });
       } else {
-        const userSpecificEmail = database(sql.retrieveUserSpecificSentEmail, [emailId, user]);
-        userSpecificEmail.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'sent email not found' });
-          } else {
-            res.status(200).json({
-              status: 200,
-              success: 'sent email retrieved',
-              data: response,
-            });
-          }
+        res.status(200).json({
+          status: 200,
+          success: 'admin, sent email retrieved',
+          data: responseTwo,
         });
       }
-    });
+    } else {
+      const userSpecificEmail = database(sql.retrieveUserSpecificSentEmail, [emailId, user]);
+      const responseThree = await userSpecificEmail;
+      if (responseThree.length === 0 || responseThree.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'sent email not found' });
+      } else {
+        res.status(200).json({
+          status: 200,
+          success: 'sent email retrieved',
+          data: responseThree,
+        });
+      }
+    }
   },
 
   /**
