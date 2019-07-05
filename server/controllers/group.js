@@ -341,25 +341,23 @@ const groups = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveGroupMember(req, res) {
+  async retrieveGroupMember(req, res) {
     const groupId = req.params.id;
     const groupMemberId = req.params.mid;
     const owner = req.userEmail;
     const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
-    specificGroupOwner.then((response) => {
-      if (response.length === 0 || response.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'group not found' });
+    const responseOne = await specificGroupOwner;
+    if (responseOne.length === 0 || responseOne.length === 'undefined') {
+      res.status(404).json({ status: 404, error: 'group not found' });
+    } else {
+      const specificGroupMember = database(sql.retrieveSpecificGroupMemberById, [groupMemberId, groupId]);
+      const responseTwo = await specificGroupMember;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'group member not found' });
       } else {
-        const specificGroupMember = database(sql.retrieveSpecificGroupMemberById, [groupMemberId, groupId]);
-        specificGroupMember.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'group member not found' });
-          } else {
-            res.status(200).json({ status: 200, success: 'group member retrieved', response });
-          }
-        });
+        res.status(200).json({ status: 200, success: 'group member retrieved', responseTwo });
       }
-    });
+    }
   },
 
   /**
