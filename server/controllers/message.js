@@ -303,40 +303,37 @@ const messages = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveDraftEmails(req, res) {
+  async retrieveDraftEmails(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
     const status = 'draft';
     const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    retrieveAdmin.then((response) => {
-      if (response.length !== 0) {
-        const adminGetDraftEmails = database(sql.adminGetDraftEmails, [status]);
-        adminGetDraftEmails.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, no draft emails found' });
-          } else if (response.length !== 0) {
-            res.status(200).json({
-              status: 200,
-              success: 'admin, draft emails retrieved',
-              data: response,
-            });
-          }
-        });
-      } else {
-        const draftEmails = database(sql.retrieveDraftEmails, [status, user]);
-        draftEmails.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'sorry! you have no draft emails!' });
-          } else {
-            res.status(200).json({
-              status: 200,
-              success: 'your draft emails retrieved',
-              data: response,
-            });
-          }
+    const responseOne = await retrieveAdmin;
+    if (responseOne.length !== 0) {
+      const adminGetDraftEmails = database(sql.adminGetDraftEmails, [status]);
+      const responseOne = await adminGetDraftEmails;
+      if (responseOne.length === 0 || responseOne.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'admin, no draft emails found' });
+      } else if (responseOne.length !== 0) {
+        res.status(200).json({
+          status: 200,
+          success: 'admin, draft emails retrieved',
+          data: responseOne,
         });
       }
-    });
+    } else {
+      const draftEmails = database(sql.retrieveDraftEmails, [status, user]);
+      const responseTwo = await draftEmails;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'sorry! you have no draft emails!' });
+      } else {
+        res.status(200).json({
+          status: 200,
+          success: 'your draft emails retrieved',
+          data: responseTwo,
+        });
+      }
+    }
   },
 
   /**
