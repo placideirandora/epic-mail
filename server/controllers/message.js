@@ -69,42 +69,39 @@ const messages = {
    * @param {object} req
    * @param {object} res
    */
-  retrieveReceivedEmails(req, res) {
+  async retrieveReceivedEmails(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
     const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    findAdmin.then((response) => {
-      if (response.length !== 0) {
-        const allEmails = database(sql.retrieveAllEmails);
-        allEmails.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({
-              status: 404,
-              error: 'admin, received emails not found',
-            });
-          } else {
-            res.status(200).json({
-              status: 200,
-              success: 'admin, received emails retrieved',
-              data: response,
-            });
-          }
+    const responseOne = await findAdmin;
+    if (responseOne.length !== 0) {
+      const allEmails = database(sql.retrieveAllEmails);
+      const responseTwo = await allEmails;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({
+          status: 404,
+          error: 'admin, received emails not found',
         });
       } else {
-        const specificUserEmails = database(sql.retrieveSpecificUserEmails, [user]);
-        specificUserEmails.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'received emails not found' });
-          } else {
-            res.status(200).json({
-              status: 200,
-              success: 'received emails retrieved',
-              data: response,
-            });
-          }
+        res.status(200).json({
+          status: 200,
+          success: 'admin, received emails retrieved',
+          data: responseTwo,
         });
       }
-    });
+    } else {
+      const specificUserEmails = database(sql.retrieveSpecificUserEmails, [user]);
+      const responseThree = await specificUserEmails;
+      if (responseThree.length === 0 || responseThree.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'received emails not found' });
+      } else {
+        res.status(200).json({
+          status: 200,
+          success: 'received emails retrieved',
+          data: responseThree,
+        });
+      }
+    }
   },
 
   /**
