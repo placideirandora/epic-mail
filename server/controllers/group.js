@@ -233,7 +233,7 @@ const groups = {
    * @param {object} req
    * @param {object} res
    */
-  addGroupMember(req, res) {
+  async addGroupMember(req, res) {
     const groupId = req.params.id;
     const {
       username, email,
@@ -244,48 +244,45 @@ const groups = {
     } else {
       const owner = req.userEmail;
       const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
-      specificGroupOwner.then((response) => {
-        if (response.length === 0 || response.length === 'undefined') {
-          res.status(404).json({ status: 404, error: 'group not found' });
-        } else {
-          const findUser = database(sql.retrieveSpecificUser, [email]);
-          findUser.then((response) => {
-            if (response.length !== 0) {
-              const findMemberByUsername = database(sql.retrieveMemberByUsername, [username, groupId]);
-              findMemberByUsername.then((response) => {
-                if (response.length !== 0) {
-                  res.status(400).json({ status: 400, error: 'the specified username is already taken. choose another unique name' });
-                } else {
-                  const findMemberByEmail = database(sql.retrieveMemberByEmail, [email, groupId]);
-                  findMemberByEmail.then((response) => {
-                    if (response.length !== 0) {
-                      res.status(400).json({ status: 400, error: 'user with the specified email is already registered' });
-                    } else {
-                      const memberGroup = groupId;
-                      const member = new Member(username, email, memberGroup);
-                      const query = database(sql.registerGroupMember, [member.username, member.email, member.memberGroup]);
-                      query.then((response) => {
-                        const {
-                          id, username, email, groupid,
-                        } = response[0];
-                        res.status(201).json({
-                          status: 201,
-                          success: 'group member registered',
-                          data: [{
-                            id, username, email, groupid,
-                          }],
-                        });
-                      });
-                    }
-                  });
-                }
-              });
+      const responseOne = await specificGroupOwner;
+      if (responseOne.length === 0 || responseOne.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'group not found' });
+      } else {
+        const findUser = database(sql.retrieveSpecificUser, [email]);
+        const responseTwo = await findUser;
+        if (responseTwo.length !== 0) {
+          const findMemberByUsername = database(sql.retrieveMemberByUsername, [username, groupId]);
+          const responseThree = await findMemberByUsername;
+          if (responseThree.length !== 0) {
+            res.status(400).json({ status: 400, error: 'the specified username is already taken. choose another unique name' });
+          } else {
+            const findMemberByEmail = database(sql.retrieveMemberByEmail, [email, groupId]);
+            const responseFour = await findMemberByEmail;
+            if (responseFour.length !== 0) {
+              res.status(400).json({ status: 400, error: 'user with the specified email is already registered' });
             } else {
-              res.status(404).json({ status: 404, error: 'user with the specified email is not even registered. the email is invalid' });
+              const memberGroup = groupId;
+              const member = new Member(username, email, memberGroup);
+              const query = database(sql.registerGroupMember, [member.username, member.email, member.memberGroup]);
+              const responseFive = await query;
+              if (responseFive) {
+                const {
+                  id, username, email, groupid,
+                } = responseFive[0];
+                res.status(201).json({
+                  status: 201,
+                  success: 'group member registered',
+                  data: [{
+                    id, username, email, groupid,
+                  }],
+                });
+              }
             }
-          });
+          }
+        } else {
+          res.status(404).json({ status: 404, error: 'user with the specified email is not even registered. the email is incorrect' });
         }
-      });
+      }
     }
   },
 
