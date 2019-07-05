@@ -130,7 +130,7 @@ const groups = {
    * @param {object} req
    * @param {object} res
    */
-  changeGroupName(req, res) {
+  async changeGroupName(req, res) {
     const groupId = req.params.id;
     const {
       name,
@@ -138,58 +138,56 @@ const groups = {
     const user = req.userEmail;
     const userAccess = 'true';
     const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    findAdmin.then((response) => {
-      if (response.length !== 0) {
-        const specificGroup = database(sql.retrieveSpecificGroup, [groupId]);
-        specificGroup.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, group with the specified id, not found' });
-          } else {
-            const query = database(sql.updateSpecificGroup, [name, groupId]);
-            query.then((response) => {
-              const {
-                id, name, role,
-              } = response[0];
-              res.status(200).json({
-                status: 200,
-                success: 'admin, group name changed',
-                data: {
-                  id, name, role,
-                },
-              });
-            });
-          }
-        });
+    const responseOne = await findAdmin;
+    if (responseOne.length !== 0) {
+      const specificGroup = database(sql.retrieveSpecificGroup, [groupId]);
+      const responseTwo = await specificGroup;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'admin, group with the specified id, not found' });
       } else {
-        const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
-        userGroup.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'group not found' });
-          } else {
-            const findGroup = database(sql.findGroup, [name, user]);
-            findGroup.then((response) => {
-              if (response.length !== 0 || response.length === 'undefined') {
-                res.status(400).json({ status: 400, error: 'the specified group name is already taken' });
-              } else {
-                const query = database(sql.updateSpecificGroup, [name, groupId]);
-                query.then((response) => {
-                  const {
-                    id, name, role,
-                  } = response[0];
-                  res.status(200).json({
-                    status: 200,
-                    success: 'group name changed',
-                    data: {
-                      id, name, role,
-                    },
-                  });
-                });
-              }
+        const query = database(sql.updateSpecificGroup, [name, groupId]);
+        const responseThree = await query;
+        if (responseThree) {
+          const {
+            id, name, role,
+          } = responseThree[0];
+          res.status(200).json({
+            status: 200,
+            success: 'admin, group name changed',
+            data: {
+              id, name, role,
+            },
+          });
+        }
+      }
+    } else {
+      const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
+      const responseFour = await userGroup;
+      if (responseFour.length === 0 || responseFour.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'group not found' });
+      } else {
+        const findGroup = database(sql.findGroup, [name, user]);
+        const responseFive = await findGroup;
+        if (responseFive.length !== 0 || responseFive.length === 'undefined') {
+          res.status(400).json({ status: 400, error: 'the specified group name is already taken' });
+        } else {
+          const query = database(sql.updateSpecificGroup, [name, groupId]);
+          const responseSix = await query;
+          if (responseSix) {
+            const {
+              id, name, role,
+            } = responseSix[0];
+            res.status(200).json({
+              status: 200,
+              success: 'group name changed',
+              data: {
+                id, name, role,
+              },
             });
           }
-        });
+        }
       }
-    });
+    }
   },
 
   /**
