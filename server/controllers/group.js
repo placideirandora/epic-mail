@@ -393,33 +393,33 @@ const groups = {
    * @param {object} req
    * @param {object} res
    */
-  sendGroupEmail(req, res) {
+  async sendGroupEmail(req, res) {
     const groupId = req.params.id;
     const {
       subject, message, parentMessageId,
     } = req.body;
     const owner = req.userEmail;
     const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
-    specificGroupOwner.then((response) => {
-      if (response.length === 0 || response.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'group not found' });
-      } else {
-        const groupmessage = new Groupmessage(subject, message, parentMessageId, groupId);
-        const query = database(sql.sendGroupEmail, [groupmessage.subject, groupmessage.message, groupmessage.parentMessageId, moment().format('LL'), groupmessage.groupId]);
-        query.then((response) => {
-          const {
+    const responseOne = await specificGroupOwner;
+    if (responseOne.length === 0 || responseOne.length === 'undefined') {
+      res.status(404).json({ status: 404, error: 'group not found' });
+    } else {
+      const groupmessage = new Groupmessage(subject, message, parentMessageId, groupId);
+      const query = database(sql.sendGroupEmail, [groupmessage.subject, groupmessage.message, groupmessage.parentMessageId, moment().format('LL'), groupmessage.groupId]);
+      const responseTwo = await query;
+      if (responseTwo) {
+        const {
+          id, subject, message, parentmessageid, groupid, createdon,
+        } = responseTwo[0];
+        res.status(201).json({
+          status: 201,
+          success: 'group email sent',
+          data: [{
             id, subject, message, parentmessageid, groupid, createdon,
-          } = response[0];
-          res.status(201).json({
-            status: 201,
-            success: 'group email sent',
-            data: [{
-              id, subject, message, parentmessageid, groupid, createdon,
-            }],
-          });
+          }],
         });
       }
-    });
+    }
   },
 
   /**
