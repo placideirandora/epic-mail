@@ -417,42 +417,37 @@ const messages = {
    * @param {object} req
    * @param {object} res
    */
-  deleteSpecificSentEmail(req, res) {
+  async deleteSpecificSentEmail(req, res) {
     const emailId = req.params.id;
     const user = req.userEmail;
     const userAccess = 'true';
     const retrieveAdmin = database(sql.retrieveAdmin, [user, userAccess]);
-    retrieveAdmin.then((response) => {
-      if (response.length !== 0) {
-        const specificEmail = database(sql.adminRetrieveUserSpecificSentEmail, [emailId]);
-        specificEmail.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'admin, sent email not found' });
-          } else {
-            const deleteEmail = database(sql.deleteSpecificSentEmail, [emailId]);
-            deleteEmail.then((response) => {
-              if (response) {
-                res.status(200).json({ status: 200, success: 'sent email deleted by admin' });
-              }
-            });
-          }
-        });
+    const responseOne = await retrieveAdmin;
+    if (responseOne.length !== 0) {
+      const specificEmail = database(sql.adminRetrieveUserSpecificSentEmail, [emailId]);
+      const responseTwo = await specificEmail;
+      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'admin, sent email not found' });
       } else {
-        const userSpecificEmail = database(sql.retrieveUserSpecificSentEmail, [emailId, user]);
-        userSpecificEmail.then((response) => {
-          if (response.length === 0 || response.length === 'undefined') {
-            res.status(404).json({ status: 404, error: 'sent email not found' });
-          } else {
-            const deleteEmail = database(sql.deleteSpecificSentEmail, [emailId]);
-            deleteEmail.then((response) => {
-              if (response) {
-                res.status(200).json({ status: 200, success: 'sent email deleted' });
-              }
-            });
-          }
-        });
+        const deleteEmail = database(sql.deleteSpecificSentEmail, [emailId]);
+        const responseThree = await deleteEmail;
+        if (responseThree) {
+          res.status(200).json({ status: 200, success: 'sent email deleted by admin' });
+        }
       }
-    });
+    } else {
+      const userSpecificEmail = database(sql.retrieveUserSpecificSentEmail, [emailId, user]);
+      const responseFour = await userSpecificEmail;
+      if (responseFour.length === 0 || responseFour.length === 'undefined') {
+        res.status(404).json({ status: 404, error: 'sent email not found' });
+      } else {
+        const deleteEmail = database(sql.deleteSpecificSentEmail, [emailId]);
+        const responseFive = await deleteEmail;
+        if (responseFive) {
+          res.status(200).json({ status: 200, success: 'sent email deleted' });
+        }
+      }
+    }
   },
 
   /**
