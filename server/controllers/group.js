@@ -18,33 +18,33 @@ const groups = {
    * @param {object} req
    * @param {object} res
    */
-  createGroup(req, res) {
+  async createGroup(req, res) {
     const {
       name, role,
     } = req.body;
     const user = req.userEmail;
     const findGroup = database(sql.findGroup, [name, user]);
-    findGroup.then((response) => {
-      if (response.length !== 0) {
-        res.status(400).json({ status: 400, error: 'group with the specified name already exists' });
-      } else {
-        const owner = user;
-        const group = new Group(name, role, owner);
-        const query = database(sql.createGroup, [group.name, group.role, group.owner]);
-        query.then((response) => {
-          const {
+    const responseOne = await findGroup;
+    if (responseOne.length !== 0) {
+      res.status(400).json({ status: 400, error: 'group with the specified name already exists' });
+    } else {
+      const owner = user;
+      const group = new Group(name, role, owner);
+      const query = database(sql.createGroup, [group.name, group.role, group.owner]);
+      const responseTwo = await query;
+      if (responseTwo) {
+        const {
+          id, name, role,
+        } = responseTwo[0];
+        res.status(201).json({
+          status: 201,
+          success: 'group created',
+          data: [{
             id, name, role,
-          } = response[0];
-          res.status(201).json({
-            status: 201,
-            success: 'group created',
-            data: [{
-              id, name, role,
-            }],
-          });
+          }],
         });
       }
-    });
+    }
   },
 
   /**
