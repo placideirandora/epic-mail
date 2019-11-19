@@ -39,7 +39,7 @@ EPIC Mail helps people exchange messages/information over the internet.
 ### Clone The Project
 
 ```
-$ git clone https://github.com/placideirandora/epic-mail.git
+$ git clone https://github.com/placideirandora/epic-mail-with-node.js
 ```
 
 ### Install Required Dependencies
