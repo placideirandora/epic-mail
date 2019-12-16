@@ -1,5 +1,5 @@
-# EPIC MAIL (NODE.JS)
-EPIC Mail helps people exchange messages/information over the internet.
+# EPIC MAIL (NODEJS)
+A full-stack web application that helps people exchange information over the internet.
 
 [![Build Status](https://travis-ci.org/placideirandora/epic-mail.svg?branch=develop)](https://travis-ci.org/placideirandora/epic-mail)  [![Coverage Status](https://coveralls.io/repos/github/placideirandora/epic-mail/badge.svg?branch=develop)](https://coveralls.io/github/placideirandora/epic-mail?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/ffeae9beea9202ff160f/maintainability)](https://codeclimate.com/github/placideirandora/epic-mail/maintainability)
 
@@ -7,12 +7,13 @@ EPIC Mail helps people exchange messages/information over the internet.
 
 
 
-## TOOLS USED
+## SOFTWARE TECHNOLOGIES
 
+- **HTML + CSS + JS** - UI
 
-- **JavaScript** - Programming Language
+- **NodeJS** - JavaScript Run-time Environment
 
-- **NodeJS** - Server Environment
+- **ExpressJS** - Web Framework
 
 - **Mocha and Chai** - Test Framework And Assertion Library
 
@@ -23,8 +24,6 @@ EPIC Mail helps people exchange messages/information over the internet.
 - **Code Climate** - Continuous Integration Code Quality
 
 - **Heroku** - Deployment. [Visit The App](https://epic-mail-ch3.herokuapp.com/)
-
-- **GIT** - Version Control System
 
 - **GitHub Pages** - Front-End UI Hosting. [Visit The App](https://placideirandora.github.io/epic-mail/)
 
@@ -396,12 +395,3 @@ $ npm test
     ]
 }
 ```
-
-
-## DEVELOPER
-
-Placide IRANDORA
-
-## COPYRIGHT
-
-&copy; 2019 Placide IRANDORA
