@@ -38,7 +38,7 @@ A full-stack web application that helps people exchange information over the int
 ### Clone The Project
 
 ```
-$ git clone https://github.com/placideirandora/epic-mail-with-node.js
+$ git clone https://github.com/placiderapson/epic-mail-with-node.js
 ```
 
 ### Install Required Dependencies
