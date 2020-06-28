@@ -1,11 +1,8 @@
-# EPIC MAIL (NODEJS)
+# EPIC MAIL (VANILLA JS & NODE JS)
+
 A full-stack web application that helps people exchange information over the internet.
 
-[![Build Status](https://travis-ci.org/placideirandora/epic-mail.svg?branch=develop)](https://travis-ci.org/placideirandora/epic-mail)  [![Coverage Status](https://coveralls.io/repos/github/placideirandora/epic-mail/badge.svg?branch=develop)](https://coveralls.io/github/placideirandora/epic-mail?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/ffeae9beea9202ff160f/maintainability)](https://codeclimate.com/github/placideirandora/epic-mail/maintainability)
-
-
-
-
+[![Build Status](https://travis-ci.org/placideirandora/epic-mail.svg?branch=develop)](https://travis-ci.org/placideirandora/epic-mail) [![Coverage Status](https://coveralls.io/repos/github/placideirandora/epic-mail/badge.svg?branch=develop)](https://coveralls.io/github/placideirandora/epic-mail?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/ffeae9beea9202ff160f/maintainability)](https://codeclimate.com/github/placideirandora/epic-mail/maintainability)
 
 ## SOFTWARE TECHNOLOGIES
 
@@ -31,14 +28,12 @@ A full-stack web application that helps people exchange information over the int
 
 - **PostgreSQL** - Database System. [Download And Install It](https://www.postgresql.org/)
 
-
-
 ## GETTING STARTED
 
 ### Clone The Project
 
 ```
-$ git clone https://github.com/placiderapson/epic-mail-with-node.js
+$ git clone https://github.com/placiderapson/epic-mail-with-node-and-vanilla-js
 ```
 
 ### Install Required Dependencies
@@ -131,40 +126,38 @@ $ npm test
 
 ## API ENDPOINT ROUTES
 
-| METHOD | ROUTE | DESCRIPTION | ACCESS |
-|--------|----------------|-------------|-----------------|
-|  POST  | api/v2/auth/signup | User Registration | Public |
-|  POST  | api/v2/auth/login  | User Login | Public |
-|  GET  | api/v2/users | Retrieve Registered Users | Private |
-|  GET  | api/v2/users/{userId}  | Retrieve A Specific Registered User | Private |
-|  DELETE  | api/v2/users/{userId}  | Delete A Specific Registered User | Private |
-|  POST  | api/v2/auth/reset | User Password Reset | Public |
-|  GET  | api/v2/auth/reset  | Retrieve Users Who Reset Their Passwords | Private |
-|  POST   | api/v2/messages | Send Email | Private |
-|  GET   | api/v2/messages | Retrieve Received Emails | Private |
-|  GET   | api/v2/messages/{messageId} | Retrieve A Specific Email | Private |
-|  DELETE | api/v2/messages/{messageId} | Delete A Specific Email | Private |
-|  GET   | api/v2/messages/sent | Retrieve Sent Emails | Private |
-|  GET   | api/v2/messages/sent/{messageId} | Retrieve A Specific Sent Email | Private |
-|  DELETE   | api/v2/messages/sent/{messageId} | Delete A Specific Sent Email | Private |
-|  GET   | api/v2/messages/read | Retrieve Read Emails | Private |
-|  GET   | api/v2/messages/unread | Retrieve Unread Emails | Private |
-|  GET   | api/v2/messages/draft | Retrieve Draft Emails | Private |
-|  GET   | api/v2/messages/draft/{messageId} | Retrieve A Specific Draft Email | Private |
-|  DELETE   | api/v2/messages/draft/{messageId} | Delete A Specific Draft Email | Private |
-|  POST   | api/v2/groups | Create A Group | Private |
-|  GET   | api/v2/groups | Retrieve Groups | Private |
-|  GET   | api/v2/groups/{groupId} | Retrieve A Specific Group | Private |
-|  DELETE   | api/v2/groups/{groupId} | Delete A Specific Group | Private |
-|  PATCH   | api/v2/groups/{groupId}/name | Change A Group Name | Private |
-|  POST   | api/v2/groups/{groupId}/users | Add A Group Member | Private |
-|  GET   | api/v2/groups/{groupId}/users | Retrieve Group Members | Private |
-|  GET   | api/v2/groups/{groupId}/users/{memberId} | Retrieve A Specific Group Member | Private |
-|  DELETE   | api/v2/groups/{groupId}/users/{memberId} | Delete A Specific Group Member | Private |
-|  POST   | api/v2/groups/{groupId}/messages | Send A Group Message | Private |
-|  GET   | api/v2/groups/{groupId}/messages | Retrieve Group Messages | Private |
-
-
+| METHOD | ROUTE                                    | DESCRIPTION                              | ACCESS  |
+| ------ | ---------------------------------------- | ---------------------------------------- | ------- |
+| POST   | api/v2/auth/signup                       | User Registration                        | Public  |
+| POST   | api/v2/auth/login                        | User Login                               | Public  |
+| GET    | api/v2/users                             | Retrieve Registered Users                | Private |
+| GET    | api/v2/users/{userId}                    | Retrieve A Specific Registered User      | Private |
+| DELETE | api/v2/users/{userId}                    | Delete A Specific Registered User        | Private |
+| POST   | api/v2/auth/reset                        | User Password Reset                      | Public  |
+| GET    | api/v2/auth/reset                        | Retrieve Users Who Reset Their Passwords | Private |
+| POST   | api/v2/messages                          | Send Email                               | Private |
+| GET    | api/v2/messages                          | Retrieve Received Emails                 | Private |
+| GET    | api/v2/messages/{messageId}              | Retrieve A Specific Email                | Private |
+| DELETE | api/v2/messages/{messageId}              | Delete A Specific Email                  | Private |
+| GET    | api/v2/messages/sent                     | Retrieve Sent Emails                     | Private |
+| GET    | api/v2/messages/sent/{messageId}         | Retrieve A Specific Sent Email           | Private |
+| DELETE | api/v2/messages/sent/{messageId}         | Delete A Specific Sent Email             | Private |
+| GET    | api/v2/messages/read                     | Retrieve Read Emails                     | Private |
+| GET    | api/v2/messages/unread                   | Retrieve Unread Emails                   | Private |
+| GET    | api/v2/messages/draft                    | Retrieve Draft Emails                    | Private |
+| GET    | api/v2/messages/draft/{messageId}        | Retrieve A Specific Draft Email          | Private |
+| DELETE | api/v2/messages/draft/{messageId}        | Delete A Specific Draft Email            | Private |
+| POST   | api/v2/groups                            | Create A Group                           | Private |
+| GET    | api/v2/groups                            | Retrieve Groups                          | Private |
+| GET    | api/v2/groups/{groupId}                  | Retrieve A Specific Group                | Private |
+| DELETE | api/v2/groups/{groupId}                  | Delete A Specific Group                  | Private |
+| PATCH  | api/v2/groups/{groupId}/name             | Change A Group Name                      | Private |
+| POST   | api/v2/groups/{groupId}/users            | Add A Group Member                       | Private |
+| GET    | api/v2/groups/{groupId}/users            | Retrieve Group Members                   | Private |
+| GET    | api/v2/groups/{groupId}/users/{memberId} | Retrieve A Specific Group Member         | Private |
+| DELETE | api/v2/groups/{groupId}/users/{memberId} | Delete A Specific Group Member           | Private |
+| POST   | api/v2/groups/{groupId}/messages         | Send A Group Message                     | Private |
+| GET    | api/v2/groups/{groupId}/messages         | Retrieve Group Messages                  | Private |
 
 ## REQUEST AND RESPONSE SAMPLE
 
