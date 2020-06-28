@@ -2,90 +2,96 @@
  * importing google fonts
  */
 
- @import url('https://fonts.googleapis.com/css?family=Montserrat');
- @import url('https://fonts.googleapis.com/css?family=Comfortaa');
- @import url('https://fonts.googleapis.com/css?family=Righteous');
- @import url('https://fonts.googleapis.com/css?family=Laila');
- @import url('https://fonts.googleapis.com/css?family=Varela+Round');
- 
- 
- /**
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Comfortaa');
+@import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://fonts.googleapis.com/css?family=Laila');
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
+/**
   * body
   */
- 
- * { box-sizing: border-box; }
- 
- body 
- {
-   margin: 0;
-   padding: 0;
-   width: 100%;
-   height: 100vh;
-   background: url('../images/email-5.jpg') no-repeat center;
-   background-size: cover;
-   color:#fff;
-   font-family: 'Varela Round', Helvetica;
- }
- 
- /**
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  background: url('../images/email-5.jpg') no-repeat center;
+  background-size: cover;
+  color: #fff;
+  font-family: 'Varela Round', Helvetica;
+}
+
+/**
   * title of the web application in the container
   */
- 
- .container .title { text-align: center; letter-spacing: 12px; text-transform: uppercase; }
- 
- /**
+
+.container .title {
+  text-align: center;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+}
+
+/**
   * the rest in the sub-container
   */
- 
- .container .sub-container { margin-top: 212px; }
- 
- /**
+
+.container .sub-container {
+  margin-top: 212px;
+}
+
+/**
   * web application description
   */
- 
- .container .sub-container .description 
- {
-   background: rgba(0, 0, 0, 0.6); 
-   text-align: center; letter-spacing: 4px; 
-   padding: 8px; 
-   font-weight: bold; 
-   font-size: 21px; 
-   text-transform: capitalize;
- }
- 
- /**
+
+.container .sub-container .description {
+  background: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  letter-spacing: 4px;
+  padding: 8px;
+  font-weight: bold;
+  font-size: 21px;
+  text-transform: capitalize;
+}
+
+/**
   * get started button
   */
- 
- .get-started { margin-top: 189px; text-align: center; text-transform: uppercase; }
- 
- .container .sub-container .get-started .get-started-button
- {
-     padding: 10px 20px;
-   margin: 0px 10px 10px 0px;
-     border-radius: 10px;
-     font-size: 20px;
-     color: #FFF;
-     font-family: 'Laila', Helvetica;
-   text-decoration: none;
-   letter-spacing: 2px;	
-   background: rgba(0, 0, 0, 0.6);
-   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
- }
- 
- .container .sub-container .get-started .get-started-button:hover
- {
-   color: rgba(0, 0, 0, 1);
-   background: #ccc;
-   
- }
- 
- /**
+
+.get-started {
+  margin-top: 189px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.container .sub-container .get-started .get-started-button {
+  padding: 10px 20px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 10px;
+  font-size: 20px;
+  color: #fff;
+  font-family: 'Laila', Helvetica;
+  text-decoration: none;
+  letter-spacing: 2px;
+  background: rgba(0, 0, 0, 0.6);
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.container .sub-container .get-started .get-started-button:hover {
+  color: rgba(0, 0, 0, 1);
+  background: #ccc;
+}
+
+/**
  * user section
  */
 
-.user-options-container 
-{
+.user-options-container {
   position: relative;
   width: 80%;
   margin-left: 10%;
@@ -96,8 +102,7 @@
  * registered and unregistered section
  */
 
-.user-options-text 
-{
+.user-options-text {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -106,8 +111,7 @@
 }
 
 .user-options-registered,
-.user-options-unregistered 
-{
+.user-options-unregistered {
   width: 50%;
   padding: 75px 45px;
   color: #fff;
@@ -115,26 +119,23 @@
 }
 
 .user-registered-title,
-.user-unregistered-title 
-{
+.user-unregistered-title {
   margin-bottom: 18px;
-  font-size: 1.60rem;
+  font-size: 1.6rem;
   line-height: 1em;
   letter-spacing: 3.5px;
 }
 
 .user-unregistered-text,
-.user-registered-text 
-{
+.user-registered-text {
   font-size: 0.78rem;
   line-height: 1.4em;
   letter-spacing: 2px;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
 }
 
 .user-registered-sign-in,
-.user-unregistered-sign-up 
-{
+.user-unregistered-sign-up {
   margin-top: 30px;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -146,14 +147,12 @@
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 .user-registered-sign-in:hover,
-.user-unregistered-sign-up:hover 
-{
+.user-unregistered-sign-up:hover {
   color: rgba(34, 34, 34, 0.85);
   background-color: #ccc;
 }
 
-button 
-{
+button {
   background-color: transparent;
   padding: 0;
   border: 0;
@@ -165,8 +164,7 @@ button
  * forms section
  */
 
-.user-options-forms  
-{
+.user-options-forms {
   position: absolute;
   top: 49%;
   left: 30px;
@@ -177,16 +175,13 @@ button
   box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   transform: translate(100%, -50%);
-  
 }
-
 
 /**
  * forms titles
  */
 
-.user-options-forms .forms-title 
-{
+.user-options-forms .forms-title {
   margin-bottom: 45px;
   font-size: 1.5rem;
   font-weight: 500;
@@ -200,26 +195,23 @@ button
  * forms input
  */
 
-.user-options-forms .forms-field:not(:last-of-type) 
-{
+.user-options-forms .forms-field:not(:last-of-type) {
   margin-bottom: 20px;
 }
 
-.user-options-forms .forms-field-input 
-{
+.user-options-forms .forms-field-input {
   width: 100%;
   border-bottom: 1.5px solid #bbc1cd;
   padding: 6px 20px 6px 6px;
   font-family: 'Montserrat';
-  font-size: 0.90rem;
+  font-size: 0.9rem;
   font-weight: bold;
-  color: #06080A;
+  color: #06080a;
   letter-spacing: 0.1rem;
   transition: border-color 0.3s ease-in-out;
 }
 
-input 
-{
+input {
   background-color: transparent;
   padding: 0;
   border: 0;
@@ -227,18 +219,18 @@ input
   text-align: center;
 }
 
-input[type="submit"] { cursor: pointer; }
+input[type='submit'] {
+  cursor: pointer;
+}
 
-input::placeholder 
-{
-  font-size: 0.80rem;
+input::placeholder {
+  font-size: 0.8rem;
   font-weight: 300;
   letter-spacing: 0.1rem;
   color: #6c7882;
 }
 
-.user-options-forms .forms-field-input:focus 
-{
+.user-options-forms .forms-field-input:focus {
   border-color: rgb(43, 177, 211);
 }
 
@@ -246,16 +238,14 @@ input::placeholder
  * forms buttons
  */
 
-.user-options-forms .forms-buttons 
-{
+.user-options-forms .forms-buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 35px;
 }
 
-.user-options-forms .forms-buttons-forgot 
-{
+.user-options-forms .forms-buttons-forgot {
   font-family: 'Montserrat', Helvetica;
   letter-spacing: 0.1rem;
   color: #6c7882;
@@ -263,13 +253,11 @@ input::placeholder
   transition: color 0.2s ease-in-out;
 }
 
-.user-options-forms .forms-buttons-forgot:hover 
-{
+.user-options-forms .forms-buttons-forgot:hover {
   color: black;
 }
 
-.user-options-forms .forms-buttons-action 
-{
+.user-options-forms .forms-buttons-action {
   background-color: rgb(20, 156, 190);
   border-radius: 3px;
   padding: 10px 35px;
@@ -282,19 +270,16 @@ input::placeholder
   transition: background-color 0.3s ease-in-out;
 }
 
-.user-options-forms .right
-{
+.user-options-forms .right {
   margin-left: 65%;
 }
 
-.user-options-forms .forms-buttons-action a 
-{
+.user-options-forms .forms-buttons-action a {
   text-decoration: none;
   color: #fff;
 }
 
-.user-options-forms .forms-buttons-action:hover 
-{
+.user-options-forms .forms-buttons-action:hover {
   background-color: rgb(7, 106, 131);
 }
 
@@ -302,219 +287,188 @@ input::placeholder
  * sign in and sign up forms
  */
 
-.user-options-forms .user-forms-sign-in
-{
+.user-options-forms .user-forms-sign-in {
   position: absolute;
   top: 70px;
   left: 40px;
   width: calc(100% - 80px);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, transform 0.5s ease-in-out;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out,
+    transform 0.5s ease-in-out;
 }
 
-.user-options-forms .user-forms-sign-up 
-{
+.user-options-forms .user-forms-sign-up {
   position: absolute;
   top: 55px;
   left: 40px;
   width: calc(100% - 80px);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, transform 0.5s ease-in-out;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out,
+    transform 0.5s ease-in-out;
 }
 
-.user-options-forms .user-forms-sign-in 
-{
+.user-options-forms .user-forms-sign-in {
   transform: translateX(0);
   opacity: 1;
   visibility: visible;
 }
 
-.user-options-forms .user-forms-sign-up .forms-fields 
-{  
+.user-options-forms .user-forms-sign-up .forms-fields {
   display: flex;
   width: 100%;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
-.user-options-forms .user-forms-sign-up .forms-fields .forms-field-input
-{
+.user-options-forms .user-forms-sign-up .forms-fields .forms-field-input {
   width: 49%;
 }
-
 
 /**
  * modal
  */
 
- .user .modal 
- {
-   position: fixed;
-   left: 0;
-   top: 0;
-   width: 100%;
-   height: 100%;
-   background-color: rgba(0, 0, 0, 0.7);
-   opacity: 0;
-   visibility: hidden;
-   transform: scale(1.1);
-   transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
- }
- 
- .user .modal .modal-content 
- {
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
-   background-color:  rgb(233, 230, 230);
-   padding: 1rem 1.5rem;
-   width: 40%;
-   height: 33%;
-   color: black;
-   border-radius: 3px;
- }
- 
- .user .modal .modal-content h2
- {
-   text-align: center;
-   text-transform: uppercase;
-   letter-spacing: 0.1rem;
-   color: rgb(20, 156, 190);
- }
- 
- .user .modal .modal-content .password-reset-input
- {
-   width: 100%;
-   border-bottom: 1.5px solid #bbc1cd;
-   margin-top: 0.4rem;
-   padding: 6px 20px 6px 6px;
-   font-family: 'Montserrat';
-   font-size: 0.90rem;
-   font-weight: bold;
-   color: #06080A;
-   letter-spacing: 0.1rem;
-   transition: border-color 0.2s ease-in-out;
- }
- 
- .user .modal .modal-content .password-reset-input:focus
- {
-   border-color: rgb(43, 177, 211);
- }
- 
- .user .modal .modal-content .password-reset-button 
- {
-   background-color: rgb(20, 156, 190);
-   border-radius: 3px;
-   margin-top: 28px;
-   margin-left: 37%;
-   padding: 8px 30px;
-   font-size: 1rem;
-   font-family: 'Laila', helvetica;
-   font-weight: 300;
-   color: #fff;
-   text-transform: uppercase;
-   letter-spacing: 0.1rem;
-   transition: background-color 0.2s ease-in-out;
- }
- 
- .user .modal .modal-content .password-reset-button:hover 
- {
-   background-color: rgb(7, 106, 131);
- }
- 
- .user .show-modal 
- {
-   opacity: 1;
-   visibility: visible;
-   transform: scale(1.0);
-   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
- }
- 
+.user .modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1);
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.user .modal .modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(233, 230, 230);
+  padding: 1rem 1.5rem;
+  width: 40%;
+  height: 33%;
+  color: black;
+  border-radius: 3px;
+}
+
+.user .modal .modal-content h2 {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: rgb(20, 156, 190);
+}
+
+.user .modal .modal-content .password-reset-input {
+  width: 100%;
+  border-bottom: 1.5px solid #bbc1cd;
+  margin-top: 0.4rem;
+  padding: 6px 20px 6px 6px;
+  font-family: 'Montserrat';
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #06080a;
+  letter-spacing: 0.1rem;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.user .modal .modal-content .password-reset-input:focus {
+  border-color: rgb(43, 177, 211);
+}
+
+.user .modal .modal-content .password-reset-button {
+  background-color: rgb(20, 156, 190);
+  border-radius: 3px;
+  margin-top: 28px;
+  margin-left: 37%;
+  padding: 8px 30px;
+  font-size: 1rem;
+  font-family: 'Laila', helvetica;
+  font-weight: 300;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.user .modal .modal-content .password-reset-button:hover {
+  background-color: rgb(7, 106, 131);
+}
+
+.user .show-modal {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
 
 /**
  * bounce to the left side
  */
 
- @keyframes bounceLeft 
- {
-
+@keyframes bounceLeft {
   0% {
-            transform: translate(100%, -50%);
+    transform: translate(100%, -50%);
   }
   50% {
-            transform: translate(-30px, -50%);
+    transform: translate(-30px, -50%);
   }
   100% {
-            transform: translate(0, -50%);
+    transform: translate(0, -50%);
   }
-
 }
 
 /**
  * bounce to the right side
  */
 
-@keyframes bounceRight 
-{
-
-  0% 
-  {
-            transform: translate(0, -50%);
+@keyframes bounceRight {
+  0% {
+    transform: translate(0, -50%);
   }
 
-  50% 
-  {
-            transform: translate(calc(100% + 30px), -50%);
+  50% {
+    transform: translate(calc(100% + 30px), -50%);
   }
 
-  100% 
-  {
-            transform: translate(100%, -50%);
+  100% {
+    transform: translate(100%, -50%);
   }
-
 }
 
 /**
  * show sign up form
  */
 
-@keyframes showSign-Up 
-{
-
-  100% 
-  {
+@keyframes showSign-Up {
+  100% {
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
   }
-
 }
 
 /**
  * triggers and animation
  */
 
-.user-options-forms.bounceLeft 
-{
-          animation: bounceLeft 1s forwards;
+.user-options-forms.bounceLeft {
+  animation: bounceLeft 1s forwards;
 }
 
-.user-options-forms.bounceLeft .user-forms-sign-up 
-{
-          animation: showSign-Up 1s forwards;
+.user-options-forms.bounceLeft .user-forms-sign-up {
+  animation: showSign-Up 1s forwards;
 }
 
-.user-options-forms.bounceLeft .user-forms-sign-in 
-{
+.user-options-forms.bounceLeft .user-forms-sign-in {
   opacity: 0;
   visibility: hidden;
   transform: translateX(-120px);
 }
 
-.user-options-forms.bounceRight 
-{
-          animation: bounceRight 1s forwards;
+.user-options-forms.bounceRight {
+  animation: bounceRight 1s forwards;
 }
-
