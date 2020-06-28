@@ -1,144 +1,155 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width", initial-scale=1.0>
-    <title>EPIC Mail - Dashboard</title>
-    <link rel="stylesheet" href="../css/groups.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="shortcut icon" type="image/png" href="../images/epic-mail-icon-1.png"/>
-  </head>
-  <body>
-      <div class="container">
-          <div class="sub-container">
-                <div class="sideMenu">
-                        <div class="logo">
-                          <i class="fa fa-envelope-open"></i>
-                          <h2 class="title">EPIC Mail</h2>
+
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width" , initial-scale=1.0>
+        <title>EPIC Mail - Groups</title>
+        <link rel="stylesheet" href="../css/groups.css">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+                integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+                crossorigin="anonymous">
+        <link rel="shortcut icon" type="image/png" href="../images/epic-mail-icon-1.png" />
+</head>
+
+<body>
+        <div class="container">
+                <div class="sub-container">
+                        <div class="sideMenu">
+                                <div class="logo">
+                                        <i class="fa fa-envelope-open"></i>
+                                        <h2 class="title">EPIC Mail</h2>
+                                </div>
+                                <nav>
+                                        <a href="inbox.html"><i class="fa fa-inbox"></i>
+                                                inbox</a>
+                                        <a href="outbox.html"><i class="fa fa-share-square"></i>
+                                                outbox</a>
+                                        <a href="send-message.html"><i class="fa fa-at"></i>
+                                                send message</a>
+                                        <a href="add-group.html"><i class="fa fa-plus-circle"></i>
+                                                add group</a>
+                                        <a href="#" class="active"><i class="fa fa-list-ul"></i>
+                                                groups</a>
+
+
+                                        <a href="profile.html"><i class="fa fa-user-circle"></i>
+                                                profile</a>
+                                        <a href="account.html"><i class="fa fa-sign-out"></i>
+                                                sign out</a>
+                                </nav>
                         </div>
-                        <nav>
-                            <a href="#" class="active"><i class="fa fa-list-ul"></i>
-                              view groups</a>
-                            <a href="create-group.html"><i class="fa fa-plus-circle"></i>
-                              create group</a>
-                            <a href="send-message.html"><i class="fa fa-at"></i>
-                              create message</a>
-                            <a href="inbox.html"><i class="fa fa-inbox"></i>
-                              view inbox</a>
-                            <a href="outbox.html"><i class="fa fa-share-square"></i>
-                                view outbox</a>
-                            <a href="profile.html"><i class="fa fa-user-circle"></i>
-                                    view profile</a>
-                            <a href="sign-in-sign-up.html"><i class="fa fa-sign-out"></i>
-                              sign out</a>
-                        </nav>
+                        <header>
+                                <div class="welcome">
+                                        <h2 class="message">DASHBOARD</h2>
+                                </div>
+                                <div class="user-area">
+                                        <a href="#">
+                                                <div class="user-img"></div>
+                                        </a>
+                                </div>
+                        </header>
+                        <div class="groups">
+                                <div class="title">
+                                        CHAT GROUPS
+                                </div>
+                                <div class="cards">
+                                        <div class="row-1">
+                                                <div class="card-1">
+                                                        <div class="group-name" id="trigger-1">
+                                                                <h4>Programming</h4>
+                                                        </div>
+                                                </div>
+                                                <div class="card-2">
+                                                        <div class="group-name" id="trigger-2">
+                                                                <h4>Cybersecurity</h4>
+                                                        </div>
+                                                </div>
+                                                <div class="card-3">
+                                                        <div class="group-name" id="trigger-3">
+                                                                <h4>Business</h4>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="row-2">
+                                                <div class="card-4">
+                                                        <div class="group-name" id="trigger-4">
+                                                                <h4>Photography</h4>
+                                                        </div>
+                                                </div>
+                                                <div class="card-5">
+                                                        <div class="group-name" id="trigger-5">
+                                                                <h4>Sports</h4>
+                                                        </div>
+                                                </div>
+                                                <div class="card-6">
+                                                        <div class="group-name" id="trigger-6">
+                                                                <h4>Cinema</h4>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="modal">
+                                        <div class="modal-content">
+                                                <h2>Group Chat Room</h2>
+                                                <div class="msg-space">
+                                                        <div class="send-msg">
+                                                                <p id="chatlog14" class="chatlog-right">&nbsp;</p>
+                                                                <p id="chatlog13" class="chatlog-left">&nbsp;</p>
+                                                                <p id="chatlog12" class="chatlog-right">&nbsp;</p>
+                                                                <p id="chatlog11" class="chatlog-left">&nbsp;</p>
+                                                                <p id="chatlog10" class="chatlog-right">&nbsp;</p>
+                                                                <p id="chatlog9" class="chatlog-left">&nbsp;</p>
+                                                                <p id="chatlog8" class="chatlog-right">&nbsp;</p>
+                                                                <p id="chatlog7" class="chatlog-left">&nbsp;</p>
+                                                                <p id="chatlog6" class="chatlog-right">&nbsp;</p>
+                                                                <p id="chatlog5" class="chatlog-left">&nbsp;</p>
+                                                                <p id="chatlog4" class="chatlog-right">&nbsp;</p>
+                                                                <p id="chatlog3" class="chatlog-left">&nbsp;</p>
+                                                                <p id="chatlog2" class="chatlog-right">&nbsp;</p>
+                                                                <p id="chatlog1" class="chatlog-left">&nbsp;</p>
+                                                                <div class="msg-input">
+                                                                        <input type="text" class="input"
+                                                                                placeholder="Enter message" id="chatbox"
+                                                                                onfocus="placeHolder()"><button
+                                                                                type="submit" class="send-btn"
+                                                                                id="send-btn"><i
+                                                                                        class="fa fa-arrow-circle-right"></i>
+                                                                                Send</button>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
                 </div>
-                <header>
-                        <div class="welcome">
-                            <h2 class="message">DASHBOARD</h2>
-                        </div>
-                        <div class="user-area">
-                                <a href="#">
-                                  <div class="user-img"></div>
-                                </a>
-                        </div>
-                </header>
-                <div class="groups">
-                    <div class="title">
-                        CHAT GROUPS
-                    </div>
-                    <div class="cards">
-                        <div class="row-1">
-                                <div class="card-1">
-                                    <div class="group-name" id="trigger-1">
-                                        <h4>Programming</h4>
-                                    </div>
-                                </div>
-                                <div class="card-2">
-                                        <div class="group-name" id="trigger-2">
-                                                <h4>Cybersecurity</h4>
-                                        </div>
-                                </div>
-                                <div class="card-3">
-                                        <div class="group-name" id="trigger-3">
-                                                <h4>Business</h4>
-                                        </div>    
-                                </div>
-                        </div>
-                        <div class="row-2">
-                                <div class="card-4">
-                                        <div class="group-name" id="trigger-4">
-                                                <h4>Photography</h4>
-                                        </div>
-                                </div>
-                                <div class="card-5">
-                                        <div class="group-name" id="trigger-5">
-                                                <h4>Sports</h4>
-                                        </div>  
-                                </div>
-                                <div class="card-6">
-                                        <div class="group-name" id="trigger-6">
-                                                <h4>Cinema</h4>
-                                        </div>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="modal">
-                            <div class="modal-content">
-                                <h2>Group Chat Room</h2>
-                                <div class="msg-space">
-                                    <div class="send-msg">
-                                            <p id="chatlog14" class="chatlog-right">&nbsp;</p>
-                                            <p id="chatlog13" class="chatlog-left">&nbsp;</p>
-                                            <p id="chatlog12" class="chatlog-right">&nbsp;</p>
-                                            <p id="chatlog11" class="chatlog-left">&nbsp;</p>
-                                            <p id="chatlog10" class="chatlog-right">&nbsp;</p>
-                                            <p id="chatlog9" class="chatlog-left">&nbsp;</p>
-                                            <p id="chatlog8" class="chatlog-right">&nbsp;</p>
-                                            <p id="chatlog7" class="chatlog-left">&nbsp;</p>
-                                            <p id="chatlog6" class="chatlog-right">&nbsp;</p>
-                                            <p id="chatlog5" class="chatlog-left">&nbsp;</p>
-                                            <p id="chatlog4" class="chatlog-right">&nbsp;</p>
-                                            <p id="chatlog3" class="chatlog-left">&nbsp;</p>
-                                            <p id="chatlog2" class="chatlog-right">&nbsp;</p>
-                                            <p id="chatlog1" class="chatlog-left">&nbsp;</p>
-                                        <div class="msg-input">
-                                            <input type="text" class="input" placeholder="Enter message" id="chatbox" onfocus="placeHolder()"><button type="submit" class="send-btn" id="send-btn"><i class="fa fa-arrow-circle-right"></i> Send</button>
-                                        </div>
-                                     </div>
-                                </div>
-                            </div>
-                   </div>
-                </div>
-          </div>
-      <script>
-        const triggerOne = document.querySelector("#trigger-1");
-        const triggerTwo = document.querySelector("#trigger-2");
-        const triggerThree = document.querySelector("#trigger-3");
-        const triggerFour = document.querySelector("#trigger-4");
-        const triggerFive = document.querySelector("#trigger-5");
-        const triggerSix= document.querySelector("#trigger-6");
-        const modal = document.querySelector(".modal");
+                <script>
+                        const triggerOne = document.querySelector("#trigger-1");
+                        const triggerTwo = document.querySelector("#trigger-2");
+                        const triggerThree = document.querySelector("#trigger-3");
+                        const triggerFour = document.querySelector("#trigger-4");
+                        const triggerFive = document.querySelector("#trigger-5");
+                        const triggerSix = document.querySelector("#trigger-6");
+                        const modal = document.querySelector(".modal");
 
-        triggerOne.addEventListener("click", toggle);
-        triggerTwo.addEventListener("click", toggle);
-        triggerThree.addEventListener("click", toggle);
-        triggerFour.addEventListener("click", toggle);
-        triggerFive.addEventListener("click", toggle);
-        triggerSix.addEventListener("click", toggle);
+                        triggerOne.addEventListener("click", toggle);
+                        triggerTwo.addEventListener("click", toggle);
+                        triggerThree.addEventListener("click", toggle);
+                        triggerFour.addEventListener("click", toggle);
+                        triggerFive.addEventListener("click", toggle);
+                        triggerSix.addEventListener("click", toggle);
 
-        window.addEventListener("click", () => {
-            if (event.target == modal)
-            {
-              modal.classList.toggle("show-modal");
-            }
-        })
-        function toggle()
-        {
-          modal.classList.toggle("show-modal");
-        }
+                        window.addEventListener("click", () => {
+                                if (event.target == modal) {
+                                        modal.classList.toggle("show-modal");
+                                }
+                        })
+                        function toggle() {
+                                modal.classList.toggle("show-modal");
+                        }
 
-      </script>
-      <script src="../js/chat-bot.js"></script>
-  </body>
+                </script>
+                <script src="../js/chat-bot.js"></script>
+</body>
+
 </html>

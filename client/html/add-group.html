@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>EPIC Mail - Add Group</title>
+    <link rel="stylesheet" href="../css/create-group.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="../images/epic-mail-icon-1.png"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="sub-container">
+        <div class="sideMenu">
+          <div class="logo">
+            <i class="fa fa-envelope-open"></i>
+            <h2 class="title">EPIC Mail</h2>
+          </div>
+          <nav>
+            <a href="inbox.html"><i class="fa fa-inbox"></i> inbox</a>
+            <a href="outbox.html"><i class="fa fa-share-square"></i> outbox</a>
+            <a href="send-message.html"><i class="fa fa-at"></i> send email</a>
+            <a href="#" class="active"
+              ><i class="fa fa-plus-circle"></i> add group</a
+            >
+            <a href="groups.html"><i class="fa fa-list-ul"></i> groups</a>
+
+            <a href="profile.html"><i class="fa fa-user-circle"></i> profile</a>
+            <a href="account.html"><i class="fa fa-sign-out"></i> sign out</a>
+          </nav>
+        </div>
+        <header>
+          <div class="welcome">
+            <h2 class="message">DASHBOARD</h2>
+          </div>
+          <div class="user-area">
+            <a href="#">
+              <div class="user-img"></div>
+            </a>
+          </div>
+        </header>
+        <div class="new-group">
+          <div class="title">
+            ADD GROUP
+          </div>
+          <div class="input-fields">
+            <label class="label">Group Name</label>
+            <input type="text" class="input" autofocus />
+          </div>
+          <div class="input-fields">
+            <label class="label">Add User 1</label>
+            <input type="text" class="input" />
+          </div>
+          <div class="input-fields">
+            <label class="label">Add User 2</label>
+            <input type="text" class="input" />
+          </div>
+          <div class="input-fields">
+            <label class="label">Add User 3</label>
+            <input type="text" class="input" />
+          </div>
+          <div class="forms-buttons">
+            <button class="forms-buttons-action" id="create-group-button">
+              <a href="#">Create Group</a>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const creategroupButton = document.querySelector('#create-group-button');
+      creategroupButton.addEventListener('click', () => {
+        alert('Group created');
+      });
+    </script>
+  </body>
+</html>

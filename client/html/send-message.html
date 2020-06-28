@@ -1,86 +1,108 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width", initial-scale=1.0>
-    <title>EPIC Mail - Dashboard</title>
-    <link rel="stylesheet" href="../css/send-message.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="shortcut icon" type="image/png" href="../images/epic-mail-icon-1.png"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>EPIC Mail - Send Message</title>
+    <link rel="stylesheet" href="../css/send-message.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="../images/epic-mail-icon-1.png"
+    />
   </head>
+
   <body>
-      <div class="container">
-          <div class="sub-container">
-                <div class="sideMenu">
-                        <div class="logo">
-                          <i class="fa fa-envelope-open"></i>
-                          <h2 class="title">EPIC Mail</h2>
-                        </div>
-                        <nav>
-                            <a href="groups.html"><i class="fa fa-list-ul"></i>
-                              view groups</a>
-                            <a href="create-group.html"><i class="fa fa-plus-circle"></i>
-                              create group</a>
-                            <a href="#"  class="active"><i class="fa fa-at"></i>
-                              create message</a>
-                            <a href="inbox.html"><i class="fa fa-inbox"></i>
-                              view inbox</a>
-                            <a href="outbox.html"><i class="fa fa-share-square"></i>
-                                view outbox</a>
-                            <a href="profile.html"><i class="fa fa-user-circle"></i>
-                                    view profile</a>
-                            <a href="sign-in-sign-up.html"><i class="fa fa-sign-out"></i>
-                              sign out</a>
-                        </nav>
-                </div>
-                <header>
-                        <div class="welcome">
-                            <h2 class="message">DASHBOARD</h2>
-                        </div>
-                        <div class="user-area">
-                            <a href="#">
-                              <div class="user-img"></div>
-                            </a>
-                        </div>
-                </header>
-                <div class="compose-email">
-                    <div class="title">
-                        SEND A NEW MESSAGE
-                    </div>
-                    <div class="box-body">
-                        <div class="input-fields">
-                          <input type="email" class="form-control" placeholder="To:" autofocus>
-                        </div>
-                        <div class="input-fields">
-                          <input type="text" class="form-control" placeholder="Subject:">
-                        </div>
-                        <div class="input-fields">
-                              <textarea id="compose-textarea" class="form-control" style="height: 300px" placeholder="Message:"></textarea>
-                        </div>
-                        <div class="box-footer">
-                            <div class="pull-right">
-                              <button type="button" class="draft-btn" id="draft-btn"><i class="fa fa-pencil"></i> Draft</button>
-                              <button type="submit" class="send-btn" id="send-btn"><i class="fa fa-envelope-o"></i> Send</button>
-                            </div>
-                            <button type="reset" class="discard-btn" id="discard-btn"><i class="fa fa-times"></i> Discard</button>
-                          </div>
-                      </div>
-              </div>  
+    <div class="container">
+      <div class="sub-container">
+        <div class="sideMenu">
+          <div class="logo">
+            <i class="fa fa-envelope-open"></i>
+            <h2 class="title">EPIC Mail</h2>
           </div>
+          <nav>
+            <a href="inbox.html"><i class="fa fa-inbox"></i> inbox</a>
+            <a href="outbox.html"><i class="fa fa-share-square"></i> outbox</a>
+            <a href="#" class="active"><i class="fa fa-at"></i> send message</a>
+            <a href="add-group.html"
+              ><i class="fa fa-plus-circle"></i> add group</a
+            >
+            <a href="#"><i class="fa fa-list-ul"></i> groups</a>
+
+            <a href="profile.html"><i class="fa fa-user-circle"></i> profile</a>
+            <a href="account.html"><i class="fa fa-sign-out"></i> sign out</a>
+          </nav>
+        </div>
+        <header>
+          <div class="welcome">
+            <h2 class="message">DASHBOARD</h2>
+          </div>
+          <div class="user-area">
+            <a href="#">
+              <div class="user-img"></div>
+            </a>
+          </div>
+        </header>
+        <div class="compose-email">
+          <div class="title">
+            SEND A NEW MESSAGE
+          </div>
+          <div class="box-body">
+            <div class="input-fields">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="To:"
+                autofocus
+              />
+            </div>
+            <div class="input-fields">
+              <input type="text" class="form-control" placeholder="Subject:" />
+            </div>
+            <div class="input-fields">
+              <textarea
+                id="compose-textarea"
+                class="form-control"
+                style="height: 300px"
+                placeholder="Message:"
+              ></textarea>
+            </div>
+            <div class="box-footer">
+              <div class="pull-right">
+                <button type="button" class="draft-btn" id="draft-btn">
+                  <i class="fa fa-pencil"></i> Draft
+                </button>
+                <button type="submit" class="send-btn" id="send-btn">
+                  <i class="fa fa-envelope-o"></i> Send
+                </button>
+              </div>
+              <button type="reset" class="discard-btn" id="discard-btn">
+                <i class="fa fa-times"></i> Discard
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <script>
-        const sendButton = document.querySelector("#send-btn");
-        sendButton.addEventListener("click", () => {
-          alert("Message sent");
-        });
-        const draftButton = document.querySelector("#draft-btn");
-        draftButton.addEventListener("click", () => {
-          alert("Message drafted");
-        });
-        const discardButton = document.querySelector("#discard-btn");
-        discardButton.addEventListener("click", () => {
-          alert("Message discarded");
-        });
-      </script>
+    </div>
+    <script>
+      const sendButton = document.querySelector('#send-btn');
+      sendButton.addEventListener('click', () => {
+        alert('Message sent');
+      });
+      const draftButton = document.querySelector('#draft-btn');
+      draftButton.addEventListener('click', () => {
+        alert('Message drafted');
+      });
+      const discardButton = document.querySelector('#discard-btn');
+      discardButton.addEventListener('click', () => {
+        alert('Message discarded');
+      });
+    </script>
   </body>
 </html>

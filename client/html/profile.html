@@ -1,138 +1,161 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width", initial-scale=1.0>
-    <title>EPIC Mail - Dashboard</title>
-    <link rel="stylesheet" href="../css/profile.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="shortcut icon" type="image/png" href="../images/epic-mail-icon-1.png"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>EPIC Mail - Profile</title>
+    <link rel="stylesheet" href="../css/profile.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="../images/epic-mail-icon-1.png"
+    />
   </head>
+
   <body>
-      <div class="container">
-          <div class="sub-container">
-                <div class="sideMenu">
-                        <div class="logo">
-                          <i class="fa fa-envelope-open"></i>
-                          <h2 class="title">EPIC Mail</h2>
-                        </div>
-                        <nav>
-                            <a href="groups.html"><i class="fa fa-list-ul"></i>
-                              view groups</a>
-                            <a href="create-group.html"><i class="fa fa-plus-circle"></i>
-                              create group</a>
-                            <a href="send-message.html"><i class="fa fa-at"></i>
-                              create message</a>
-                            <a href="inbox.html"><i class="fa fa-inbox"></i>
-                              view inbox</a>
-                            <a href="outbox.html"><i class="fa fa-share-square"></i>
-                                view outbox</a>
-                            <a href="#" class="active"><i class="fa fa-user-circle"></i>
-                                    view profile</a>
-                            <a href="sign-in-sign-up.html"><i class="fa fa-sign-out"></i>
-                              sign out</a>
-                        </nav>
-                </div>
-                <header>
-                        <div class="welcome">
-                            <h2 class="message">DASHBOARD</h2>
-                        </div>
-                </header>
-                <div class="profile">
-                    <div class="title">
-                        User Profile
-                    </div>
-                    <div class="cover">
-                        <div class="user-img">    
-                        </div>
-                    </div>
-                    <div class="user-info">
-                      <div class="row-1">
-                        <p class="key">Firstname:</p>
-                        <p class="value">Placide</p>
-                    </div>
-                    <div class="row-2">
-                      <p class="key">Lastname:</p>
-                      <p class="value">IRANDORA</p>
-                    </div>
-                    <div class="row-3">
-                      <p class="key">Email:</p>
-                      <p class="value">placideirandora@gmail.com</p>
-                    </div>
-                    <div class="row-4">
-                      <p class="key">Joined:</p>
-                      <p class="value">February 2019</p>
-                    </div>
-                    </div>
-                    <div class="edit-profile">
-                        <button type="button" class="edit-btn" id="edit-btn"><i class="fa fa-pencil"></i> Update Profile</button>
-                    </div>
-                    <div class="modal">
-                        <div class="modal-content">
-                            <h3>Update Profile</h3>
-                            <div class="input-fields">
-                                <label class="label">Firstname</label>
-                                <input type="text" class="input" value="Placide" autofocus>
-                            </div>
-                            <div class="input-fields">
-                                    <label class="label">Lastname</label>
-                                    <input type="text" class="input" value="IRANDORA">
-                            </div>
-                            <div class="input-fields">
-                                    <label class="label">Email</label>
-                                    <input type="text" class="input" value="placideirandora@gmail.com">
-                            </div>
-                            <div class="profile-photo">
-                              <form id="file-upload-form" class="uploader">
-                                <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
-                                <label for="file-upload" id="file-drag">
-                                  <img id="file-image" src="#" alt="Preview" class="hidden">
-                                  <div id="start">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
-                                    <div>UPLOAD A NEW PROFILE PHOTO</div>
-                                    <div>Drag and Drop or</div>
-                                    <div id="notimage" class="hidden">Please select an image</div>
-                                    <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
-                                  </div>
-                                  <div id="response" class="hidden">
-                                    <div id="messages"></div>
-                                  </div>
-                                </label>
-                              </form>
-                            </div>
-                            <div class="forms-buttons">
-                              <button class="forms-buttons-action" id="update-btn"><a href="#">Update</a></button>
-                            </div>
-                        </div>
-                      </div>
-                </div>
+    <div class="container">
+      <div class="sub-container">
+        <div class="sideMenu">
+          <div class="logo">
+            <i class="fa fa-envelope-open"></i>
+            <h2 class="title">EPIC Mail</h2>
           </div>
+          <nav>
+            <a href="inbox.html"><i class="fa fa-inbox"></i> inbox</a>
+            <a href="outbox.html"><i class="fa fa-share-square"></i> outbox</a>
+            <a href="send-message.html"
+              ><i class="fa fa-at"></i> send message</a
+            >
+            <a href="add-group.html"
+              ><i class="fa fa-plus-circle"></i> add group</a
+            >
+            <a href="groups.html"><i class="fa fa-list-ul"></i> groups</a>
+
+            <a href="#" class="active"
+              ><i class="fa fa-user-circle"></i> profile</a
+            >
+            <a href="account.html"><i class="fa fa-sign-out"></i> sign out</a>
+          </nav>
+        </div>
+        <header>
+          <div class="welcome">
+            <h2 class="message">DASHBOARD</h2>
+          </div>
+        </header>
+        <div class="profile">
+          <div class="title">
+            User Profile
+          </div>
+          <div class="cover">
+            <div class="user-img"></div>
+          </div>
+          <div class="user-info">
+            <div class="row-1">
+              <p class="key">Firstname:</p>
+              <p class="value">Placide</p>
+            </div>
+            <div class="row-2">
+              <p class="key">Lastname:</p>
+              <p class="value">IRANDORA</p>
+            </div>
+            <div class="row-3">
+              <p class="key">Email:</p>
+              <p class="value">placideirandora@gmail.com</p>
+            </div>
+            <div class="row-4">
+              <p class="key">Joined:</p>
+              <p class="value">February 2019</p>
+            </div>
+          </div>
+          <div class="edit-profile">
+            <button type="button" class="edit-btn" id="edit-btn">
+              <i class="fa fa-pencil"></i> Update Profile
+            </button>
+          </div>
+          <div class="modal">
+            <div class="modal-content">
+              <h3>Update Profile</h3>
+              <div class="input-fields">
+                <label class="label">Firstname</label>
+                <input type="text" class="input" value="Placide" autofocus />
+              </div>
+              <div class="input-fields">
+                <label class="label">Lastname</label>
+                <input type="text" class="input" value="IRANDORA" />
+              </div>
+              <div class="input-fields">
+                <label class="label">Email</label>
+                <input
+                  type="text"
+                  class="input"
+                  value="placideirandora@gmail.com"
+                />
+              </div>
+              <div class="profile-photo">
+                <form id="file-upload-form" class="uploader">
+                  <input
+                    id="file-upload"
+                    type="file"
+                    name="fileUpload"
+                    accept="image/*"
+                  />
+                  <label for="file-upload" id="file-drag">
+                    <img id="file-image" src="#" alt="Preview" class="hidden" />
+                    <div id="start">
+                      <i class="fa fa-upload" aria-hidden="true"></i>
+                      <div>UPLOAD A NEW PROFILE PHOTO</div>
+                      <div>Drag and Drop or</div>
+                      <div id="notimage" class="hidden">
+                        Please select an image
+                      </div>
+                      <span id="file-upload-btn" class="btn btn-primary"
+                        >Select a file</span
+                      >
+                    </div>
+                    <div id="response" class="hidden">
+                      <div id="messages"></div>
+                    </div>
+                  </label>
+                </form>
+              </div>
+              <div class="forms-buttons">
+                <button class="forms-buttons-action" id="update-btn">
+                  <a href="#">Update</a>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <script>
-          const editButton = document.querySelector("#edit-btn");
-          const modal = document.querySelector(".modal");
-          const updateButton = document.querySelector("#update-btn");
-  
-          editButton.addEventListener("click", toggle);
-          updateButton.addEventListener("click", () => {
-            alert("Profile updated");
-            if (alert)
-            {
-              toggle();
-            }
-          })
-          
-          window.addEventListener("click", () => {
-              if (event.target == modal)
-              {
-                toggle();
-              }
-          })
-          function toggle()
-          {
-            modal.classList.toggle("show-modal");
-          }
-        </script>
-        <script src="../js/profile-photo.js"></script>
+    </div>
+    <script>
+      const editButton = document.querySelector('#edit-btn');
+      const modal = document.querySelector('.modal');
+      const updateButton = document.querySelector('#update-btn');
+
+      editButton.addEventListener('click', toggle);
+      updateButton.addEventListener('click', () => {
+        alert('Profile updated');
+        if (alert) {
+          toggle();
+        }
+      });
+
+      window.addEventListener('click', () => {
+        if (event.target == modal) {
+          toggle();
+        }
+      });
+      function toggle() {
+        modal.classList.toggle('show-modal');
+      }
+    </script>
+    <script src="../js/profile-photo.js"></script>
   </body>
 </html>
