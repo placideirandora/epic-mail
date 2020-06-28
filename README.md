@@ -2,7 +2,9 @@
 
 A full-stack web application that helps people exchange information over the internet.
 
-[![Build Status](https://travis-ci.org/placideirandora/epic-mail.svg?branch=develop)](https://travis-ci.org/placideirandora/epic-mail) [![Coverage Status](https://coveralls.io/repos/github/placideirandora/epic-mail/badge.svg?branch=develop)](https://coveralls.io/github/placideirandora/epic-mail?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/ffeae9beea9202ff160f/maintainability)](https://codeclimate.com/github/placideirandora/epic-mail/maintainability)
+[![Build Status](https://travis-ci.org/placiderapson/epic-mail-with-node-and-vanilla-js.svg?branch=develop)](https://travis-ci.org/placiderapson/epic-mail-with-node-and-vanilla-js)
+[![Coverage Status](https://coveralls.io/repos/github/placiderapson/epic-mail-with-node-and-vanilla-js/badge.svg?branch=develop)](https://coveralls.io/github/placiderapson/epic-mail-with-node-and-vanilla-js?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c4787ba07cf26ceadb73/maintainability)](https://codeclimate.com/github/placiderapson/epic-mail-with-node-and-vanilla-js/maintainability)
 
 ## SOFTWARE TECHNOLOGIES
 

@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/placideirandora/epic-mail.git"
+    "url": "git+https://github.com/placiderapson/epic-mail-with-node-and-vanilla-js.git"
   },
   "keywords": [
     "email",
@@ -22,9 +22,9 @@
   "author": "Placide IRANDORA",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/placideirandora/epic-mail/issues"
+    "url": "https://github.com/placiderapson/epic-mail-with-node-and-vanilla-js/issues"
   },
-  "homepage": "https://github.com/placideirandora/epic-mail#readme",
+  "homepage": "https://github.com/placiderapson/epic-mail-with-node-and-vanilla-js#readme",
   "dependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
