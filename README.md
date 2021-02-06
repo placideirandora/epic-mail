@@ -34,97 +34,60 @@ A full-stack web application that helps people exchange information over the int
 
 ### Clone The Project
 
-```
-$ git clone https://github.com/placiderapson/epic-mail-with-express-and-vanilla-js
-```
+`git clone https://github.com/placiderapson/epic-mail-with-express-and-vanilla-js`
+
 
 ### Install Required Dependencies
 
-```
-$ npm install
-```
+`npm install`
+
 
 ### Download And Install A Database Management System
 
-```
-$ PostgreSQL
-```
+`PostgreSQL`
+
 
 ### PostgreSQL Databases
 
-```
-$ Create a PostgreSQL database called 'epic-mail' for development
-```
+`Create a PostgreSQL database called 'epic-mail' for development`
 
-```
-$ Create a PostgreSQL database called 'epic-mail-test' for testing
-```
+`Create a PostgreSQL database called 'epic-mail-test' for testing`
 
 ### Create A .env File In The Project Folder And Save The Following Credentials Inside
 
-```
-$ DB_HOST = "localhost"
-```
+`DB_HOST = "localhost"`
 
-```
-$ DB_USER = "postgres"
-```
+`DB_USER = "postgres"`
 
-```
-$ DB_PASSWORD = "xxxxxxxxxx"
-```
+`DB_PASSWORD = "xxxxxxxxxx"`
 
-```
-$ DB_NAME = "epic-mail"
-```
+`DB_NAME = "epic-mail"`
 
-```
-$ DB_NAME_TEST = "epic-mail-test"
-```
+`DB_NAME_TEST = "epic-mail-test"`
 
-```
-$ DB_PORT = 5000 (custom) or 5432 (default)
-```
+`DB_PORT = 5000 (custom) or 5432 (default)`
 
-```
-$ ADMIN_FIRSTNAME = "someone"
-```
+`ADMIN_FIRSTNAME = "someone"`
 
-```
-$ ADMIN_LASTNAME = "someone"
-```
+`ADMIN_LASTNAME = "someone"`
 
-```
-$ ADMIN_USERNAME = "someone"
-```
+`ADMIN_USERNAME = "someone"`
 
-```
-$ ADMIN_EMAIL = "someone@epicmail.com"
-```
+`ADMIN_EMAIL = "someone@epicmail.com"`
 
-```
-$ ADMIN_PASSWORD = "xxxxxxxxxx"
-```
+`ADMIN_PASSWORD = "xxxxxxxxxx"`
 
-```
-$ IS_ADMIN = "true"
-```
+`IS_ADMIN = "true"`
 
-```
-$ SECRET_KEY = "xxxxxxxxxxx"
-```
+`SECRET_KEY = "xxxxxxxxxxx"`
 
 ### Start The Server
 
-```
-$ npm start
-```
+`npm start`
 
 ### Run Tests
 
-```
-$ npm test
-```
+`npm test`
 
 ## API ENDPOINT ROUTES
 
