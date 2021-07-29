@@ -2,16 +2,15 @@
 
 A full-stack web application that helps people exchange information over the internet.
 
-[![Build Status](https://travis-ci.org/placiderapson/epic-mail-with-express-and-vanilla-js.svg?branch=develop)](https://travis-ci.org/placiderapson/epic-mail-with-express-and-vanilla-js)
+![Build](https://github.com/placideirandora/epic-mail-with-express-and-vanilla-js/actions/workflows/node.js.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/placiderapson/epic-mail-with-express-and-vanilla-js/badge.svg?branch=develop)](https://coveralls.io/github/placiderapson/epic-mail-with-express-and-vanilla-js?branch=develop)
-[![Maintainability](https://api.codeclimate.com/v1/badges/c4787ba07cf26ceadb73/maintainability)](https://codeclimate.com/github/placiderapson/epic-mail-with-express-and-vanilla-js/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a61f7603ea417e3c497a/maintainability)](https://codeclimate.com/github/placideirandora/epic-mail-with-express-and-vanilla-js/maintainability)
 
 ## SOFTWARE TECHNOLOGIES
 
 - **HTML + CSS + JS** - UI
 
 - **NodeJS** - JavaScript Run-time Environment
-
 - **ExpressJS** - Web Framework
 
 - **Mocha and Chai** - Test Framework And Assertion Library
@@ -36,16 +35,13 @@ A full-stack web application that helps people exchange information over the int
 
 `git clone https://github.com/placiderapson/epic-mail-with-express-and-vanilla-js`
 
-
 ### Install Required Dependencies
 
 `npm install`
 
-
 ### Download And Install A Database Management System
 
 `PostgreSQL`
-
 
 ### PostgreSQL Databases
 
