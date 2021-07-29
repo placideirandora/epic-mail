@@ -3,7 +3,7 @@
 A full-stack web application that helps people exchange information over the internet.
 
 ![Build](https://github.com/placideirandora/epic-mail-with-express-and-vanilla-js/actions/workflows/node.js.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/placiderapson/epic-mail-with-express-and-vanilla-js/badge.svg?branch=develop)](https://coveralls.io/github/placiderapson/epic-mail-with-express-and-vanilla-js?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/placideirandora/epic-mail-with-express-and-vanilla-js/badge.svg?branch=develop)](https://coveralls.io/github/placideirandora/epic-mail-with-express-and-vanilla-js?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a61f7603ea417e3c497a/maintainability)](https://codeclimate.com/github/placideirandora/epic-mail-with-express-and-vanilla-js/maintainability)
 
 ## SOFTWARE TECHNOLOGIES
