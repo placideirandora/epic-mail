@@ -15,21 +15,48 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+      - name: Start PostgreSQL on Ubuntu
+        run: |
+          sudo systemctl start postgresql.service
+          pg_isready
+      - name: Create DB User
+        run: |
+          sudo -u postgres psql --command="CREATE USER pgtest PASSWORD '123456'" --command="\du"
+      - name: Create Test Database
+        run: |
+          sudo -u postgres createdb --owner=pgtest epic-mail-test
+          PGPASSWORD=123456 psql --username=pgtest --host=localhost --list epic-mail-test
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
       - run: npm ci
       - run: npm run build --if-present
-      - run: npm run coverage
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_DEBUG: false
+          envkey_DB_HOST: ${{ secrets.DB_HOST }}
+          envkey_DB_USER: ${{ secrets.DB_USER }}
+          envkey_DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_DB_PORT: ${{ secrets.DB_PORT }}
+          envkey_ADMIN_FIRSTNAME: ${{ secrets.ADMIN_FIRSTNAME }}
+          envkey_ADMIN_LASTNAME: ${{ secrets.ADMIN_LASTNAME }}
+          envkey_ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          envkey_ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          envkey_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          envkey_IS_ADMIN: ${{ secrets.IS_ADMIN }}
+          envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          file_name: .env
+      - run: npm test
       - uses: actions/checkout@master
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: '../.nyc_output/'

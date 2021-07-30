@@ -96,12 +96,12 @@ const falsePassReset = {
 };
 
 const admin = {
-  email: 'placideirandora@epicmail.com',
+  email: process.env.ADMIN_EMAIL,
   password: process.env.ADMIN_PASSWORD,
 };
 
 const falseAdminPass = {
-  email: 'placideirandora@epicmail.com',
+  email: process.env.ADMIN_EMAIL,
   password: 'xxxxxxxxxxxxx',
 };
 

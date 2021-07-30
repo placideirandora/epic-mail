@@ -2,7 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
-import swaggerDOC from '../swagger';
+import swaggerDOC from '../swagger.json';
 import user from './routes/user';
 import message from './routes/message';
 import group from './routes/group';
