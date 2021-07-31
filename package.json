@@ -4,9 +4,10 @@
   "description": "EPIC Mail helps people exchange messages/information over the internet.",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --require babel-polyfill --require @babel/register ./server/tests --timeout 1600 --exit",
     "dev": "nodemon --exec babel-node server/server.js",
-    "start": "node ."
+    "start": "node .",
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --require babel-polyfill --require @babel/register ./server/tests --timeout 1600 --exit",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "repository": {
     "type": "git",
@@ -50,6 +51,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "codecov": "^3.8.3",
     "eslint": "^5.15.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",

@@ -56,7 +56,5 @@ jobs:
           envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
           file_name: .env
       - run: npm test
-      - uses: actions/checkout@master
-      - uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+      - run: npm run report-coverage
+ 
