@@ -2,11 +2,11 @@
   "name": "epic-mail",
   "version": "1.0.0",
   "description": "EPIC Mail helps people exchange messages/information over the internet.",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
     "dev": "nodemon --exec babel-node server/server.js",
-    "start": "node .",
-    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --require babel-polyfill --require @babel/register ./server/tests --timeout 1600 --exit",
+    "start": "babel-node .",
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --require babel-polyfill --require @babel/register ./server/tests --timeout 3000 --exit",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "repository": {
