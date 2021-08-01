@@ -3,11 +3,12 @@
 /* eslint-disable no-dupe-keys */
 /* eslint-disable no-shadow */
 import dotenv from 'dotenv';
+
+import sql from '../db/queries';
+import databaseClient from '../db';
 import Group from '../models/group';
 import Member from '../models/member';
 import Groupmessage from '../models/group-message';
-import databaseClient from '../db';
-import sql from '../helpers/sql';
 
 dotenv.config();
 

@@ -11,7 +11,7 @@ import {
   groupMessages,
   receivedEmails
 } from './tables';
-import sql from '../helpers/sql';
+import sql from './queries';
 
 class Database {
   constructor() {

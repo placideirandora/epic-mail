@@ -1,8 +1,5 @@
 const sql = {};
 
-/**
- * Declare SQL Queries for Data Processing
- */
 const seedAdmin = 'INSERT INTO users(firstname, lastname, username, email, password, isActive, isAdmin) VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT (email) DO NOTHING';
 const registerUser = 'INSERT INTO users(firstname, lastname, username, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING * ';
 const retrieveAllUsers = 'SELECT * FROM users';

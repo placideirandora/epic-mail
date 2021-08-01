@@ -2,9 +2,10 @@
 /* eslint-disable no-dupe-keys */
 /* eslint-disable no-shadow */
 import dotenv from 'dotenv';
-import Message from '../models/message';
+
+import sql from '../db/queries';
 import databaseClient from '../db';
-import sql from '../helpers/sql';
+import Message from '../models/message';
 
 dotenv.config();
 

@@ -5,9 +5,9 @@
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
 
-import sql from '../helpers/sql';
+import sql from '../db/queries';
+import User from '../models/user';
 import databaseClient from '../db';
 
 dotenv.config();
