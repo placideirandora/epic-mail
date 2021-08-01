@@ -9,7 +9,6 @@ const newUser = {
   password: '123456',
 };
 
-
 const newUser2 = {
   firstname: 'Emmanuel2',
   lastname: 'CYUBAHIRO2',
@@ -148,7 +147,6 @@ const newUserLogIn8 = {
 const message = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 1,
   receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
   status: 'sent',
 };
@@ -156,7 +154,6 @@ const message = {
 const message2 = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 2,
   receiverEmail: 'emmanuelcyubahiro4@epicmail.com',
   status: 'sent',
 };
@@ -164,7 +161,6 @@ const message2 = {
 const message3 = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 2,
   receiverEmail: 'emmanuelcyubahiro44@epicmail.com',
   status: 'sent',
 };
@@ -172,7 +168,6 @@ const message3 = {
 const message4 = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 2,
   receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
   status: 'sent',
 };
@@ -180,7 +175,6 @@ const message4 = {
 const sentEmail = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 2,
   receiverId: 1,
   status: 'sent',
 };
@@ -188,7 +182,6 @@ const sentEmail = {
 const readEmail = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 2,
   receiverId: 1,
   status: 'read',
 };
@@ -196,7 +189,6 @@ const readEmail = {
 const draftEmail = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 2,
   receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
   status: 'draft',
 };
@@ -204,7 +196,6 @@ const draftEmail = {
 const draftEmail2 = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 2,
   receiverEmail: 'emmanuelcyubahiro4@epicmail.com',
   status: 'draft',
 };
@@ -212,7 +203,6 @@ const draftEmail2 = {
 const unreadEmail = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 2,
   receiverId: 1,
   status: 'unread',
 };
@@ -220,7 +210,6 @@ const unreadEmail = {
 const unreadEmail2 = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 2,
   receiverId: 4,
   status: 'unread',
 };
@@ -228,24 +217,23 @@ const unreadEmail2 = {
 const readEmail2 = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 2,
   receiverId: 2,
   status: 'read',
 };
 
 const newGroup = {
   name: 'testOne',
-  role: 'testing',
+  purpose: 'testing',
 };
 
 const newGroup2 = {
   name: 'testTwo',
-  role: 'testing',
+  purpose: 'testing',
 };
 
 const newGroup3 = {
   name: 'testThree',
-  role: 'testing',
+  purpose: 'testing',
 };
 
 const newGroupName = {
@@ -276,7 +264,6 @@ const groupMessage = {
   message: 'test mic check mic check',
   parentMessageId: 1,
 };
-
 
 export {
   newUser,

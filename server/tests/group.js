@@ -3,8 +3,9 @@
 /* eslint-disable no-unused-expressions */
 import chai from 'chai';
 import chaiHTTP from 'chai-http';
-import server from '../server';
-import database from '../db/database';
+
+import server from '../index';
+import database from '../db';
 import {
   newUser6,
   newUser7,
@@ -20,7 +21,7 @@ import {
   newGroup3,
   newGroupMember,
   newGroupMember2,
-  groupMessage,
+  groupMessage
 } from './dummy';
 
 chai.use(chaiHTTP);
@@ -32,55 +33,52 @@ describe('GROUP ENDPOINT TESTS', () => {
   let userToken3;
   let adminToken;
 
-  before((done) => {
+  it('Should register a seventh user', done => {
     chai
       .request(server)
       .post('/api/v2/auth/signup')
       .send(newUser6)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('user registered');
+        res.should.have.status(201);
+        res.body.should.have.property('message').eql('User registered');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
       });
   });
 
-  before((done) => {
+  it('Should register an eight user', done => {
     chai
       .request(server)
       .post('/api/v2/auth/signup')
       .send(newUser7)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('user registered');
+        res.should.have.status(201);
+        res.body.should.have.property('message').eql('User registered');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
       });
   });
 
-  before((done) => {
+  it('Should register a ninth user', done => {
     chai
       .request(server)
       .post('/api/v2/auth/signup')
       .send(newUser8)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('user registered');
+        res.should.have.status(201);
+        res.body.should.have.property('message').eql('User registered');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
       });
   });
 
-  before((done) => {
+  it('Should login the sixth user', done => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
@@ -88,9 +86,8 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
         userToken1 = `Bearer ${res.body.token}`;
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('logged in');
+        res.should.have.status(200);
+        res.body.should.have.property('message').eql('Logged in');
         res.body.should.have.property('token');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
@@ -98,7 +95,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  before((done) => {
+  it('Should login the seventh user', done => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
@@ -106,9 +103,8 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
         userToken2 = `Bearer ${res.body.token}`;
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('logged in');
+        res.should.have.status(200);
+        res.body.should.have.property('message').eql('Logged in');
         res.body.should.have.property('token');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
@@ -116,7 +112,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  before((done) => {
+  it('Should login the eight user', done => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
@@ -124,9 +120,8 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
         userToken3 = `Bearer ${res.body.token}`;
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('logged in');
+        res.should.have.status(200);
+        res.body.should.have.property('message').eql('Logged in');
         res.body.should.have.property('token');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
@@ -134,7 +129,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  before((done) => {
+  it('Should login the admin', done => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
@@ -142,9 +137,8 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
         adminToken = `Bearer ${res.body.token}`;
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('logged in');
+        res.should.have.status(200);
+        res.body.should.have.property('message').eql('Logged in');
         res.body.should.have.property('token');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
@@ -152,7 +146,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should create a new group', (done) => {
+  it('Should create a new group', done => {
     chai
       .request(server)
       .post('/api/v2/groups')
@@ -169,7 +163,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should create a new group', (done) => {
+  it('Should create a new group', done => {
     chai
       .request(server)
       .post('/api/v2/groups')
@@ -186,7 +180,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should create a new group', (done) => {
+  it('Should create a new group', done => {
     chai
       .request(server)
       .post('/api/v2/groups')
@@ -203,7 +197,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve groups', (done) => {
+  it('Should retrieve groups', done => {
     chai
       .request(server)
       .get('/api/v2/groups')
@@ -219,7 +213,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve groups', (done) => {
+  it('Should retrieve groups', done => {
     chai
       .request(server)
       .get('/api/v2/groups')
@@ -235,7 +229,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should add a group member', (done) => {
+  it('Should add a group member', done => {
     chai
       .request(server)
       .post('/api/v2/groups/3/users')
@@ -252,7 +246,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not add the group member because their username is already taken', (done) => {
+  it('Should not add the group member because their username is already taken', done => {
     chai
       .request(server)
       .post('/api/v2/groups/3/users')
@@ -272,7 +266,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not add the group member because they are not even registered', (done) => {
+  it('Should not add the group member because they are not even registered', done => {
     chai
       .request(server)
       .post('/api/v2/groups/3/users')
@@ -292,7 +286,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should send a group message', (done) => {
+  it('Should send a group message', done => {
     chai
       .request(server)
       .post('/api/v2/groups/1/messages')
@@ -309,7 +303,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not send a group message, because the group does not exist', (done) => {
+  it('Should not send a group message, because the group does not exist', done => {
     chai
       .request(server)
       .post('/api/v2/groups/11/messages')
@@ -325,7 +319,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve group messages', (done) => {
+  it('Should retrieve group messages', done => {
     chai
       .request(server)
       .get('/api/v2/groups/1/messages')
@@ -341,7 +335,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve group messages', (done) => {
+  it('Should retrieve group messages', done => {
     chai
       .request(server)
       .get('/api/v2/groups/1/messages')
@@ -359,7 +353,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group messages, because they are none', (done) => {
+  it('Should not retrieve group messages, because they are none', done => {
     chai
       .request(server)
       .get('/api/v2/groups/2/messages')
@@ -376,7 +370,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group messages, because the group does not exist', (done) => {
+  it('Should not retrieve group messages, because the group does not exist', done => {
     chai
       .request(server)
       .get('/api/v2/groups/4/messages')
@@ -391,7 +385,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group messages, because they are none', (done) => {
+  it('Should not retrieve group messages, because they are none', done => {
     chai
       .request(server)
       .get('/api/v2/groups/3/messages')
@@ -406,7 +400,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group messages, because they are none', (done) => {
+  it('Should not retrieve group messages, because they are none', done => {
     chai
       .request(server)
       .get('/api/v2/groups/3/messages')
@@ -421,7 +415,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group messages, because they are not a member of the group', (done) => {
+  it('Should not retrieve group messages, because they are not a member of the group', done => {
     chai
       .request(server)
       .get('/api/v2/groups/3/messages')
@@ -438,7 +432,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group messages, because they are none', (done) => {
+  it('Should not retrieve group messages, because they are none', done => {
     chai
       .request(server)
       .get('/api/v2/groups/2/messages')
@@ -453,7 +447,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve group members', (done) => {
+  it('Should retrieve group members', done => {
     chai
       .request(server)
       .get('/api/v2/groups/3/users')
@@ -469,7 +463,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve group members', (done) => {
+  it('Should retrieve group members', done => {
     chai
       .request(server)
       .get('/api/v2/groups/3/users')
@@ -487,7 +481,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group members because they are none', (done) => {
+  it('Should not retrieve group members because they are none', done => {
     chai
       .request(server)
       .get('/api/v2/groups/2/users')
@@ -504,7 +498,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group members because the group does not exist', (done) => {
+  it('Should not retrieve group members because the group does not exist', done => {
     chai
       .request(server)
       .get('/api/v2/groups/4/users')
@@ -519,7 +513,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group members because they are none', (done) => {
+  it('Should not retrieve group members because they are none', done => {
     chai
       .request(server)
       .get('/api/v2/groups/2/users')
@@ -534,7 +528,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group members because the group does not exist', (done) => {
+  it('Should not retrieve group members because the group does not exist', done => {
     chai
       .request(server)
       .get('/api/v2/groups/4/users')
@@ -549,7 +543,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve group member of id = 1', (done) => {
+  it('Should retrieve group member of id = 1', done => {
     chai
       .request(server)
       .get('/api/v2/groups/3/users/1')
@@ -564,7 +558,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group member of id = 5 because they do not exist', (done) => {
+  it('Should not retrieve group member of id = 5 because they do not exist', done => {
     chai
       .request(server)
       .get('/api/v2/groups/3/users/5')
@@ -579,7 +573,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve group member of id = 5 because the group does not exist', (done) => {
+  it('Should not retrieve group member of id = 5 because the group does not exist', done => {
     chai
       .request(server)
       .get('/api/v2/groups/5/users/5')
@@ -594,7 +588,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should change the group name', (done) => {
+  it('Should change the group name', done => {
     chai
       .request(server)
       .patch('/api/v2/groups/1/name')
@@ -610,7 +604,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should change the group name', (done) => {
+  it('Should change the group name', done => {
     chai
       .request(server)
       .patch('/api/v2/groups/1/name')
@@ -628,7 +622,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete the group member of id = 1', (done) => {
+  it('Should delete the group member of id = 1', done => {
     chai
       .request(server)
       .delete('/api/v2/groups/3/users/1')
@@ -643,7 +637,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not delete the group member of id = 2 because they do not exist', (done) => {
+  it('Should not delete the group member of id = 2 because they do not exist', done => {
     chai
       .request(server)
       .delete('/api/v2/groups/3/users/2')
@@ -658,7 +652,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not delete the group member of id = 1 because the group does not exist', (done) => {
+  it('Should not delete the group member of id = 1 because the group does not exist', done => {
     chai
       .request(server)
       .delete('/api/v2/groups/4/users/1')
@@ -673,7 +667,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete the group of id = 2', (done) => {
+  it('Should delete the group of id = 2', done => {
     chai
       .request(server)
       .delete('/api/v2/groups/2')
@@ -688,7 +682,7 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete the group of id = 3', (done) => {
+  it('Should delete the group of id = 3', done => {
     chai
       .request(server)
       .delete('/api/v2/groups/3')
@@ -703,10 +697,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       });
   });
 
-  database(
+  database.query(
     'TRUNCATE TABLE groups CASCADE; ALTER SEQUENCE groups_id_seq RESTART WITH 1;'
   );
-  database(
+  database.query(
     'TRUNCATE TABLE groupmembers CASCADE; ALTER SEQUENCE groupmembers_id_seq RESTART WITH 1;'
   );
 });
