@@ -1,4 +1,5 @@
 import express from 'express';
+
 import controller from '../controllers/message';
 import authenticate from '../middleware/authenticate';
 import email from '../middleware/validate';

@@ -1,4 +1,5 @@
 import express from 'express';
+
 import controller from '../controllers/group';
 import authenticate from '../middleware/authenticate';
 import group from '../middleware/validate';
