@@ -1,22 +1,23 @@
-import express from 'express';
 import morgan from 'morgan';
-import bodyParser from 'body-parser';
+import express, { json } from 'express';
 import swaggerUI from 'swagger-ui-express';
-import swaggerDOC from '../swagger.json';
+
+import database from './db';
 import user from './routes/user';
-import message from './routes/message';
 import group from './routes/group';
+import message from './routes/message';
+import swaggerDOC from '../swagger.json';
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(json());
 app.use(morgan('dev'));
 
+database.migrateTables();
+
 app.use('/api/v2', user);
-app.use('/api/v2', message);
 app.use('/api/v2', group);
+app.use('/api/v2', message);
 app.use('/', swaggerUI.serve, swaggerUI.setup(swaggerDOC));
 
 app.use((req, res) => {
