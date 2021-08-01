@@ -67,8 +67,6 @@ const validate = {
         .required(),
       receiverEmail: Joi.string().email({ minDomainAtomas: 2 })
         .required(),
-      parentMessageId: Joi.number().integer()
-        .required(),
       status: Joi.string().valid('sent', 'draft')
         .required(),
     });
@@ -152,7 +150,7 @@ const validate = {
     const groupSchema = Joi.object().keys({
       name: Joi.string().trim().min(6).max(30)
         .required(),
-      role: Joi.string().trim().min(5).max(60)
+      purpose: Joi.string().trim().min(5).max(60)
         .required(),
     });
 

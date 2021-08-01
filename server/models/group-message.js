@@ -2,10 +2,8 @@
  *a class for creating an object to store group message information
  */
 class groupmessage {
-  constructor(subject, message, parentMessageId, groupId) {
-    this.subject = subject;
+  constructor(message, groupId) {
     this.message = message;
-    this.parentMessageId = parentMessageId;
     this.groupId = groupId;
   }
 }

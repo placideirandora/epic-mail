@@ -10,3 +10,5 @@ class member {
 }
 
 export default member;
+
+// TODO: REFACTOR THE CLASS NAMES TO USE PASCAL CASE
