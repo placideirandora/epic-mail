@@ -3,11 +3,10 @@
 /* eslint-disable no-dupe-keys */
 /* eslint-disable no-shadow */
 import dotenv from 'dotenv';
-import moment from 'moment';
 import Group from '../models/group';
 import Member from '../models/member';
 import Groupmessage from '../models/group-message';
-import database from '../db/database';
+import databaseClient from '../db';
 import sql from '../helpers/sql';
 
 dotenv.config();
@@ -20,27 +19,27 @@ const groups = {
    */
   async createGroup(req, res) {
     const {
-      name, role,
+      name, purpose,
     } = req.body;
     const user = req.userEmail;
-    const findGroup = database(sql.findGroup, [name, user]);
+    const findGroup = await databaseClient.query(sql.findGroup, [name, user]);
     const responseOne = await findGroup;
     if (responseOne.length !== 0) {
       res.status(400).json({ status: 400, error: 'group with the specified name already exists' });
     } else {
       const owner = user;
-      const group = new Group(name, role, owner);
-      const query = database(sql.createGroup, [group.name, group.role, group.owner]);
+      const group = new Group(name, purpose, owner);
+      const query = await databaseClient.query(sql.createGroup, [group.name, group.purpose, group.owner]);
       const responseTwo = await query;
       if (responseTwo) {
         const {
-          id, name, role,
+          id, name, purpose,
         } = responseTwo[0];
         res.status(201).json({
           status: 201,
           success: 'group created',
           data: [{
-            id, name, role,
+            id, name, purpose,
           }],
         });
       }
@@ -55,10 +54,10 @@ const groups = {
   async retrieveGroups(req, res) {
     const user = req.userEmail;
     const userAccess = 'true';
-    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    const findAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
     const responseOne = await findAdmin;
     if (responseOne.length !== 0) {
-      const allGroups = database(sql.retrieveAllGroups);
+      const allGroups = await databaseClient.query(sql.retrieveAllGroups);
       const responseTwo = await allGroups;
       if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
         res.status(404).json({
@@ -73,7 +72,7 @@ const groups = {
         });
       }
     } else {
-      const userGroups = database(sql.retrieveUserGroups, [user]);
+      const userGroups = await databaseClient.query(sql.retrieveUserGroups, [user]);
       const responseThree = await userGroups;
       if (responseThree.length === 0 || responseThree.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'no groups found' });
@@ -96,10 +95,10 @@ const groups = {
     const groupId = req.params.id;
     const user = req.userEmail;
     const userAccess = 'true';
-    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    const findAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
     const responseOne = await findAdmin;
     if (responseOne.length !== 0) {
-      const specificGroup = database(sql.retrieveSpecificGroup, [groupId]);
+      const specificGroup = await databaseClient.query(sql.retrieveSpecificGroup, [groupId]);
       const responseTwo = await specificGroup;
       if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'admin, group not found' });
@@ -111,7 +110,7 @@ const groups = {
         });
       }
     } else {
-      const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
+      const userGroup = await databaseClient.query(sql.retrieveUserGroup, [groupId, user]);
       const responseThree = await userGroup;
       if (responseThree.length === 0 || responseThree.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'group not found' });
@@ -137,15 +136,15 @@ const groups = {
     } = req.body;
     const user = req.userEmail;
     const userAccess = 'true';
-    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    const findAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
     const responseOne = await findAdmin;
     if (responseOne.length !== 0) {
-      const specificGroup = database(sql.retrieveSpecificGroup, [groupId]);
+      const specificGroup = await databaseClient.query(sql.retrieveSpecificGroup, [groupId]);
       const responseTwo = await specificGroup;
       if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'admin, group with the specified id, not found' });
       } else {
-        const query = database(sql.updateSpecificGroup, [name, groupId]);
+        const query = await databaseClient.query(sql.updateSpecificGroup, [name, groupId]);
         const responseThree = await query;
         if (responseThree) {
           const {
@@ -161,17 +160,17 @@ const groups = {
         }
       }
     } else {
-      const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
+      const userGroup = await databaseClient.query(sql.retrieveUserGroup, [groupId, user]);
       const responseFour = await userGroup;
       if (responseFour.length === 0 || responseFour.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'group not found' });
       } else {
-        const findGroup = database(sql.findGroup, [name, user]);
+        const findGroup = await databaseClient.query(sql.findGroup, [name, user]);
         const responseFive = await findGroup;
         if (responseFive.length !== 0 || responseFive.length === 'undefined') {
           res.status(400).json({ status: 400, error: 'the specified group name is already taken' });
         } else {
-          const query = database(sql.updateSpecificGroup, [name, groupId]);
+          const query = await databaseClient.query(sql.updateSpecificGroup, [name, groupId]);
           const responseSix = await query;
           if (responseSix) {
             const {
@@ -199,27 +198,27 @@ const groups = {
     const groupId = req.params.id;
     const user = req.userEmail;
     const userAccess = 'true';
-    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    const findAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
     const responseOne = await findAdmin;
     if (responseOne.length !== 0) {
-      const specificGroup = database(sql.retrieveSpecificGroup, [groupId]);
+      const specificGroup = await databaseClient.query(sql.retrieveSpecificGroup, [groupId]);
       const responseTwo = await specificGroup;
       if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'admin, group not found' });
       } else {
-        const query = database(sql.deleteSpecificGroup, [groupId]);
+        const query = await databaseClient.query(sql.deleteSpecificGroup, [groupId]);
         const responseThree = await query;
         if (responseThree) {
           res.status(200).json({ status: 200, success: 'admin, group deleted' });
         }
       }
     } else {
-      const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
+      const userGroup = await databaseClient.query(sql.retrieveUserGroup, [groupId, user]);
       const responseFour = await userGroup;
       if (responseFour.length === 0 || responseFour.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'group not found' });
       } else {
-        const query = database(sql.deleteSpecificGroup, [groupId]);
+        const query = await databaseClient.query(sql.deleteSpecificGroup, [groupId]);
         const responseFive = await query;
         if (responseFive) {
           res.status(200).json({ status: 200, success: 'group deleted' });
@@ -243,27 +242,27 @@ const groups = {
       res.status(400).json({ error: 'username must not start with a number' });
     } else {
       const owner = req.userEmail;
-      const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
+      const specificGroupOwner = await databaseClient.query(sql.retrieveSpecificGroupOwner, [groupId, owner]);
       const responseOne = await specificGroupOwner;
       if (responseOne.length === 0 || responseOne.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'group not found' });
       } else {
-        const findUser = database(sql.retrieveSpecificUser, [email]);
+        const findUser = await databaseClient.query(sql.retrieveSpecificUser, [email]);
         const responseTwo = await findUser;
         if (responseTwo.length !== 0) {
-          const findMemberByUsername = database(sql.retrieveMemberByUsername, [username, groupId]);
+          const findMemberByUsername = await databaseClient.query(sql.retrieveMemberByUsername, [username, groupId]);
           const responseThree = await findMemberByUsername;
           if (responseThree.length !== 0) {
             res.status(400).json({ status: 400, error: 'the specified username is already taken. choose another unique name' });
           } else {
-            const findMemberByEmail = database(sql.retrieveMemberByEmail, [email, groupId]);
+            const findMemberByEmail = await databaseClient.query(sql.retrieveMemberByEmail, [email, groupId]);
             const responseFour = await findMemberByEmail;
             if (responseFour.length !== 0) {
               res.status(400).json({ status: 400, error: 'user with the specified email is already registered' });
             } else {
               const memberGroup = groupId;
               const member = new Member(username, email, memberGroup);
-              const query = database(sql.registerGroupMember, [member.username, member.email, member.memberGroup]);
+              const query = await databaseClient.query(sql.registerGroupMember, [member.username, member.email, member.memberGroup]);
               const responseFive = await query;
               if (responseFive) {
                 const {
@@ -295,15 +294,15 @@ const groups = {
     const groupId = req.params.id;
     const user = req.userEmail;
     const userAccess = 'true';
-    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    const findAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
     const responseOne = await findAdmin;
     if (responseOne.length !== 0) {
-      const specificGroup = database(sql.retrieveSpecificGroup, [groupId]);
+      const specificGroup = await databaseClient.query(sql.retrieveSpecificGroup, [groupId]);
       const responseTwo = await specificGroup;
       if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'admin, group not found' });
       } else {
-        const groupMembers = database(sql.retrieveSpecificGroupMembers, [groupId]);
+        const groupMembers = await databaseClient.query(sql.retrieveSpecificGroupMembers, [groupId]);
         const responseThree = await groupMembers;
         if (responseThree.length === 0 || responseThree.length === 'undefined') {
           res.status(404).json({ status: 404, error: 'admin, no group members found' });
@@ -316,12 +315,12 @@ const groups = {
         }
       }
     } else {
-      const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
+      const userGroup = await databaseClient.query(sql.retrieveUserGroup, [groupId, user]);
       const responseFour = await userGroup;
       if (responseFour.length === 0 || responseFour.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'group not found' });
       } else {
-        const groupMembers = database(sql.retrieveSpecificGroupMembers, [groupId]);
+        const groupMembers = await databaseClient.query(sql.retrieveSpecificGroupMembers, [groupId]);
         const responseFive = await groupMembers;
         if (responseFive.length === 0 || responseFive.length === 'undefined') {
           res.status(404).json({ status: 404, error: 'no group members found' });
@@ -345,12 +344,12 @@ const groups = {
     const groupId = req.params.id;
     const groupMemberId = req.params.mid;
     const owner = req.userEmail;
-    const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
+    const specificGroupOwner = await databaseClient.query(sql.retrieveSpecificGroupOwner, [groupId, owner]);
     const responseOne = await specificGroupOwner;
     if (responseOne.length === 0 || responseOne.length === 'undefined') {
       res.status(404).json({ status: 404, error: 'group not found' });
     } else {
-      const specificGroupMember = database(sql.retrieveSpecificGroupMemberById, [groupMemberId, groupId]);
+      const specificGroupMember = await databaseClient.query(sql.retrieveSpecificGroupMemberById, [groupMemberId, groupId]);
       const responseTwo = await specificGroupMember;
       if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'group member not found' });
@@ -369,17 +368,17 @@ const groups = {
     const groupId = req.params.id;
     const groupMemberId = req.params.mid;
     const owner = req.userEmail;
-    const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
+    const specificGroupOwner = await databaseClient.query(sql.retrieveSpecificGroupOwner, [groupId, owner]);
     const responseOne = await specificGroupOwner;
     if (responseOne.length === 0 || responseOne.length === 'undefined') {
       res.status(404).json({ status: 404, error: 'group not found' });
     } else {
-      const specificGroupMember = database(sql.retrieveSpecificGroupMemberById, [groupMemberId, groupId]);
+      const specificGroupMember = await databaseClient.query(sql.retrieveSpecificGroupMemberById, [groupMemberId, groupId]);
       const responseTwo = await specificGroupMember;
       if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'group member not found' });
       } else {
-        const query = database(sql.deleteSpecificGroupMember, [groupMemberId, groupId]);
+        const query = await databaseClient.query(sql.deleteSpecificGroupMember, [groupMemberId, groupId]);
         const responseThree = await query;
         if (responseThree) {
           res.status(200).json({ status: 200, success: 'group member deleted' });
@@ -396,26 +395,26 @@ const groups = {
   async sendGroupEmail(req, res) {
     const groupId = req.params.id;
     const {
-      subject, message, parentMessageId,
+      message
     } = req.body;
     const owner = req.userEmail;
-    const specificGroupOwner = database(sql.retrieveSpecificGroupOwner, [groupId, owner]);
+    const specificGroupOwner = await databaseClient.query(sql.retrieveSpecificGroupOwner, [groupId, owner]);
     const responseOne = await specificGroupOwner;
     if (responseOne.length === 0 || responseOne.length === 'undefined') {
       res.status(404).json({ status: 404, error: 'group not found' });
     } else {
-      const groupmessage = new Groupmessage(subject, message, parentMessageId, groupId);
-      const query = database(sql.sendGroupEmail, [groupmessage.subject, groupmessage.message, groupmessage.parentMessageId, moment().format('LL'), groupmessage.groupId]);
+      const groupmessage = new Groupmessage(message, groupId);
+      const query = await databaseClient.query(sql.sendGroupEmail, [groupmessage.message, groupmessage.groupId]);
       const responseTwo = await query;
       if (responseTwo) {
         const {
-          id, subject, message, parentmessageid, groupid, createdon,
+          id, message, groupId, createdAt,
         } = responseTwo[0];
         res.status(201).json({
           status: 201,
           success: 'group email sent',
           data: [{
-            id, subject, message, parentmessageid, groupid, createdon,
+            id, message, groupId, createdAt
           }],
         });
       }
@@ -431,15 +430,15 @@ const groups = {
     const groupId = req.params.id;
     const user = req.userEmail;
     const userAccess = 'true';
-    const findAdmin = database(sql.retrieveAdmin, [user, userAccess]);
+    const findAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
     const responseOne = await findAdmin;
     if (responseOne.length !== 0) {
-      const specificGroup = database(sql.retrieveSpecificGroup, [groupId]);
+      const specificGroup = await databaseClient.query(sql.retrieveSpecificGroup, [groupId]);
       const responseTwo = await specificGroup;
       if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
         res.status(404).json({ status: 404, error: 'admin, group not found' });
       } else {
-        const groupEmails = database(sql.retrieveSpecificGroupEmails, [groupId]);
+        const groupEmails = await databaseClient.query(sql.retrieveSpecificGroupEmails, [groupId]);
         const responseThree = await groupEmails;
         if (responseThree.length === 0 || responseThree.length === 'undefined') {
           res.status(404).json({ status: 404, error: 'admin, no group emails found' });
@@ -452,15 +451,15 @@ const groups = {
         }
       }
     } else {
-      const userGroup = database(sql.retrieveUserGroup, [groupId, user]);
+      const userGroup = await databaseClient.query(sql.retrieveUserGroup, [groupId, user]);
       const responseFour = await userGroup;
       if (responseFour.length === 0 || responseFour.length === 'undefined') {
-        const findMember = database(sql.retrieveSpecificGroupMember, [user, groupId]);
+        const findMember = await databaseClient.query(sql.retrieveSpecificGroupMember, [user, groupId]);
         const responseFive = await findMember;
         if (responseFive.length === 0) {
           res.status(404).json({ status: 404, error: 'you are not a member of the group or it does not exist' });
         } else {
-          const memberEmails = database(sql.retrieveMemberEmails, [groupId]);
+          const memberEmails = await databaseClient.query(sql.retrieveMemberEmails, [groupId]);
           const responseSix = await memberEmails;
           if (responseSix.length === 0 || responseSix.length === 'undefined') {
             res.status(404).json({ status: 404, error: 'no group emails found' });
@@ -473,7 +472,7 @@ const groups = {
           }
         }
       } else {
-        const groupEmails = database(sql.retrieveSpecificGroupEmails, [groupId]);
+        const groupEmails = await databaseClient.query(sql.retrieveSpecificGroupEmails, [groupId]);
         const responseSeven = await groupEmails;
         if (responseSeven.length === 0 || responseSeven.length === 'undefined') {
           res.status(404).json({ status: 404, error: 'no group emails found' });
