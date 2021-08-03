@@ -17,6 +17,9 @@
     "lines-between-class-members": "off",
     "comma-dangle": "off",
     "object-curly-newline": "off",
-    "arrow-parens": "off"
+    "arrow-parens": "off",
+    "consistent-return": "off",
+    "operator-linebreak": "off",
+    "no-restricted-globals": "off"
   }
 }
