@@ -2,29 +2,29 @@ import express from 'express';
 
 import group from '../middleware/validate';
 import controller from '../controllers/group';
-import authenticate from '../middleware/authenticate';
+import authentication from '../middleware/authenticate';
 
 const router = express.Router();
 
 router.post(
   '/groups',
-  authenticate.verifyUser,
+  authentication.verifyUser,
   group.validateGroup,
   controller.createGroup
 );
 
-router.get('/groups', authenticate.verifyUser, controller.retrieveGroups);
+router.get('/groups', authentication.verifyUser, controller.retrieveGroups);
 
 router.get(
   '/groups/:id',
-  authenticate.verifyUser,
+  authentication.verifyUser,
   group.validateGroupId,
   controller.retrieveGroup
 );
 
 router.patch(
   '/groups/:id/name',
-  authenticate.verifyUser,
+  authentication.verifyUser,
   group.validateGroupId,
   group.validateGroupName,
   controller.changeGroupName
@@ -32,14 +32,14 @@ router.patch(
 
 router.delete(
   '/groups/:id',
-  authenticate.verifyUser,
+  authentication.verifyUser,
   group.validateGroupId,
   controller.deleteGroup
 );
 
 router.post(
   '/groups/:id/users',
-  authenticate.verifyUser,
+  authentication.verifyUser,
   group.validateGroupId,
   group.validateGroupMember,
   controller.addGroupMember
@@ -47,35 +47,35 @@ router.post(
 
 router.get(
   '/groups/:id/users',
-  authenticate.verifyUser,
+  authentication.verifyUser,
   group.validateGroupId,
   controller.retrieveGroupMembers
 );
 
 router.get(
   '/groups/:id/:users/:mid',
-  authenticate.verifyUser,
+  authentication.verifyUser,
   group.validateGroupIdAndMemberId,
   controller.retrieveGroupMember
 );
 
 router.delete(
   '/groups/:id/:users/:mid',
-  authenticate.verifyUser,
+  authentication.verifyUser,
   group.validateGroupIdAndMemberId,
   controller.deleteGroupMember
 );
 
 router.post(
   '/groups/:id/messages',
-  authenticate.verifyUser,
+  authentication.verifyUser,
   group.validateGroupEmail,
   controller.sendGroupEmail
 );
 
 router.get(
   '/groups/:id/messages',
-  authenticate.verifyUser,
+  authentication.verifyUser,
   group.validateGroupId,
   controller.retrieveGroupEmails
 );

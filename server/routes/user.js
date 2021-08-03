@@ -2,7 +2,7 @@ import express from 'express';
 
 import user from '../middleware/validate';
 import UserController from '../controllers/user';
-import authenticate from '../middleware/authenticate';
+import authentication from '../middleware/authenticate';
 
 const router = express.Router();
 
@@ -14,18 +14,18 @@ router.post(
 
 router.post('/auth/login', user.validateLogin, UserController.loginUser);
 
-router.get('/users', authenticate.verifyAdmin, UserController.retrieveUsers);
+router.get('/users', authentication.verifyAdmin, UserController.retrieveUsers);
 
 router.get(
   '/users/:id',
-  authenticate.verifyAdmin,
+  authentication.verifyAdmin,
   user.validateUserId,
   UserController.retrieveUser
 );
 
 router.delete(
   '/users/:id',
-  authenticate.verifyAdmin,
+  authentication.verifyAdmin,
   user.validateUserId,
   UserController.deleteUser
 );
@@ -38,7 +38,7 @@ router.post(
 
 router.get(
   '/auth/reset',
-  authenticate.verifyAdmin,
+  authentication.verifyAdmin,
   UserController.retrievePassResetUsers
 );
 
