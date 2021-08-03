@@ -1,4 +1,3 @@
-import morgan from 'morgan';
 import express, { json } from 'express';
 import swaggerUI from 'swagger-ui-express';
 
@@ -7,11 +6,14 @@ import user from './routes/user';
 import group from './routes/group';
 import message from './routes/message';
 import swaggerDOC from '../swagger.json';
+import logger from './config/winston.config';
+import morganMiddleware from './config/morgan.config';
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(json());
-app.use(morgan('dev'));
+app.use(morganMiddleware);
 
 database.migrateTables();
 
@@ -24,14 +26,8 @@ app.use((req, res) => {
   res.status(404).json({ status: 404, error: 'route not found' });
 });
 
-app.use((error, req, res, next) => {
-  res.status(500).json({ status: 500, error: error.message, next });
-});
-
-const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
-  console.log(`Server listening on port: ${PORT}`);
+  logger.info(`🚀 Server Listening on Port: ${PORT} \n`);
 });
 
 export default app;
