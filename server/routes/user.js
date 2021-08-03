@@ -39,7 +39,7 @@ router.post(
 router.get(
   '/auth/reset',
   authentication.verifyAdmin,
-  UserController.retrievePassResetUsers
+  UserController.retrievePasswordResetUsers
 );
 
 export default router;

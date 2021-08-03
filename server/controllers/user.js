@@ -1,267 +1,208 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable max-len */
-/* eslint-disable no-dupe-keys */
-/* eslint-disable no-shadow */
-import dotenv from 'dotenv';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-
 import sql from '../db/queries';
 import User from '../models/user';
 import databaseClient from '../db';
-
-dotenv.config();
+import AuthHelper from '../helpers/auth.helper';
 
 class UserController {
   static async registerUser(req, res) {
     const { firstname, lastname, username, password } = req.body;
+
     const firstnameArr = Array.from(firstname);
     const lastnameArr = Array.from(lastname);
     const usernameArr = Array.from(username);
+
     if (!isNaN(firstnameArr[0])) {
-      res
+      return res
         .status(400)
-        .json({ message: 'firstname must not start with a number' });
-    } else if (!isNaN(lastnameArr[0])) {
-      res
-        .status(400)
-        .json({ message: 'lastname must not start with a number' });
-    } else if (!isNaN(usernameArr[0])) {
-      res
-        .status(400)
-        .json({ message: 'username must not start with a number' });
-    } else {
-      const responseOne = await databaseClient.query(sql.findUsername, [username]);
-      if (responseOne.length !== 0) {
-        res.status(400).json({
-          message:
-            'the username is already taken. register with a unique username'
-        });
-      } else {
-        const email = `${username}@epicmail.com`;
-        const user = new User(firstname, lastname, username, email, password);
-        const hash = bcrypt.hashSync(user.password, 10);
-        user.password = hash;
-        const responseTwo = await databaseClient.query(sql.registerUser, [
-          user.firstname,
-          user.lastname,
-          user.username,
-          user.email,
-          user.password
-        ]);
-        jwt.sign(
-          { response: responseTwo[0] },
-          process.env.SECRET_KEY,
-          (err, token) => {
-            const {
-              id,
-              firstname,
-              lastname,
-              username,
-              email,
-              isadmin,
-              registered
-            } = responseTwo[0];
-            res.status(201).json({
-              message: 'User registered',
-              data: [
-                {
-                  token,
-                  user: {
-                    id,
-                    firstname,
-                    lastname,
-                    username,
-                    email,
-                    isadmin,
-                    registered
-                  }
-                }
-              ]
-            });
-          }
-        );
-      }
+        .json({ message: 'Firstname must not start with a number' });
     }
+
+    if (!isNaN(lastnameArr[0])) {
+      return res
+        .status(400)
+        .json({ message: 'Lastname must not start with a number' });
+    }
+
+    if (!isNaN(usernameArr[0])) {
+      return res
+        .status(400)
+        .json({ message: 'Username must not start with a number' });
+    }
+
+    const usernameTaken = await databaseClient.query(sql.findUsername, [
+      username,
+    ]);
+
+    if (usernameTaken.length) {
+      return res.status(400).json({
+        message:
+          'The username is already taken. Register with a unique username',
+      });
+    }
+
+    const email = `${username}@epicmail.com`;
+    const user = new User(firstname, lastname, username, email, password);
+    user.password = AuthHelper.hashPassword(user.password);
+
+    const registeredUser = await databaseClient.query(sql.registerUser, [
+      user.firstname,
+      user.lastname,
+      user.username,
+      user.email,
+      user.password,
+    ]);
+
+    delete registeredUser[0].password;
+
+    const token = AuthHelper.generateToken(registeredUser[0]);
+
+    res.status(201).json({
+      message: 'User registered',
+      data: {
+        token,
+        user: registeredUser[0],
+      },
+    });
   }
 
   static async loginUser(req, res) {
     try {
       const { email, password } = req.body;
-      const responseOne = await databaseClient.query(sql.loginUser, [email]);
-      if (responseOne.length === 0 || responseOne.length === 'undefined') {
-        res.status(401).json({ message: 'Incorrect email or password' });
-      } else if (responseOne[0].password === null) {
-        res.status(401).json({
-          message:
-            'You have recently reset your password. Check your email for the password reset link'
-        });
-      } else {
-        const truePass = bcrypt.compareSync(password, responseOne[0].password);
-        if (truePass) {
-          jwt.sign(
-            { response: responseOne[0] },
-            process.env.SECRET_KEY,
-            { expiresIn: '3h' },
-            (err, token) => {
-              const {
-                id,
-                firstname,
-                lastname,
-                username,
-                email,
-                isadmin,
-                registered
-              } = responseOne[0];
-              res.status(200).json({
-                message: 'Logged in',
-                token,
-                data: [
-                  {
-                    id,
-                    firstname,
-                    lastname,
-                    username,
-                    email,
-                    isadmin,
-                    registered
-                  }
-                ]
-              });
-            }
-          );
-        } else {
-          res.status(401).json({
-            message: 'Incorrect email or password'
-          });
-        }
+
+      const user = await databaseClient.query(sql.loginUser, [email]);
+
+      if (!user.length) {
+        return res.status(401).json({ message: 'Incorrect email or password' });
       }
+
+      if (!user[0].password) {
+        return res.status(401).json({
+          message:
+            'You have recently reset your password. Check your email for the password reset link',
+        });
+      }
+
+      const correctPassword = AuthHelper.compareHashedPasswords(
+        password,
+        user[0].password
+      );
+
+      if (correctPassword) {
+        delete user[0].password;
+
+        const token = AuthHelper.generateToken(user[0]);
+
+        return res.status(200).json({
+          message: 'Logged in',
+          data: {
+            token,
+            user: user[0],
+          },
+        });
+      }
+
+      res.status(401).json({
+        message: 'Incorrect email or password',
+      });
     } catch (error) {
       const message = 'Something went wrong while attempting to log you in';
+
       res.status(500).json({
-        message
+        message,
       });
     }
   }
 
   static async retrieveUsers(req, res) {
-    const allUsers = await databaseClient.query(sql.retrieveAllUsers);
-    const responseOne = await allUsers;
-    if (responseOne.length === 0 || responseOne.length === 'undefined') {
-      res.status(404).json({ status: 404, error: 'no users found' });
-    } else {
-      res
-        .status(200)
-        .json({ status: 200, success: 'users retrieved', data: responseOne });
+    const users = await databaseClient.query(sql.retrieveAllUsers);
+
+    if (!users.length) {
+      return res.status(404).json({ message: 'No users found' });
     }
+
+    res.status(200).json({ message: 'Users retrieved', data: users });
   }
 
   static async retrieveUser(req, res) {
     const userId = req.params.id;
-    const specificUser = await databaseClient.query(sql.retrieveSpecificUserById, [
-      userId
+
+    const user = await databaseClient.query(sql.retrieveSpecificUserById, [
+      userId,
     ]);
-    const responseOne = await specificUser;
-    if (responseOne.length === 0 || responseOne.length === 'undefined') {
-      res
+
+    if (!user.length) {
+      return res
         .status(404)
-        .json({ status: 404, error: 'user with the specified id, not found' });
-    } else {
-      const {
-        id,
-        firstname,
-        lastname,
-        email,
-        isadmin,
-        registered
-      } = responseOne[0];
-      res.status(200).json({
-        status: 200,
-        success: 'user retrieved',
-        data: [
-          {
-            id,
-            firstname,
-            lastname,
-            email,
-            isadmin,
-            registered
-          }
-        ]
-      });
+        .json({ message: 'User with the specified ID could not be found' });
     }
+
+    delete user[0].password;
+
+    res.status(200).json({
+      message: 'User retrieved',
+      data: user[0],
+    });
   }
 
   static async deleteUser(req, res) {
     const userId = req.params.id;
-    const findUser = await databaseClient.query(sql.retrieveSpecificUserById, [
-      userId
+
+    const user = await databaseClient.query(sql.retrieveSpecificUserById, [
+      userId,
     ]);
-    const responseOne = findUser;
-    if (responseOne.length === 0 || responseOne.length === 'undefined') {
-      res
+
+    if (!user.length) {
+      return res
         .status(404)
-        .json({ status: 404, error: 'user with the specified id, not found' });
-    } else {
-      const deleteUser = await databaseClient.query(sql.deleteSpecificUser, [userId]);
-      const responseTwo = await deleteUser;
-      if (responseTwo) {
-        res.status(200).json({ status: 200, success: 'user deleted' });
-      }
+        .json({ message: 'User with the specified ID could not be found' });
     }
+
+    await databaseClient.query(sql.deleteSpecificUser, [userId]);
+
+    res.status(200).json({ message: 'User deleted' });
   }
 
   static async resetPassword(req, res) {
     const { email } = req.body;
-    const findUserEmail = await databaseClient.query(sql.findUserEmail, [email]);
-    const responseOne = await findUserEmail;
-    if (responseOne.length === 0 || responseOne.length === 'undefined') {
-      res.status(404).json({ status: 404, error: 'incorrect email' });
-    } else {
-      const checkPassReset = await databaseClient.query(sql.passResetCheck, [email]);
-      const responseTwo = await checkPassReset;
-      if (responseTwo.length !== 0) {
-        res.status(400).json({
-          status: 400,
-          error:
-            'you have already reset the password. check the password reset link instead'
-        });
-      } else {
-        const deleteUserPassword = await databaseClient.query(
-          sql.deleteSpecificUserPassword,
-          [email]
-        );
-        const responseThree = await deleteUserPassword;
-        if (responseThree) {
-          res.status(200).json({
-            status: 200,
-            data: [
-              {
-                message: 'check your email for a password reset link',
-                email
-              }
-            ]
-          });
-        }
-      }
+
+    const user = await databaseClient.query(sql.findUserEmail, [email]);
+
+    if (!user.length) {
+      return res.status(404).json({ message: 'Incorrect email' });
     }
+
+    const passwordReset = await databaseClient.query(sql.passResetCheck, [
+      email,
+    ]);
+
+    if (passwordReset.length) {
+      return res.status(403).json({
+        message:
+          'You have already reset the password. Check your email for a password reset link we sent you',
+      });
+    }
+
+    await databaseClient.query(sql.deleteSpecificUserPassword, [email]);
+
+    res.status(200).json({
+      message: 'Check your email for a password reset link',
+    });
   }
 
-  static async retrievePassResetUsers(req, res) {
-    const passResetUsers = await databaseClient.query(sql.retrievePassResetUsers);
-    const responseOne = await passResetUsers;
-    if (responseOne.length === 0 || responseOne.length === 'undefined') {
-      res.status(404).json({
-        status: 404,
-        error: 'admin, there are no users who reset their passwords'
-      });
-    } else {
-      res.status(200).json({
-        status: 200,
-        success: 'admin, the users who reset their passwords are retrieved',
-        data: responseOne
+  static async retrievePasswordResetUsers(req, res) {
+    const users = await databaseClient.query(sql.retrievePassResetUsers);
+
+    if (!users.length) {
+      return res.status(404).json({
+        message:
+          'Admin, there are currently no users who reset their passwords',
       });
     }
+
+    res.status(200).json({
+      message: 'Admin, users who reset their passwords retrieved',
+      data: users,
+    });
   }
 }
 
