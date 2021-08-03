@@ -16,13 +16,13 @@ const verifyAdmin = (req, res, next) => {
     const bearer = bearerHeader.split(' ');
     const bearerToken = bearer[1];
     req.token = bearerToken;
-    jwt.verify(req.token, process.env.SECRET_KEY, (error, decoded) => {
+    jwt.verify(req.token, process.env.SECRET_KEY, (error, user) => {
       if (error) {
         res.status(400).json({ message: `${error.message}` });
-      } else if (decoded.response.isadmin === true) {
-        req.userEmail = decoded.response.email;
+      } else if (user.isadmin === true) {
+        req.userEmail = user.email;
         next();
-      } else if (decoded.response.isadmin === false) {
+      } else if (user.isadmin === false) {
         res.status(403).json({
           message: 'Not admin. Access denied',
         });
@@ -51,14 +51,14 @@ const verifyUser = (req, res, next) => {
     const bearer = bearerHeader.split(' ');
     const bearerToken = bearer[1];
     req.token = bearerToken;
-    jwt.verify(req.token, process.env.SECRET_KEY, (error, decoded) => {
+    jwt.verify(req.token, process.env.SECRET_KEY, (error, user) => {
       if (error) {
         res.status(403).json({ status: 403, error: `${error.message}` });
-      } else if (decoded.response.isadmin === false) {
-        req.userEmail = decoded.response.email;
+      } else if (user.isadmin === false) {
+        req.userEmail = user.email;
         next();
-      } else if (decoded.response.isadmin === true) {
-        req.userEmail = decoded.response.email;
+      } else if (user.isadmin === true) {
+        req.userEmail = user.email;
         next();
       } else {
         res.status(403).json({
