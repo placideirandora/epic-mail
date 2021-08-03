@@ -3,95 +3,95 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const newUser = {
-  firstname: 'Emmanuel',
-  lastname: 'CYUBAHIRO',
-  username: 'emmanuelcyubahiro',
+  firstname: 'john',
+  lastname: 'davinchi',
+  username: 'johndavinchi',
   password: '123456',
 };
 
 const newUser2 = {
-  firstname: 'Emmanuel2',
-  lastname: 'CYUBAHIRO2',
-  username: 'emmanuelcyubahiro2',
+  firstname: 'john2',
+  lastname: 'davinchi2',
+  username: 'johndavinchi2',
   password: '123456',
 };
 
 const falseFirstNameNewUser = {
-  firstname: '1Emmanuel4',
-  lastname: 'CYUBAHIRO4',
-  username: 'emmanuelcyubahiro4',
+  firstname: '1john4',
+  lastname: 'davinchi4',
+  username: 'johndavinchi4',
   password: '123456',
 };
 
 const falseLastNameNewUser = {
-  firstname: 'Emmanuel4',
-  lastname: '1CYUBAHIRO4',
-  username: 'emmanuelcyubahiro4',
+  firstname: 'john4',
+  lastname: '1davinchi4',
+  username: 'johndavinchi4',
   password: '123456',
 };
 
 const falseUserNameNewUser = {
-  firstname: 'Emmanuel4',
-  lastname: 'CYUBAHIRO4',
-  username: '1emmanuelcyubahiro4',
+  firstname: 'john4',
+  lastname: 'davinchi4',
+  username: '1johndavinchi4',
   password: '123456',
 };
 
 const newUser4 = {
-  firstname: 'Emmanuel4',
-  lastname: 'CYUBAHIRO4',
-  username: 'emmanuelcyubahiro4',
+  firstname: 'john4',
+  lastname: 'davinchi4',
+  username: 'johndavinchi4',
   password: '123456',
 };
 
 const newUser5 = {
-  firstname: 'Emmanuel5',
-  lastname: 'CYUBAHIRO5',
-  username: 'emmanuelcyubahiro5',
+  firstname: 'john5',
+  lastname: 'davinchi5',
+  username: 'johndavinchi5',
   password: '123456',
 };
 
 const newUser6 = {
-  firstname: 'Emmanuel6',
-  lastname: 'CYUBAHIRO6',
-  username: 'emmanuelcyubahiro6',
+  firstname: 'john6',
+  lastname: 'davinchi6',
+  username: 'johndavinchi6',
   password: '123456',
 };
 
 const newUser7 = {
-  firstname: 'Emmanuel7',
-  lastname: 'CYUBAHIRO7',
-  username: 'emmanuelcyubahiro7',
+  firstname: 'john7',
+  lastname: 'davinchi7',
+  username: 'johndavinchi7',
   password: '123456',
 };
 
 const newUser8 = {
-  firstname: 'Emmanuel8',
-  lastname: 'CYUBAHIRO8',
-  username: 'emmanuelcyubahiro8',
+  firstname: 'john8',
+  lastname: 'davinchi8',
+  username: 'johndavinchi8',
   password: '123456',
 };
 
 const newUserNameTaken = {
-  firstname: 'Emmanuel',
-  lastname: 'CYUBAHIRO',
-  email: 'emmanuelcyuba@gmail.com',
+  firstname: 'john',
+  lastname: 'davinchi',
+  email: 'johncyuba@gmail.com',
   password: '123456',
 };
 
 const newUserEmailTaken = {
-  firstname: 'Emmanuel',
-  lastname: 'CYUBAHIRO2',
-  username: 'emmanuelcyubahiro2',
+  firstname: 'john',
+  lastname: 'davinchi2',
+  username: 'johndavinchi2',
   password: '123456',
 };
 
 const passReset = {
-  email: 'emmanuelcyubahiro2@epicmail.com',
+  email: 'johndavinchi2@epicmail.com',
 };
 
 const falsePassReset = {
-  email: 'emmanuel@epicmail.com',
+  email: 'john@epicmail.com',
 };
 
 const admin = {
@@ -110,65 +110,65 @@ const falseAdminEmail = {
 };
 
 const newUserLogIn = {
-  email: 'emmanuelcyubahiro@epicmail.com',
+  email: 'johndavinchi@epicmail.com',
   password: newUser.password,
 };
 
 const newUserLogIn2 = {
-  email: 'emmanuelcyubahiro2@epicmail.com',
+  email: 'johndavinchi2@epicmail.com',
   password: newUser2.password,
 };
 
 const newUserLogIn4 = {
-  email: 'emmanuelcyubahiro4@epicmail.com',
+  email: 'johndavinchi4@epicmail.com',
   password: newUser4.password,
 };
 
 const newUserLogIn5 = {
-  email: 'emmanuelcyubahiro5@epicmail.com',
+  email: 'johndavinchi5@epicmail.com',
   password: newUser5.password,
 };
 
 const newUserLogIn6 = {
-  email: 'emmanuelcyubahiro6@epicmail.com',
+  email: 'johndavinchi6@epicmail.com',
   password: newUser6.password,
 };
 
 const newUserLogIn7 = {
-  email: 'emmanuelcyubahiro7@epicmail.com',
+  email: 'johndavinchi7@epicmail.com',
   password: newUser7.password,
 };
 
 const newUserLogIn8 = {
-  email: 'emmanuelcyubahiro8@epicmail.com',
+  email: 'johndavinchi8@epicmail.com',
   password: newUser8.password,
 };
 
 const message = {
   subject: 'test',
   message: 'test mic check mic check',
-  receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
+  receiverEmail: 'johndavinchi5@epicmail.com',
   status: 'sent',
 };
 
 const message2 = {
   subject: 'test',
   message: 'test mic check mic check',
-  receiverEmail: 'emmanuelcyubahiro4@epicmail.com',
+  receiverEmail: 'johndavinchi4@epicmail.com',
   status: 'sent',
 };
 
 const message3 = {
   subject: 'test',
   message: 'test mic check mic check',
-  receiverEmail: 'emmanuelcyubahiro44@epicmail.com',
+  receiverEmail: 'johndavinchi44@epicmail.com',
   status: 'sent',
 };
 
 const message4 = {
   subject: 'test',
   message: 'test mic check mic check',
-  receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
+  receiverEmail: 'johndavinchi5@epicmail.com',
   status: 'sent',
 };
 
@@ -189,14 +189,14 @@ const readEmail = {
 const draftEmail = {
   subject: 'test',
   message: 'test mic check mic check',
-  receiverEmail: 'emmanuelcyubahiro5@epicmail.com',
+  receiverEmail: 'johndavinchi5@epicmail.com',
   status: 'draft',
 };
 
 const draftEmail2 = {
   subject: 'test',
   message: 'test mic check mic check',
-  receiverEmail: 'emmanuelcyubahiro4@epicmail.com',
+  receiverEmail: 'johndavinchi4@epicmail.com',
   status: 'draft',
 };
 
@@ -246,17 +246,17 @@ const newGroupName2 = {
 
 const newGroupMember = {
   username: 'testing',
-  email: 'emmanuelcyubahiro6@epicmail.com',
+  email: 'johndavinchi6@epicmail.com',
 };
 
 const newGroupMember2 = {
   username: 'testing',
-  email: 'emmanuelcyubahiro10@epicmail.com',
+  email: 'johndavinchi10@epicmail.com',
 };
 
 const newGroupMember3 = {
   username: 'test',
-  email: 'emmanuelcyubahiro6@epicmail.com',
+  email: 'johndavinchi6@epicmail.com',
 };
 
 const groupMessage = {

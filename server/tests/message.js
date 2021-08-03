@@ -1,7 +1,6 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-expressions */
 import chai from 'chai';
 import chaiHTTP from 'chai-http';
+import { describe, it } from 'mocha';
 
 import database from '../db';
 import server from '../index';
@@ -16,7 +15,7 @@ import {
   draftEmail,
   draftEmail2,
   message3,
-  message4
+  message4,
 } from './dummy';
 
 chai.use(chaiHTTP);
@@ -26,7 +25,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
   let userToken1;
   let userToken2;
   let adminToken;
-  it('Should register a fourth user', done => {
+
+  it('Should register a fourth user', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/signup')
@@ -34,14 +34,17 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
         res.should.have.status(201);
-        res.body.should.have.property('message').eql('User registered');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.should.have.property('message').equals('User registered');
+        res.body.should.have.property('data');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  it('Should register a fifth new user', done => {
+  it('Should register a fifth new user', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/signup')
@@ -49,65 +52,74 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
         res.should.have.status(201);
-        res.body.should.have.property('message').eql('User registered');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.should.have.property('message').equals('User registered');
+        res.body.should.have.property('data');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  it('Should login the fourth user', done => {
+  it('Should login the fourth user', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
       .send(newUserLogIn4)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        userToken1 = `Bearer ${res.body.token}`;
+        userToken1 = `Bearer ${res.body.data.token}`;
+
         res.should.have.status(200);
-        res.body.should.have.property('message').eql('Logged in');
-        res.body.should.have.property('token');
+        res.body.should.have.property('message').equals('Logged in');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  it('Should login the fifth user', done => {
+  it('Should login the fifth user', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
       .send(newUserLogIn5)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        userToken2 = `Bearer ${res.body.token}`;
+        userToken2 = `Bearer ${res.body.data.token}`;
+
         res.should.have.status(200);
-        res.body.should.have.property('message').eql('Logged in');
-        res.body.should.have.property('token');
+        res.body.should.have.property('message').equals('Logged in');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  it('Should login the admin', done => {
+  it('Should login the admin', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
       .send(admin)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        adminToken = `Bearer ${res.body.token}`;
+        adminToken = `Bearer ${res.body.data.token}`;
+
         res.should.have.status(200);
-        res.body.should.have.property('message').eql('Logged in');
-        res.body.should.have.property('token');
+        res.body.should.have.property('message').equals('Logged in');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  it('Should send an email', done => {
+  it('Should send an email', (done) => {
     chai
       .request(server)
       .post('/api/v2/messages')
@@ -124,7 +136,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should send an email', done => {
+  it('Should send an email', (done) => {
     chai
       .request(server)
       .post('/api/v2/messages')
@@ -141,7 +153,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not send this email because the receiver is not registered', done => {
+  it('Should not send this email because the receiver is not registered', (done) => {
     chai
       .request(server)
       .post('/api/v2/messages')
@@ -159,7 +171,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not send this email because the sender and receiver emails are the same', done => {
+  it('Should not send this email because the sender and receiver emails are the same', (done) => {
     chai
       .request(server)
       .post('/api/v2/messages')
@@ -177,7 +189,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should send a draft email', done => {
+  it('Should send a draft email', (done) => {
     chai
       .request(server)
       .post('/api/v2/messages')
@@ -194,7 +206,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should send a draft email', done => {
+  it('Should send a draft email', (done) => {
     chai
       .request(server)
       .post('/api/v2/messages')
@@ -211,7 +223,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve received emails', done => {
+  it('Should retrieve received emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages')
@@ -229,7 +241,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve received emails', done => {
+  it('Should retrieve received emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages')
@@ -247,7 +259,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve received emails', done => {
+  it('Should retrieve received emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages')
@@ -265,7 +277,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve sent emails', done => {
+  it('Should retrieve sent emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent')
@@ -283,7 +295,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve sent emails', done => {
+  it('Should retrieve sent emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent')
@@ -301,7 +313,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve sent emails', done => {
+  it('Should retrieve sent emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent')
@@ -319,7 +331,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve sent email of id 1', done => {
+  it('Should retrieve sent email of id 1', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent/1')
@@ -337,7 +349,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve sent email of id 2', done => {
+  it('Should retrieve sent email of id 2', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent/2')
@@ -355,7 +367,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve sent email of id 6 because it does not exist', done => {
+  it('Should not retrieve sent email of id 6 because it does not exist', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent/6')
@@ -372,7 +384,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve sent email of id 1', done => {
+  it('Should retrieve sent email of id 1', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent/1')
@@ -388,7 +400,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve sent email of id 6 because it does not exist', done => {
+  it('Should not retrieve sent email of id 6 because it does not exist', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent/6')
@@ -403,7 +415,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve sent email of id 2', done => {
+  it('Should retrieve sent email of id 2', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent/2')
@@ -419,7 +431,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve unread emails', done => {
+  it('Should retrieve unread emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/unread')
@@ -437,7 +449,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve unread emails', done => {
+  it('Should retrieve unread emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/unread')
@@ -455,7 +467,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve unread emails', done => {
+  it('Should retrieve unread emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/unread')
@@ -473,7 +485,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve received email of id 1', done => {
+  it('Should retrieve received email of id 1', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/1')
@@ -491,7 +503,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve received email of id 2', done => {
+  it('Should retrieve received email of id 2', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/2')
@@ -509,7 +521,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve received email of id 1', done => {
+  it('Should retrieve received email of id 1', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/1')
@@ -527,7 +539,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve read emails', done => {
+  it('Should retrieve read emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/read')
@@ -545,7 +557,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve read emails', done => {
+  it('Should retrieve read emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/read')
@@ -563,7 +575,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve read emails', done => {
+  it('Should retrieve read emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/read')
@@ -581,7 +593,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve draft emails', done => {
+  it('Should retrieve draft emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/draft')
@@ -599,7 +611,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve draft email of id 1', done => {
+  it('Should retrieve draft email of id 1', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/draft/1')
@@ -617,7 +629,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve draft email of id 6 because it does not exist', done => {
+  it('Should not retrieve draft email of id 6 because it does not exist', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/draft/6')
@@ -634,7 +646,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve draft emails', done => {
+  it('Should retrieve draft emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/draft')
@@ -652,7 +664,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve draft email of id 1', done => {
+  it('Should retrieve draft email of id 1', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/draft/1')
@@ -668,7 +680,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve draft email of id 6 because it does not exist', done => {
+  it('Should not retrieve draft email of id 6 because it does not exist', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/draft/6')
@@ -683,7 +695,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve draft emails', done => {
+  it('Should retrieve draft emails', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/draft')
@@ -701,7 +713,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should retrieve draft email of id 2', done => {
+  it('Should retrieve draft email of id 2', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/draft/2')
@@ -717,7 +729,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should send an email', done => {
+  it('Should send an email', (done) => {
     chai
       .request(server)
       .post('/api/v2/messages')
@@ -734,7 +746,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should send an email', done => {
+  it('Should send an email', (done) => {
     chai
       .request(server)
       .post('/api/v2/messages')
@@ -751,7 +763,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should send a draft email', done => {
+  it('Should send a draft email', (done) => {
     chai
       .request(server)
       .post('/api/v2/messages')
@@ -768,7 +780,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should send a draft email', done => {
+  it('Should send a draft email', (done) => {
     chai
       .request(server)
       .post('/api/v2/messages')
@@ -785,7 +797,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete received email of id = 3', done => {
+  it('Should delete received email of id = 3', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/3')
@@ -802,7 +814,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete received email of id = 1', done => {
+  it('Should delete received email of id = 1', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/1')
@@ -817,7 +829,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete received email of id = 4', done => {
+  it('Should delete received email of id = 4', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/4')
@@ -834,7 +846,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not delete received email of id = 4 because it does not exist', done => {
+  it('Should not delete received email of id = 4 because it does not exist', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/6')
@@ -851,7 +863,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete received email of id = 2', done => {
+  it('Should delete received email of id = 2', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/2')
@@ -866,7 +878,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not delete received email of id = 6 because it does not exist', done => {
+  it('Should not delete received email of id = 6 because it does not exist', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/6')
@@ -881,7 +893,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete sent email of id = 2', done => {
+  it('Should delete sent email of id = 2', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/sent/2')
@@ -898,7 +910,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not delete sent email of id = 6 because it does not exist', done => {
+  it('Should not delete sent email of id = 6 because it does not exist', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/sent/6')
@@ -915,7 +927,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete sent email of id = 1', done => {
+  it('Should delete sent email of id = 1', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/sent/1')
@@ -930,7 +942,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not delete sent email of id = 6 because it does not exist', done => {
+  it('Should not delete sent email of id = 6 because it does not exist', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/sent/6')
@@ -945,7 +957,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete draft email of id = 2', done => {
+  it('Should delete draft email of id = 2', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/draft/2')
@@ -962,7 +974,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete draft email of id = 1', done => {
+  it('Should delete draft email of id = 1', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/draft/1')
@@ -977,7 +989,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete draft email of id = 3', done => {
+  it('Should delete draft email of id = 3', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/draft/3')
@@ -994,7 +1006,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete draft email of id = 4', done => {
+  it('Should delete draft email of id = 4', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/draft/4')
@@ -1011,7 +1023,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve draft emails because they will have been deleted', done => {
+  it('Should not retrieve draft emails because they will have been deleted', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/draft')
@@ -1028,7 +1040,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve draft emails because they will have been deleted', done => {
+  it('Should not retrieve draft emails because they will have been deleted', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/draft')
@@ -1045,7 +1057,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve unread emails they have been read', done => {
+  it('Should not retrieve unread emails they have been read', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/unread')
@@ -1062,7 +1074,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve unread emails because they have been read', done => {
+  it('Should not retrieve unread emails because they have been read', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/unread')
@@ -1079,7 +1091,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve read emails because they will have been deleted', done => {
+  it('Should not retrieve read emails because they will have been deleted', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/read')
@@ -1096,7 +1108,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve read emails because they will have been deleted', done => {
+  it('Should not retrieve read emails because they will have been deleted', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/read')
@@ -1113,7 +1125,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete sent email of id = 3', done => {
+  it('Should delete sent email of id = 3', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/sent/3')
@@ -1130,7 +1142,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should delete sent email of id = 4', done => {
+  it('Should delete sent email of id = 4', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/sent/4')
@@ -1147,7 +1159,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve sent emails because they will have been deleted', done => {
+  it('Should not retrieve sent emails because they will have been deleted', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent')
@@ -1164,7 +1176,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve sent emails because they will have been deleted', done => {
+  it('Should not retrieve sent emails because they will have been deleted', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/sent')
@@ -1181,7 +1193,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve received email of id 1 because it will have been deleted or does not exist', done => {
+  it('Should not retrieve received email of id 1 because it will have been deleted or does not exist', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/1')
@@ -1198,7 +1210,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve received email of id 1 because it will have been deleted or does not exist', done => {
+  it('Should not retrieve received email of id 1 because it will have been deleted or does not exist', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages/1')
@@ -1213,7 +1225,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not delete draft email of id = 6 because it does not exist', done => {
+  it('Should not delete draft email of id = 6 because it does not exist', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/draft/6')
@@ -1230,7 +1242,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not delete draft email of id = 6 because it does not exist', done => {
+  it('Should not delete draft email of id = 6 because it does not exist', (done) => {
     chai
       .request(server)
       .delete('/api/v2/messages/draft/6')
@@ -1245,7 +1257,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve received emails because they will have been deleted', done => {
+  it('Should not retrieve received emails because they will have been deleted', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages')
@@ -1262,7 +1274,7 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       });
   });
 
-  it('Should not retrieve received emails because they will have been deleted', done => {
+  it('Should not retrieve received emails because they will have been deleted', (done) => {
     chai
       .request(server)
       .get('/api/v2/messages')
