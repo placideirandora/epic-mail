@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/placiderapson/epic-mail-with-node-and-vanilla-js#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.0.1",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "cross-env": "^5.2.0",
