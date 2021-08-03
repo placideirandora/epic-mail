@@ -260,9 +260,7 @@ const validate = {
         .required(),
       message: Joi.string().trim().min(10)
         .max(800)
-        .required(),
-      parentMessageId: Joi.number().integer()
-        .required(),
+        .required()
     });
 
     const { error } = Joi.validate(req.body, messageSchema);

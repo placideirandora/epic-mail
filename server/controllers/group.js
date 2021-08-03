@@ -7,8 +7,8 @@ import dotenv from 'dotenv';
 import sql from '../db/queries';
 import databaseClient from '../db';
 import Group from '../models/group';
-import Member from '../models/member';
-import Groupmessage from '../models/group-message';
+import GroupMember from '../models/member';
+import GroupMessage from '../models/group-message';
 
 dotenv.config();
 
@@ -252,18 +252,18 @@ const groups = {
         const responseTwo = await findUser;
         if (responseTwo.length !== 0) {
           const findMemberByUsername = await databaseClient.query(sql.retrieveMemberByUsername, [username, groupId]);
-          const responseThree = await findMemberByUsername;
+          const responseThree = findMemberByUsername;
           if (responseThree.length !== 0) {
             res.status(400).json({ status: 400, error: 'the specified username is already taken. choose another unique name' });
           } else {
             const findMemberByEmail = await databaseClient.query(sql.retrieveMemberByEmail, [email, groupId]);
-            const responseFour = await findMemberByEmail;
+            const responseFour = findMemberByEmail;
             if (responseFour.length !== 0) {
               res.status(400).json({ status: 400, error: 'user with the specified email is already registered' });
             } else {
-              const memberGroup = groupId;
-              const member = new Member(username, email, memberGroup);
-              const query = await databaseClient.query(sql.registerGroupMember, [member.username, member.email, member.memberGroup]);
+              const group = groupId;
+              const member = new GroupMember(username, email, group);
+              const query = await databaseClient.query(sql.registerGroupMember, [member.username, member.email, member.group]);
               const responseFive = await query;
               if (responseFive) {
                 const {
@@ -404,9 +404,9 @@ const groups = {
     if (responseOne.length === 0 || responseOne.length === 'undefined') {
       res.status(404).json({ status: 404, error: 'group not found' });
     } else {
-      const groupmessage = new Groupmessage(message, groupId);
+      const groupmessage = new GroupMessage(message, groupId);
       const query = await databaseClient.query(sql.sendGroupEmail, [groupmessage.message, groupmessage.groupId]);
-      const responseTwo = await query;
+      const responseTwo = query;
       if (responseTwo) {
         const {
           id, message, groupId, createdAt,

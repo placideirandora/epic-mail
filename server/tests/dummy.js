@@ -262,7 +262,6 @@ const newGroupMember3 = {
 const groupMessage = {
   subject: 'test',
   message: 'test mic check mic check',
-  parentMessageId: 1,
 };
 
 export {

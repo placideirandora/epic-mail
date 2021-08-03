@@ -1,7 +1,4 @@
-/**
- *a class for creating an object to store group creation information
- */
-class group {
+class Group {
   constructor(name, purpose, owner) {
     this.name = name;
     this.purpose = purpose;
@@ -9,4 +6,4 @@ class group {
   }
 }
 
-export default group;
+export default Group;
