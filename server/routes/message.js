@@ -1,88 +1,88 @@
-import express from 'express';
+import { Router } from 'express';
 
 import email from '../middleware/validate';
-import controller from '../controllers/message';
+import MessageController from '../controllers/message';
 import authentication from '../middleware/authenticate';
 
-const router = express.Router();
+const router = Router();
 
 router.post(
   '/messages',
   authentication.verifyUser,
   email.validateEmail,
-  controller.sendEmail
+  MessageController.sendEmail
 );
 
 router.get(
   '/messages',
   authentication.verifyUser,
-  controller.retrieveReceivedEmails
+  MessageController.retrieveReceivedEmails
 );
 
 router.get(
   '/messages/sent',
   authentication.verifyUser,
-  controller.retrieveSentEmails
+  MessageController.retrieveSentEmails
 );
 
 router.get(
   '/messages/read',
   authentication.verifyUser,
-  controller.retrieveReadEmails
+  MessageController.retrieveReadEmails
 );
 
 router.get(
   '/messages/unread',
   authentication.verifyUser,
-  controller.retrieveUnReadEmails
+  MessageController.retrieveUnReadEmails
 );
 
 router.get(
   '/messages/draft',
   authentication.verifyUser,
-  controller.retrieveDraftEmails
+  MessageController.retrieveDraftEmails
 );
 
 router.get(
   '/messages/:id',
   authentication.verifyUser,
   email.validateEmailId,
-  controller.retrieveSpecificReceivedEmail
+  MessageController.retrieveSpecificReceivedEmail
 );
 
 router.delete(
   '/messages/:id',
   authentication.verifyUser,
   email.validateEmailId,
-  controller.deleteSpecificReceivedEmail
+  MessageController.deleteSpecificReceivedEmail
 );
 
 router.get(
   '/messages/sent/:id',
   authentication.verifyUser,
   email.validateEmailId,
-  controller.retrieveSpecificSentEmail
+  MessageController.retrieveSpecificSentEmail
 );
 
 router.get(
   '/messages/draft/:id',
   authentication.verifyUser,
   email.validateEmailId,
-  controller.retrieveSpecificDraftEmail
+  MessageController.retrieveSpecificDraftEmail
 );
 
 router.delete(
   '/messages/sent/:id',
   authentication.verifyUser,
   email.validateEmailId,
-  controller.deleteSpecificSentEmail
+  MessageController.deleteSpecificSentEmail
 );
 
 router.delete(
   '/messages/draft/:id',
   authentication.verifyUser,
   email.validateEmailId,
-  controller.deleteSpecificDraftEmail
+  MessageController.deleteSpecificDraftEmail
 );
 
 export default router;

@@ -1,492 +1,564 @@
-/* eslint-disable max-len */
-/* eslint-disable no-dupe-keys */
-/* eslint-disable no-shadow */
-import dotenv from 'dotenv';
-
 import sql from '../db/queries';
 import databaseClient from '../db';
 import Message from '../models/message';
 
-dotenv.config();
+class MessageController {
+  static async sendEmail(req, res) {
+    try {
+      const { subject, message, receiverEmail, status } = req.body;
+      const senderEmail = req.userEmail;
 
-const messages = {
-  /**
-   * send email endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async sendEmail(req, res) {
-    const {
-      subject, message, receiverEmail, status,
-    } = req.body;
-    const senderEmail = req.userEmail;
-    const trueReceiver = await databaseClient.query(sql.retrieveSpecificUser, [receiverEmail]);
-    const responseOne = await trueReceiver;
-    if (responseOne.length === 0 || responseOne.length === 'undefined') {
-      res.status(404).json({ status: 404, error: 'the receiver is not registered' });
-    } else if (senderEmail === receiverEmail) {
-      res.status(400).json({ status: 400, error: 'the sender and receiver email must not be the same' });
-    } else {
-      const messagee = new Message(
-        subject, message, senderEmail, receiverEmail, status,
+      const receiver = await databaseClient.query(sql.retrieveSpecificUser, [
+        receiverEmail,
+      ]);
+
+      if (!receiver.length) {
+        return res
+          .status(404)
+          .json({ message: 'the receiver is not registered' });
+      }
+
+      if (senderEmail === receiverEmail) {
+        return res.status(400).json({
+          message: 'the sender and receiver email must not be the same',
+        });
+      }
+
+      const messageObj = new Message(
+        subject,
+        message,
+        senderEmail,
+        receiverEmail,
+        status
       );
+
       if (status === 'sent') {
-        const delivered = await databaseClient.query(sql.delivered, [messagee.subject, messagee.message, messagee.senderEmail, messagee.receiverEmail, 'unread']);
-        const responseTwo = await delivered;
-        if (responseTwo) {
-          const query = await databaseClient.query(sql.sendEmail, [messagee.subject, messagee.message, messagee.senderEmail, messagee.receiverEmail, messagee.status]);
-          const responseThree = await query;
-          const {
-            id, subject, message, senderEmail, receiverEmail, status, createdAt,
-          } = responseThree[0];
-          res.status(201).json({
-            status: 201,
-            success: 'email sent',
-            data: [{
-              id, subject, message, senderEmail, receiverEmail, status, createdAt
-            }],
-          });
-        }
-      } else if (status === 'draft') {
-        const query = await databaseClient.query(sql.draftEmail, [messagee.subject, messagee.message, messagee.senderEmail, messagee.receiverEmail, messagee.status]);
-        const responseFour = await query;
-        const {
-          id, subject, message, senderemail, receiveremail, status, createdAt,
-        } = responseFour[0];
+        // SEND MESSAGE TO THE RECEIVER'S INBO
+        await databaseClient.query(sql.delivered, [
+          messageObj.subject,
+          messageObj.message,
+          messageObj.senderEmail,
+          messageObj.receiverEmail,
+          'unread',
+        ]);
+
+        // KEEP TRACK OF THE SENT MESSAGE
+        const sentMessage = await databaseClient.query(sql.sendEmail, [
+          messageObj.subject,
+          messageObj.message,
+          messageObj.senderEmail,
+          messageObj.receiverEmail,
+          messageObj.status,
+        ]);
+
+        return res.status(201).json({
+          message: 'email sent',
+          data: sentMessage[0],
+        });
+      }
+
+      if (status === 'draft') {
+        const draftedMessage = await databaseClient.query(sql.draftEmail, [
+          messageObj.subject,
+          messageObj.message,
+          messageObj.senderEmail,
+          messageObj.receiverEmail,
+          messageObj.status,
+        ]);
+
         res.status(201).json({
-          status: 201,
-          success: 'email drafted',
-          data: [{
-            id, subject, message, senderemail, receiveremail, status, createdAt,
-          }],
+          message: 'email drafted',
+          data: draftedMessage[0],
         });
       }
-    }
-  },
+    } catch (error) {
+      const message = 'Something went wrong while attempting to send the email';
 
-  /**
-   * retrieve all received emails endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async retrieveReceivedEmails(req, res) {
-    const user = req.userEmail;
-    const userAccess = 'true';
-    const findAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await findAdmin;
-    if (responseOne.length !== 0) {
-      const allEmails = await databaseClient.query(sql.retrieveAllEmails);
-      const responseTwo = await allEmails;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({
-          status: 404,
-          error: 'admin, received emails not found',
-        });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'admin, received emails retrieved',
-          data: responseTwo,
-        });
-      }
-    } else {
-      const specificUserEmails = await databaseClient.query(sql.retrieveSpecificUserEmails, [user]);
-      const responseThree = await specificUserEmails;
-      if (responseThree.length === 0 || responseThree.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'received emails not found' });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'received emails retrieved',
-          data: responseThree,
-        });
-      }
+      res.status(500).json({
+        message,
+      });
     }
-  },
+  }
 
-  /**
-   * retrieve a single received email endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async retrieveSpecificReceivedEmail(req, res) {
+  static async retrieveReceivedEmails(req, res) {
+    const isAdmin = 'true';
+    const { userEmail } = req;
+
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      userEmail,
+      isAdmin,
+    ]);
+
+    // ADMIN CAN RETRIEVE ALL RECEIVED EMAILS
+    if (admin.length) {
+      const emails = await databaseClient.query(sql.retrieveAllEmails);
+
+      if (!emails.length) {
+        return res.status(404).json({
+          message: 'admin, received emails not found',
+        });
+      }
+
+      return res.status(200).json({
+        message: 'admin, received emails retrieved',
+        data: emails,
+      });
+    }
+
+    // USER CAN ONLY RETRIEVE THEIR EMAILS
+    const userEmails = await databaseClient.query(
+      sql.retrieveSpecificUserEmails,
+      [userEmail]
+    );
+
+    if (!userEmails.length) {
+      return res.status(404).json({ message: 'received emails not found' });
+    }
+
+    res.status(200).json({
+      message: 'received emails retrieved',
+      data: userEmails,
+    });
+  }
+
+  static async retrieveSpecificReceivedEmail(req, res) {
+    const { userEmail } = req;
     const emailId = req.params.id;
-    const user = req.userEmail;
-    const userAccess = 'true';
-    const findAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await findAdmin;
-    if (responseOne.length !== 0) {
-      const specificEmail = await databaseClient.query(sql.adminRetrieveUserSpecificReceivedEmail, [emailId]);
-      const responseTwo = await specificEmail;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'admin, received email not found' });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'admin, received email retrieved',
-          data: responseTwo,
-        });
-      }
-    } else {
-      const userSpecificEmail = await databaseClient.query(sql.retrieveUserSpecificReceivedEmail, [emailId, user]);
-      const responseThree = await userSpecificEmail;
-      if (responseThree.length === 0 || responseThree.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'received email not found' });
-      } else {
-        const status = 'read';
-        const readEmail = await databaseClient.query(sql.emailRead, [status, emailId]);
-        const responseFour = await readEmail;
-        if (responseFour) {
-          res.status(200).json({
-            status: 200,
-            success: 'received email retrieved',
-            data: responseFour,
-          });
-        }
-      }
-    }
-  },
+    const isAdmin = 'true';
 
-  /**
-   * retrieve all sent emails endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async retrieveSentEmails(req, res) {
-    const user = req.userEmail;
-    const userAccess = 'true';
-    const retrieveAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await retrieveAdmin;
-    if (responseOne.length !== 0) {
-      const adminGetSentEmails = await databaseClient.query(sql.adminGetSentEmails);
-      const responseTwo = await adminGetSentEmails;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'admin, no sent emails found' });
-      } else if (responseTwo.length !== 0) {
-        res.status(200).json({
-          status: 200,
-          success: 'admin, sent emails retrieved',
-          data: responseTwo,
-        });
-      }
-    } else {
-      const sentEmails = await databaseClient.query(sql.retrieveSentEmails, [user]);
-      const responseTwo = await sentEmails;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'sorry! you have sent no emails!' });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'your sent emails retrieved',
-          data: responseTwo,
-        });
-      }
-    }
-  },
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      userEmail,
+      isAdmin,
+    ]);
 
-  /**
-   * retrieve a single sent email endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async retrieveSpecificSentEmail(req, res) {
-    const emailId = req.params.id;
-    const user = req.userEmail;
-    const userAccess = 'true';
-    const findAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await findAdmin;
-    if (responseOne.length !== 0) {
-      const specificEmail = await databaseClient.query(sql.adminRetrieveUserSpecificSentEmail, [emailId]);
-      const responseTwo = await specificEmail;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'admin, sent email not found' });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'admin, sent email retrieved',
-          data: responseTwo,
-        });
-      }
-    } else {
-      const userSpecificEmail = await databaseClient.query(sql.retrieveUserSpecificSentEmail, [emailId, user]);
-      const responseThree = await userSpecificEmail;
-      if (responseThree.length === 0 || responseThree.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'sent email not found' });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'sent email retrieved',
-          data: responseThree,
-        });
-      }
-    }
-  },
+    // ADMIN CAN RETRIEVE ALL USER'S RECEIVED EMAIL
+    if (admin.length) {
+      const email = await databaseClient.query(
+        sql.adminRetrieveUserSpecificReceivedEmail,
+        [emailId]
+      );
 
-  /**
-   * retrieve all read emails endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async retrieveReadEmails(req, res) {
-    const user = req.userEmail;
-    const userAccess = 'true';
+      if (!email.length) {
+        return res
+          .status(404)
+          .json({ message: 'admin, received email not found' });
+      }
+
+      return res.status(200).json({
+        message: 'admin, received email retrieved',
+        data: email,
+      });
+    }
+
+    // USER CAN ONLY RETRIEVE THEIR RECEIVED EMAIL
+    const unreadEmail = await databaseClient.query(
+      sql.retrieveUserSpecificReceivedEmail,
+      [emailId, userEmail]
+    );
+
+    if (!unreadEmail.length) {
+      return res.status(404).json({ message: 'received email not found' });
+    }
+
+    // AFTER RETRIEVING THE EMAIL IT IS MARKED AS READ
     const status = 'read';
-    const retrieveAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await retrieveAdmin;
-    if (responseOne.length !== 0) {
-      const adminGetReadEmails = await databaseClient.query(sql.adminGetReadEmails, [status]);
-      const responseTwo = await adminGetReadEmails;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'admin, no read emails found' });
-      } else if (responseTwo.length !== 0) {
-        res.status(200).json({
-          status: 200,
-          success: 'admin, read emails retrieved',
-          data: responseTwo,
-        });
-      }
-    } else {
-      const readEmails = await databaseClient.query(sql.retrieveReadEmails, [status, user]);
-      const responseThree = await readEmails;
-      if (responseThree.length === 0 || responseThree.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'sorry! you have read no emails!' });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'your read emails retrieved',
-          data: responseThree,
-        });
-      }
-    }
-  },
+    const readEmail = await databaseClient.query(sql.emailRead, [
+      status,
+      emailId,
+    ]);
 
-  /**
-   * retrieve all unread emails endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async retrieveUnReadEmails(req, res) {
+    res.status(200).json({
+      message: 'received email retrieved',
+      data: readEmail,
+    });
+  }
+
+  static async retrieveSentEmails(req, res) {
     const user = req.userEmail;
-    const userAccess = 'true';
+    const isAdmin = 'true';
+
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      user,
+      isAdmin,
+    ]);
+
+    // ADMIN CAN RETRIEVE ALL USER'S SENT EMAILS
+    if (admin.length) {
+      const emails = await databaseClient.query(sql.adminGetSentEmails);
+
+      if (!emails.length) {
+        return res.status(404).json({ message: 'admin, no sent emails found' });
+      }
+
+      return res.status(200).json({
+        message: 'admin, sent emails retrieved',
+        data: emails,
+      });
+    }
+
+    // USER CAN ONLY RETRIEVE THEIR SENT EMAILS
+    const emails = await databaseClient.query(sql.retrieveSentEmails, [user]);
+
+    if (!emails.length) {
+      return res
+        .status(404)
+        .json({ message: 'sorry! you have sent no emails!' });
+    }
+
+    res.status(200).json({
+      message: 'your sent emails retrieved',
+      data: emails,
+    });
+  }
+
+  static async retrieveSpecificSentEmail(req, res) {
+    const { userEmail } = req;
+    const emailId = req.params.id;
+    const isAdmin = 'true';
+
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      userEmail,
+      isAdmin,
+    ]);
+
+    if (admin.length) {
+      const email = await databaseClient.query(
+        sql.adminRetrieveUserSpecificSentEmail,
+        [emailId]
+      );
+
+      if (!email.length) {
+        return res.status(404).json({ message: 'admin, sent email not found' });
+      }
+
+      return res.status(200).json({
+        message: 'admin, sent email retrieved',
+        data: email,
+      });
+    }
+
+    const email = await databaseClient.query(
+      sql.retrieveUserSpecificSentEmail,
+      [emailId, userEmail]
+    );
+
+    if (!email.length) {
+      return res.status(404).json({ message: 'sent email not found' });
+    }
+
+    res.status(200).json({
+      message: 'sent email retrieved',
+      data: email,
+    });
+  }
+
+  static async retrieveReadEmails(req, res) {
+    const status = 'read';
+    const isAdmin = 'true';
+    const { userEmail } = req;
+
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      userEmail,
+      isAdmin,
+    ]);
+
+    // ADMIN CAN RETRIEVE ALL USER'S READ EMAILS
+    if (admin.length) {
+      const emails = await databaseClient.query(sql.adminGetReadEmails, [
+        status,
+      ]);
+
+      if (!emails.length) {
+        return res.status(404).json({ message: 'admin, no read emails found' });
+      }
+
+      return res.status(200).json({
+        message: 'admin, read emails retrieved',
+        data: emails,
+      });
+    }
+
+    // USER CAN ONLY RETRIEVE THEIR READ EMAILS
+    const emails = await databaseClient.query(sql.retrieveReadEmails, [
+      status,
+      userEmail,
+    ]);
+
+    if (!emails.length) {
+      return res
+        .status(404)
+        .json({ message: 'sorry! you have read no emails!' });
+    }
+
+    res.status(200).json({
+      message: 'your read emails retrieved',
+      data: emails,
+    });
+  }
+
+  static async retrieveUnReadEmails(req, res) {
+    const isAdmin = 'true';
     const status = 'unread';
-    const retrieveAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await retrieveAdmin;
-    if (responseOne.length !== 0) {
-      const adminGetUnreadEmails = await databaseClient.query(sql.adminGetUnreadEmails, [status]);
-      const responseTwo = await adminGetUnreadEmails;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'admin, no unread emails found' });
-      } else if (responseTwo.length !== 0) {
-        res.status(200).json({
-          status: 200,
-          success: 'admin, unread emails retrieved',
-          data: responseTwo,
-        });
-      }
-    } else {
-      const unreadEmails = await databaseClient.query(sql.retrieveUnreadEmails, [status, user]);
-      const responseThree = await unreadEmails;
-      if (responseThree.length === 0 || responseThree.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'sorry! you have no unread emails!' });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'your unread emails retrieved',
-          data: responseThree,
-        });
-      }
-    }
-  },
+    const { userEmail } = req;
 
-  /**
-   * retrieve all draft emails endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async retrieveDraftEmails(req, res) {
-    const user = req.userEmail;
-    const userAccess = 'true';
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      userEmail,
+      isAdmin,
+    ]);
+
+    // ADMIN CAN RETRIEVE ALL USER'S UNREAD EMAILS
+    if (admin.length) {
+      const emails = await databaseClient.query(sql.adminGetUnreadEmails, [
+        status,
+      ]);
+
+      if (!emails.length) {
+        return res
+          .status(404)
+          .json({ message: 'admin, no unread emails found' });
+      }
+
+      return res.status(200).json({
+        message: 'admin, unread emails retrieved',
+        data: emails,
+      });
+    }
+
+    // USER CAN ONLY RETRIEVE THEIR UNREAD EMAILS
+    const emails = await databaseClient.query(sql.retrieveUnreadEmails, [
+      status,
+      userEmail,
+    ]);
+
+    if (!emails.length) {
+      return res
+        .status(404)
+        .json({ message: 'sorry! you have no unread emails!' });
+    }
+
+    res.status(200).json({
+      message: 'your unread emails retrieved',
+      data: emails,
+    });
+  }
+
+  static async retrieveDraftEmails(req, res) {
     const status = 'draft';
-    const retrieveAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await retrieveAdmin;
-    if (responseOne.length !== 0) {
-      const adminGetDraftEmails = await databaseClient.query(sql.adminGetDraftEmails, [status]);
-      const responseOne = await adminGetDraftEmails;
-      if (responseOne.length === 0 || responseOne.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'admin, no draft emails found' });
-      } else if (responseOne.length !== 0) {
-        res.status(200).json({
-          status: 200,
-          success: 'admin, draft emails retrieved',
-          data: responseOne,
-        });
-      }
-    } else {
-      const draftEmails = await databaseClient.query(sql.retrieveDraftEmails, [status, user]);
-      const responseTwo = await draftEmails;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'sorry! you have no draft emails!' });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'your draft emails retrieved',
-          data: responseTwo,
-        });
-      }
-    }
-  },
+    const isAdmin = 'true';
+    const { userEmail } = req;
 
-  /**
-   * retrieve a single draft email endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async retrieveSpecificDraftEmail(req, res) {
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      userEmail,
+      isAdmin,
+    ]);
+
+    // ADMIN CAN RETRIEVE ALL USER'S DRAFT EMAILS
+    if (admin.length) {
+      const emails = await databaseClient.query(sql.adminGetDraftEmails, [
+        status,
+      ]);
+
+      if (!emails.length) {
+        return res
+          .status(404)
+          .json({ message: 'admin, no draft emails found' });
+      }
+
+      return res.status(200).json({
+        message: 'admin, draft emails retrieved',
+        data: emails,
+      });
+    }
+
+    // USER CAN ONLY RETRIEVE THEIR DRAFT EMAILS
+    const emails = await databaseClient.query(sql.retrieveDraftEmails, [
+      status,
+      userEmail,
+    ]);
+
+    if (!emails.length) {
+      return res
+        .status(404)
+        .json({ message: 'sorry! you have no draft emails!' });
+    }
+
+    res.status(200).json({
+      message: 'your draft emails retrieved',
+      data: emails,
+    });
+  }
+
+  static async retrieveSpecificDraftEmail(req, res) {
+    const isAdmin = 'true';
+    const { userEmail } = req;
     const emailId = req.params.id;
-    const user = req.userEmail;
-    const userAccess = 'true';
-    const findAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await findAdmin;
-    if (responseOne.length !== 0) {
-      const specificEmail = await databaseClient.query(sql.adminRetrieveUserSpecificDraftEmail, [emailId]);
-      const responseTwo = await specificEmail;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'admin, draft email not found' });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'admin, draft email retrieved',
-          data: responseTwo,
-        });
-      }
-    } else {
-      const userSpecificEmail = await databaseClient.query(sql.retrieveUserSpecificDraftEmail, [emailId, user]);
-      const responseThree = await userSpecificEmail;
-      if (responseThree.length === 0 || responseThree.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'draft email not found' });
-      } else {
-        res.status(200).json({
-          status: 200,
-          success: 'draft email retrieved',
-          data: responseThree,
-        });
-      }
-    }
-  },
 
-  /**
-   * delete a single received email endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async deleteSpecificReceivedEmail(req, res) {
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      userEmail,
+      isAdmin,
+    ]);
+
+    if (admin.length) {
+      const email = await databaseClient.query(
+        sql.adminRetrieveUserSpecificDraftEmail,
+        [emailId]
+      );
+
+      if (!email.length) {
+        return res
+          .status(404)
+          .json({ message: 'admin, draft email not found' });
+      }
+
+      return res.status(200).json({
+        message: 'admin, draft email retrieved',
+        data: email,
+      });
+    }
+
+    const email = await databaseClient.query(
+      sql.retrieveUserSpecificDraftEmail,
+      [emailId, userEmail]
+    );
+
+    if (!email.length) {
+      return res.status(404).json({ message: 'draft email not found' });
+    }
+
+    res.status(200).json({
+      message: 'draft email retrieved',
+      data: email,
+    });
+  }
+
+  static async deleteSpecificReceivedEmail(req, res) {
+    const isAdmin = 'true';
+    const { userEmail } = req;
     const emailId = req.params.id;
-    const user = req.userEmail;
-    const userAccess = 'true';
-    const retrieveAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await retrieveAdmin;
-    if (responseOne.length !== 0) {
-      const specificEmail = await databaseClient.query(sql.adminRetrieveUserSpecificReceivedEmail, [emailId]);
-      const responseTwo = await specificEmail;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'admin, received email not found' });
-      } else {
-        const deleteEmail = await databaseClient.query(sql.deleteSpecificEmail, [emailId]);
-        const responseThree = await deleteEmail;
-        if (responseThree) {
-          res.status(200).json({ status: 200, success: 'received email deleted by admin' });
-        }
-      }
-    } else {
-      const userSpecificEmail = await databaseClient.query(sql.retrieveUserSpecificReceivedEmail, [emailId, user]);
-      const responseFour = await userSpecificEmail;
-      if (responseFour.length === 0 || responseFour.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'received email not found' });
-      } else {
-        const deleteEmail = await databaseClient.query(sql.deleteSpecificEmail, [emailId]);
-        const responseFive = await deleteEmail;
-        if (responseFive) {
-          res.status(200).json({ status: 200, success: 'received email deleted' });
-        }
-      }
-    }
-  },
 
-  /**
-   * delete a single sent email endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async deleteSpecificSentEmail(req, res) {
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      userEmail,
+      isAdmin,
+    ]);
+
+    // ADMIN CAN DELETE ANY USER'S RECEIVED EMAILS
+    if (admin.length) {
+      const email = await databaseClient.query(
+        sql.adminRetrieveUserSpecificReceivedEmail,
+        [emailId]
+      );
+
+      if (!email.length) {
+        return res
+          .status(404)
+          .json({ message: 'admin, received email not found' });
+      }
+
+      await databaseClient.query(sql.deleteSpecificEmail, [emailId]);
+
+      return res
+        .status(200)
+        .json({ message: 'received email deleted by admin' });
+    }
+
+    // USER CAN ONLY DELETE THEIR RECEIVED EMAIL
+    const email = await databaseClient.query(
+      sql.retrieveUserSpecificReceivedEmail,
+      [emailId, userEmail]
+    );
+
+    if (!email.length) {
+      return res.status(404).json({ message: 'received email not found' });
+    }
+
+    await databaseClient.query(sql.deleteSpecificEmail, [emailId]);
+
+    res.status(200).json({ message: 'received email deleted' });
+  }
+
+  static async deleteSpecificSentEmail(req, res) {
+    const isAdmin = 'true';
+    const { userEmail } = req;
     const emailId = req.params.id;
-    const user = req.userEmail;
-    const userAccess = 'true';
-    const retrieveAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await retrieveAdmin;
-    if (responseOne.length !== 0) {
-      const specificEmail = await databaseClient.query(sql.adminRetrieveUserSpecificSentEmail, [emailId]);
-      const responseTwo = await specificEmail;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'admin, sent email not found' });
-      } else {
-        const deleteEmail = await databaseClient.query(sql.deleteSpecificSentEmail, [emailId]);
-        const responseThree = await deleteEmail;
-        if (responseThree) {
-          res.status(200).json({ status: 200, success: 'sent email deleted by admin' });
-        }
-      }
-    } else {
-      const userSpecificEmail = await databaseClient.query(sql.retrieveUserSpecificSentEmail, [emailId, user]);
-      const responseFour = await userSpecificEmail;
-      if (responseFour.length === 0 || responseFour.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'sent email not found' });
-      } else {
-        const deleteEmail = await databaseClient.query(sql.deleteSpecificSentEmail, [emailId]);
-        const responseFive = await deleteEmail;
-        if (responseFive) {
-          res.status(200).json({ status: 200, success: 'sent email deleted' });
-        }
-      }
-    }
-  },
 
-  /**
-   * delete a single draft email endpoint
-   * @param {object} req
-   * @param {object} res
-   */
-  async deleteSpecificDraftEmail(req, res) {
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      userEmail,
+      isAdmin,
+    ]);
+
+    // ADMIN CAN DELETE ANY USER'S SENT EMAILS
+    if (admin.length) {
+      const email = await databaseClient.query(
+        sql.adminRetrieveUserSpecificSentEmail,
+        [emailId]
+      );
+
+      if (!email.length) {
+        return res.status(404).json({ message: 'admin, sent email not found' });
+      }
+
+      await databaseClient.query(sql.deleteSpecificSentEmail, [emailId]);
+
+      return res.status(200).json({ message: 'sent email deleted by admin' });
+    }
+
+    // USER CAN ONLY DELETE THEIR SENT EMAIL
+    const email = await databaseClient.query(
+      sql.retrieveUserSpecificSentEmail,
+      [emailId, userEmail]
+    );
+
+    if (!email.length) {
+      return res.status(404).json({ message: 'sent email not found' });
+    }
+
+    await databaseClient.query(sql.deleteSpecificSentEmail, [emailId]);
+
+    res.status(200).json({ message: 'sent email deleted' });
+  }
+
+  static async deleteSpecificDraftEmail(req, res) {
+    const isAdmin = 'true';
+    const { userEmail } = req;
     const emailId = req.params.id;
-    const user = req.userEmail;
-    const userAccess = 'true';
-    const retrieveAdmin = await databaseClient.query(sql.retrieveAdmin, [user, userAccess]);
-    const responseOne = await retrieveAdmin;
-    if (responseOne.length !== 0) {
-      const specificEmail = await databaseClient.query(sql.adminRetrieveUserSpecificDraftEmail, [emailId]);
-      const responseTwo = await specificEmail;
-      if (responseTwo.length === 0 || responseTwo.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'admin, draft email not found' });
-      } else {
-        const deleteEmail = await databaseClient.query(sql.deleteSpecificDraftEmail, [emailId]);
-        const responseThree = await deleteEmail;
-        if (responseThree) {
-          res.status(200).json({ status: 200, success: 'draft email deleted by admin' });
-        }
-      }
-    } else {
-      const userSpecificEmail = await databaseClient.query(sql.retrieveUserSpecificDraftEmail, [emailId, user]);
-      const responseFour = await userSpecificEmail;
-      if (responseFour.length === 0 || responseFour.length === 'undefined') {
-        res.status(404).json({ status: 404, error: 'draft email not found' });
-      } else {
-        const deleteEmail = await databaseClient.query(sql.deleteSpecificDraftEmail, [emailId]);
-        const responseFive = await deleteEmail;
-        if (responseFive) {
-          res.status(200).json({ status: 200, success: 'draft email deleted' });
-        }
-      }
-    }
-  },
-};
 
-export default messages;
+    const admin = await databaseClient.query(sql.retrieveAdmin, [
+      userEmail,
+      isAdmin,
+    ]);
+
+    // ADMIN CAN DELETE ANY USER'S DRAFT EMAILS
+    if (admin.length) {
+      const email = await databaseClient.query(
+        sql.adminRetrieveUserSpecificDraftEmail,
+        [emailId]
+      );
+
+      if (!email.length) {
+        return res
+          .status(404)
+          .json({ message: 'admin, draft email not found' });
+      }
+
+      await databaseClient.query(sql.deleteSpecificDraftEmail, [emailId]);
+
+      return res.status(200).json({ message: 'draft email deleted by admin' });
+    }
+
+    // USER CAN ONLY DELETE THEIR DRAFT EMAIL
+    const email = await databaseClient.query(
+      sql.retrieveUserSpecificDraftEmail,
+      [emailId, userEmail]
+    );
+
+    if (!email.length) {
+      return res.status(404).json({ message: 'draft email not found' });
+    }
+
+    await databaseClient.query(sql.deleteSpecificDraftEmail, [emailId]);
+
+    res.status(200).json({ message: 'draft email deleted' });
+  }
+}
+
+export default MessageController;

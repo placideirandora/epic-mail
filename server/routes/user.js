@@ -1,10 +1,10 @@
-import express from 'express';
+import { Router } from 'express';
 
 import user from '../middleware/validate';
 import UserController from '../controllers/user';
 import authentication from '../middleware/authenticate';
 
-const router = express.Router();
+const router = Router();
 
 router.post(
   '/auth/signup',

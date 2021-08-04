@@ -9,7 +9,7 @@ import {
   draftEmails,
   groupMembers,
   groupMessages,
-  receivedEmails
+  receivedEmails,
 } from './tables';
 import sql from './queries';
 
@@ -23,7 +23,7 @@ class Database {
         user: process.env.DB_USER,
         database: process.env.DB_NAME,
         port: process.env.DB_PORT,
-        password: process.env.DB_PASSWORD
+        password: process.env.DB_PASSWORD,
       });
     }
 
@@ -33,14 +33,14 @@ class Database {
         user: process.env.DB_USER,
         database: process.env.DB_NAME_TEST,
         port: process.env.DB_PORT,
-        password: process.env.DB_PASSWORD
+        password: process.env.DB_PASSWORD,
       });
     }
 
     if (process.env.NODE_ENV === 'production') {
       const connectionString = process.env.DATABASE_URL;
       this.pool = new Pool({
-        connectionString
+        connectionString,
       });
     }
   }
@@ -56,7 +56,7 @@ class Database {
         process.env.ADMIN_EMAIL,
         passwordHash,
         true,
-        process.env.IS_ADMIN
+        process.env.IS_ADMIN,
       ];
 
       await client.query(users);
@@ -76,13 +76,13 @@ class Database {
     }
   }
 
-  async query(sqli, data = []) {
+  async query(sqlQuery, data = []) {
     const client = await this.pool.connect();
     try {
-      const result = await client.query(sqli, data);
+      const result = await client.query(sqlQuery, data);
       return result.rows;
     } catch (error) {
-      console.log('Something went wrong while executing the query', error);
+      console.log('Something went wrong while executing the SQL query', error);
       return null;
     } finally {
       client.release();
