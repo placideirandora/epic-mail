@@ -159,9 +159,9 @@ const validations = {
       groupId: Joi.number().integer().required(),
       memberId: Joi.number().integer().required(),
     });
-    const groupId = req.params.id;
-    const memberId = req.params.mid;
-    const { error } = Joi.validate({ groupId, memberId }, groupMemberParams);
+
+    const { id, memberId } = req.params;
+    const { error } = Joi.validate({ groupId: id, memberId }, groupMemberParams);
     if (error) {
       res
         .status(400)
