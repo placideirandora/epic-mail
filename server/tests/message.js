@@ -127,11 +127,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('email sent');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('email sent');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -144,11 +143,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('email sent');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('email sent');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -161,11 +159,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('the receiver is not registered');
+          .property('message')
+          .equals('the receiver is not registered');
         res.body.should.be.a('object');
         done();
       });
@@ -179,11 +176,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(400);
-        res.body.should.have.property('status').eql(400);
+        res.should.have.status(400);
         res.body.should.have
-          .property('error')
-          .eql('the sender and receiver email must not be the same');
+          .property('message')
+          .equals('the sender and receiver email must not be the same');
         res.body.should.be.a('object');
         done();
       });
@@ -197,11 +193,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('email drafted');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('email drafted');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -214,11 +209,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('email drafted');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('email drafted');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -230,11 +224,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, received emails retrieved');
+          .property('message')
+          .equals('admin, received emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -248,11 +241,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('received emails retrieved');
+          .property('message')
+          .equals('received emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -266,11 +258,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('received emails retrieved');
+          .property('message')
+          .equals('received emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -284,11 +275,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('your sent emails retrieved');
+          .property('message')
+          .equals('your sent emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -302,11 +292,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('your sent emails retrieved');
+          .property('message')
+          .equals('your sent emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -320,11 +309,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, sent emails retrieved');
+          .property('message')
+          .equals('admin, sent emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -338,11 +326,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, sent email retrieved');
+          .property('message')
+          .equals('admin, sent email retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -356,11 +343,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, sent email retrieved');
+          .property('message')
+          .equals('admin, sent email retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -374,11 +360,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, sent email not found');
+          .property('message')
+          .equals('admin, sent email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -391,9 +376,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('sent email retrieved');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('sent email retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -407,9 +391,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('sent email not found');
+        res.should.have.status(404);
+        res.body.should.have.property('message').equals('sent email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -422,9 +405,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('sent email retrieved');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('sent email retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -438,11 +420,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, unread emails retrieved');
+          .property('message')
+          .equals('admin, unread emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -456,11 +437,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('your unread emails retrieved');
+          .property('message')
+          .equals('your unread emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -474,11 +454,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('your unread emails retrieved');
+          .property('message')
+          .equals('your unread emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -492,11 +471,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, received email retrieved');
+          .property('message')
+          .equals('admin, received email retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -510,11 +488,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('received email retrieved');
+          .property('message')
+          .equals('received email retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -528,11 +505,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('received email retrieved');
+          .property('message')
+          .equals('received email retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -546,11 +522,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, read emails retrieved');
+          .property('message')
+          .equals('admin, read emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -564,11 +539,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('your read emails retrieved');
+          .property('message')
+          .equals('your read emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -582,11 +556,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('your read emails retrieved');
+          .property('message')
+          .equals('your read emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -600,11 +573,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, draft emails retrieved');
+          .property('message')
+          .equals('admin, draft emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -618,11 +590,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, draft email retrieved');
+          .property('message')
+          .equals('admin, draft email retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -636,11 +607,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, draft email not found');
+          .property('message')
+          .equals('admin, draft email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -653,11 +623,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('your draft emails retrieved');
+          .property('message')
+          .equals('your draft emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -671,9 +640,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('draft email retrieved');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('draft email retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -687,9 +655,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('draft email not found');
+        res.should.have.status(404);
+        res.body.should.have.property('message').equals('draft email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -702,11 +669,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('your draft emails retrieved');
+          .property('message')
+          .equals('your draft emails retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -720,9 +686,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('draft email retrieved');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('draft email retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
@@ -737,11 +702,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('email sent');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('email sent');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -754,11 +718,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('email sent');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('email sent');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -771,11 +734,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('email drafted');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('email drafted');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -788,11 +750,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('email drafted');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('email drafted');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -804,11 +765,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('received email deleted by admin');
+          .property('message')
+          .equals('received email deleted by admin');
         res.body.should.be.a('object');
         done();
       });
@@ -821,9 +781,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('received email deleted');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('received email deleted');
         res.body.should.be.a('object');
         done();
       });
@@ -836,11 +795,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('received email deleted by admin');
+          .property('message')
+          .equals('received email deleted by admin');
         res.body.should.be.a('object');
         done();
       });
@@ -853,11 +811,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, received email not found');
+          .property('message')
+          .equals('admin, received email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -870,9 +827,9 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('received email deleted');
+        res.should.have.status(200);
+
+        res.body.should.have.property('message').equals('received email deleted');
         res.body.should.be.a('object');
         done();
       });
@@ -885,9 +842,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('received email not found');
+        res.should.have.status(404);
+        res.body.should.have
+          .property('message')
+          .equals('received email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -900,11 +858,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('sent email deleted by admin');
+          .property('message')
+          .equals('sent email deleted by admin');
         res.body.should.be.a('object');
         done();
       });
@@ -917,11 +874,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, sent email not found');
+          .property('message')
+          .equals('admin, sent email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -934,9 +890,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('sent email deleted');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('sent email deleted');
         res.body.should.be.a('object');
         done();
       });
@@ -949,9 +904,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('sent email not found');
+        res.should.have.status(404);
+        res.body.should.have.property('message').equals('sent email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -964,11 +918,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('draft email deleted by admin');
+          .property('message')
+          .equals('draft email deleted by admin');
         res.body.should.be.a('object');
         done();
       });
@@ -981,9 +934,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('draft email deleted');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('draft email deleted');
         res.body.should.be.a('object');
         done();
       });
@@ -996,11 +948,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('draft email deleted by admin');
+          .property('message')
+          .equals('draft email deleted by admin');
         res.body.should.be.a('object');
         done();
       });
@@ -1013,11 +964,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('draft email deleted by admin');
+          .property('message')
+          .equals('draft email deleted by admin');
         res.body.should.be.a('object');
         done();
       });
@@ -1030,11 +980,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, no draft emails found');
+          .property('message')
+          .equals('admin, no draft emails found');
         res.body.should.be.a('object');
         done();
       });
@@ -1047,11 +996,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('sorry! you have no draft emails!');
+          .property('message')
+          .equals('sorry! you have no draft emails!');
         res.body.should.be.a('object');
         done();
       });
@@ -1064,11 +1012,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, no unread emails found');
+          .property('message')
+          .equals('admin, no unread emails found');
         res.body.should.be.a('object');
         done();
       });
@@ -1081,11 +1028,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('sorry! you have no unread emails!');
+          .property('message')
+          .equals('sorry! you have no unread emails!');
         res.body.should.be.a('object');
         done();
       });
@@ -1098,11 +1044,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, no read emails found');
+          .property('message')
+          .equals('admin, no read emails found');
         res.body.should.be.a('object');
         done();
       });
@@ -1115,11 +1060,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('sorry! you have read no emails!');
+          .property('message')
+          .equals('sorry! you have read no emails!');
         res.body.should.be.a('object');
         done();
       });
@@ -1132,11 +1076,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('sent email deleted by admin');
+          .property('message')
+          .equals('sent email deleted by admin');
         res.body.should.be.a('object');
         done();
       });
@@ -1149,11 +1092,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('sent email deleted by admin');
+          .property('message')
+          .equals('sent email deleted by admin');
         res.body.should.be.a('object');
         done();
       });
@@ -1166,11 +1108,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, no sent emails found');
+          .property('message')
+          .equals('admin, no sent emails found');
         res.body.should.be.a('object');
         done();
       });
@@ -1183,11 +1124,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('sorry! you have sent no emails!');
+          .property('message')
+          .equals('sorry! you have sent no emails!');
         res.body.should.be.a('object');
         done();
       });
@@ -1200,11 +1140,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, received email not found');
+          .property('message')
+          .equals('admin, received email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -1217,9 +1156,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('received email not found');
+        res.should.have.status(404);
+        res.body.should.have
+          .property('message')
+          .equals('received email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -1232,11 +1172,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, draft email not found');
+          .property('message')
+          .equals('admin, draft email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -1249,9 +1188,8 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('draft email not found');
+        res.should.have.status(404);
+        res.body.should.have.property('message').equals('draft email not found');
         res.body.should.be.a('object');
         done();
       });
@@ -1264,11 +1202,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, received emails not found');
+          .property('message')
+          .equals('admin, received emails not found');
         res.body.should.be.a('object');
         done();
       });
@@ -1281,9 +1218,10 @@ describe('MESSAGE ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('received emails not found');
+        res.should.have.status(404);
+        res.body.should.have
+          .property('message')
+          .equals('received emails not found');
         res.body.should.be.a('object');
         done();
       });
