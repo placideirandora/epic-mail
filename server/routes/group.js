@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import group from '../middleware/validate';
-import GroupController from '../controllers/group';
+import groupController from '../controllers/group';
 import authentication from '../middleware/authenticate';
 
 const router = Router();
@@ -10,20 +10,20 @@ router.post(
   '/groups',
   authentication.verifyUser,
   group.validateGroup,
-  GroupController.createGroup
+  groupController.moduleOne.createGroup
 );
 
 router.get(
   '/groups',
   authentication.verifyUser,
-  GroupController.retrieveGroups
+  groupController.moduleOne.retrieveGroups
 );
 
 router.get(
   '/groups/:id',
   authentication.verifyUser,
   group.validateGroupId,
-  GroupController.retrieveGroup
+  groupController.moduleOne.retrieveGroup
 );
 
 router.patch(
@@ -31,14 +31,14 @@ router.patch(
   authentication.verifyUser,
   group.validateGroupId,
   group.validateGroupName,
-  GroupController.changeGroupName
+  groupController.moduleOne.changeGroupName
 );
 
 router.delete(
   '/groups/:id',
   authentication.verifyUser,
   group.validateGroupId,
-  GroupController.deleteGroup
+  groupController.moduleTwo.deleteGroup
 );
 
 router.post(
@@ -46,42 +46,42 @@ router.post(
   authentication.verifyUser,
   group.validateGroupId,
   group.validateGroupMember,
-  GroupController.addGroupMember
+  groupController.moduleTwo.addGroupMember
 );
 
 router.get(
   '/groups/:id/users',
   authentication.verifyUser,
   group.validateGroupId,
-  GroupController.retrieveGroupMembers
+  groupController.moduleTwo.retrieveGroupMembers
 );
 
 router.get(
   '/groups/:id/:users/:memberId',
   authentication.verifyUser,
   group.validateGroupIdAndMemberId,
-  GroupController.retrieveGroupMember
+  groupController.moduleThree.retrieveGroupMember
 );
 
 router.delete(
   '/groups/:id/:users/:memberId',
   authentication.verifyUser,
   group.validateGroupIdAndMemberId,
-  GroupController.deleteGroupMember
+  groupController.moduleThree.deleteGroupMember
 );
 
 router.post(
   '/groups/:id/messages',
   authentication.verifyUser,
   group.validateGroupEmail,
-  GroupController.sendGroupEmail
+  groupController.moduleThree.sendGroupEmail
 );
 
 router.get(
   '/groups/:id/messages',
   authentication.verifyUser,
   group.validateGroupId,
-  GroupController.retrieveGroupMessages
+  groupController.moduleThree.retrieveGroupMessages
 );
 
 export default router;
