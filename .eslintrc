@@ -20,6 +20,7 @@
     "arrow-parens": "off",
     "consistent-return": "off",
     "operator-linebreak": "off",
-    "no-restricted-globals": "off"
+    "no-restricted-globals": "off",
+    "import/prefer-default-export": "off"
   }
 }

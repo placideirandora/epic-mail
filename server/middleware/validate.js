@@ -191,8 +191,6 @@ const validations = {
 
   validateGroupEmail(req, res, next) {
     const messageSchema = Joi.object().keys({
-      subject: Joi.string().trim().min(2).max(25)
-        .required(),
       message: Joi.string().trim().min(10).max(800)
         .required(),
     });
