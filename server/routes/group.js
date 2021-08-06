@@ -1,20 +1,87 @@
-import express from 'express';
-import controller from '../controllers/group';
-import authenticate from '../middleware/authenticate';
+import { Router } from 'express';
+
 import group from '../middleware/validate';
+import groupController from '../controllers/group';
+import authentication from '../middleware/authenticate';
 
-const router = express.Router();
+const router = Router();
 
-router.post('/groups', authenticate.verifyUser, group.validateGroup, controller.createGroup);
-router.get('/groups', authenticate.verifyUser, controller.retrieveGroups);
-router.get('/groups/:id', authenticate.verifyUser, group.validateGroupId, controller.retrieveGroup);
-router.patch('/groups/:id/name', authenticate.verifyUser, group.validateGroupId, group.validateGroupName, controller.changeGroupName);
-router.delete('/groups/:id', authenticate.verifyUser, group.validateGroupId, controller.deleteGroup);
-router.post('/groups/:id/users', authenticate.verifyUser, group.validateGroupId, group.validateGroupMember, controller.addGroupMember);
-router.get('/groups/:id/users', authenticate.verifyUser, group.validateGroupId, controller.retrieveGroupMembers);
-router.get('/groups/:id/:users/:mid', authenticate.verifyUser, group.validateGroupIdAndMemberId, controller.retrieveGroupMember);
-router.delete('/groups/:id/:users/:mid', authenticate.verifyUser, group.validateGroupIdAndMemberId, controller.deleteGroupMember);
-router.post('/groups/:id/messages', authenticate.verifyUser, group.validateGroupEmail, controller.sendGroupEmail);
-router.get('/groups/:id/messages', authenticate.verifyUser, group.validateGroupId, controller.retrieveGroupEmails);
+router.post(
+  '/groups',
+  authentication.verifyUser,
+  group.validateGroup,
+  groupController.moduleOne.createGroup
+);
+
+router.get(
+  '/groups',
+  authentication.verifyUser,
+  groupController.moduleOne.retrieveGroups
+);
+
+router.get(
+  '/groups/:id',
+  authentication.verifyUser,
+  group.validateGroupId,
+  groupController.moduleOne.retrieveGroup
+);
+
+router.patch(
+  '/groups/:id/name',
+  authentication.verifyUser,
+  group.validateGroupId,
+  group.validateGroupName,
+  groupController.moduleOne.changeGroupName
+);
+
+router.delete(
+  '/groups/:id',
+  authentication.verifyUser,
+  group.validateGroupId,
+  groupController.moduleTwo.deleteGroup
+);
+
+router.post(
+  '/groups/:id/users',
+  authentication.verifyUser,
+  group.validateGroupId,
+  group.validateGroupMember,
+  groupController.moduleTwo.addGroupMember
+);
+
+router.get(
+  '/groups/:id/users',
+  authentication.verifyUser,
+  group.validateGroupId,
+  groupController.moduleTwo.retrieveGroupMembers
+);
+
+router.get(
+  '/groups/:id/:users/:memberId',
+  authentication.verifyUser,
+  group.validateGroupIdAndMemberId,
+  groupController.moduleThree.retrieveGroupMember
+);
+
+router.delete(
+  '/groups/:id/:users/:memberId',
+  authentication.verifyUser,
+  group.validateGroupIdAndMemberId,
+  groupController.moduleThree.deleteGroupMember
+);
+
+router.post(
+  '/groups/:id/messages',
+  authentication.verifyUser,
+  group.validateGroupEmail,
+  groupController.moduleThree.sendGroupEmail
+);
+
+router.get(
+  '/groups/:id/messages',
+  authentication.verifyUser,
+  group.validateGroupId,
+  groupController.moduleThree.retrieveGroupMessages
+);
 
 export default router;

@@ -15,25 +15,25 @@ A full-stack web application that helps people exchange information over the int
 
 - **Mocha and Chai** - Test Framework And Assertion Library
 
-- **Travis-CI** - Continuous Integration Testing
+- **GitHub Actions** - Continuous Integration and Delivery
 
-- **Coveralls** - Continuous Integration Test Coverage
+- **Codecov** - Test Coverage
 
-- **Code Climate** - Continuous Integration Code Quality
+- **Code Climate** - Code Quality
 
-- **Heroku** - Deployment. [Visit The App](https://epic-mail-ch3.herokuapp.com/)
+- **Heroku** - Production Deployment
 
-- **GitHub Pages** - Front-End UI Hosting. [Visit The App](https://placideirandora.github.io/epic-mail/)
+- **GitHub Pages** - UI Hosting
 
-- **SQL** - Database Data Processing Language
+- **SQL** - Database Query Language
 
-- **PostgreSQL** - Database System. [Download And Install It](https://www.postgresql.org/)
+- **PostgreSQL** - Relational Database
 
 ## GETTING STARTED
 
 ### Clone The Project
 
-`git clone https://github.com/placiderapson/epic-mail-with-express-and-vanilla-js`
+`git clone https://github.com/placideirandora/epic-mail-with-express-and-vanilla-js`
 
 ### Install Required Dependencies
 
@@ -119,233 +119,3 @@ A full-stack web application that helps people exchange information over the int
 | DELETE | api/v2/groups/{groupId}/users/{memberId} | Delete A Specific Group Member           | Private |
 | POST   | api/v2/groups/{groupId}/messages         | Send A Group Message                     | Private |
 | GET    | api/v2/groups/{groupId}/messages         | Retrieve Group Messages                  | Private |
-
-## REQUEST AND RESPONSE SAMPLE
-
-### POST auth/signup
-
-```
-{
-    "status": 201,
-    "success": "user registered",
-    "data": [
-        {
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNwb25zZSI6eyJpZCI6NDI1LCJmaXJzdG5hbWUiOiJzb21lb25lIiwibGFzdG5hbWUiOiJzb21lb25lIiwidXNlcm5hbWUiOiJzb21lb25lIiwiZW1haWwiOiJzb21lb25lQGVwaWNtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJDNleFVENUtnUDJza3J0MzloYTdPQS5CdVZVa1E1alQvbk9na1hjeE4uNk04MFB6cXBSVUFlIiwiaXNhZG1pbiI6ZmFsc2UsInJlZ2lzdGVyZWQiOiIyMDE5LTA0LTAxVDIyOjAwOjAwLjAwMFoifSwiaWF0IjoxNTU0MjM1NjczfQ.VHgTeFNx4FRbNPENp0JY2Q6lK5cT5QaBZ-RMIH6kIag",
-            "user": {
-                "id": 425,
-                "firstname": "someone",
-                "lastname": "someone",
-                "username": "someone",
-                "email": "someone@epicmail.com",
-                "isadmin": false,
-                "registered": "2019-04-01T22:00:00.000Z"
-            }
-        }
-    ]
-}
-```
-
-### POST auth/login
-
-```
-{
-    "status": 200,
-    "success": "logged in",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNwb25zZSI6eyJpZCI6NDI1LCJmaXJzdG5hbWUiOiJzb21lb25lIiwibGFzdG5hbWUiOiJzb21lb25lIiwidXNlcm5hbWUiOiJzb21lb25lIiwiZW1haWwiOiJzb21lb25lQGVwaWNtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJDNleFVENUtnUDJza3J0MzloYTdPQS5CdVZVa1E1alQvbk9na1hjeE4uNk04MFB6cXBSVUFlIiwiaXNhZG1pbiI6ZmFsc2UsInJlZ2lzdGVyZWQiOiIyMDE5LTA0LTAxVDIyOjAwOjAwLjAwMFoifSwiaWF0IjoxNTU0MjM1NzI5LCJleHAiOjE1NTQyNDY1Mjl9.tE3In1DmIvG8V4x7qePcSEAlKLCUIdlCaqKCzI5XaoY",
-    "data": [
-        {
-            "id": 425,
-            "firstname": "someone",
-            "lastname": "someone",
-            "username": "someone",
-            "email": "someone@epicmail.com",
-            "isadmin": false,
-            "registered": "2019-04-01T22:00:00.000Z"
-        }
-    ]
-}
-```
-
-### POST messages
-
-```
-{
-    "status": 201,
-    "success": "email sent",
-    "data": [
-        {
-            "id": 8,
-            "subject": "Hello World",
-            "message": "The first program in every programming language",
-            "parentmessageid": 1,
-            "senderemail": "someone@epicmail.com",
-            "receiveremail": "fredmanzi@epicmail.com",
-            "status": "sent",
-            "createdon": "2019-04-01T22:00:00.000Z"
-        }
-    ]
-}
-```
-
-### GET messages | fredmanzi@epicmail.com
-
-```
-{
-    "status": 200,
-    "success": "received emails retrieved",
-    "data": [
-        {
-            "id": 2,
-            "subject": "WHAT'S UP!",
-            "message": "How did you do it man?!",
-            "parentmessageid": 1,
-            "senderemail": "emmanuelcyubahiro@epicmail.com",
-            "receiveremail": "fredmanzi@epicmail.com",
-            "status": "read",
-            "createdon": "2019-03-26T22:00:00.000Z"
-        },
-        {
-            "id": 8,
-            "subject": "Hello World",
-            "message": "The first program in every programming language",
-            "parentmessageid": 1,
-            "senderemail": "someone@epicmail.com",
-            "receiveremail": "fredmanzi@epicmail.com",
-            "status": "unread",
-            "createdon": "2019-04-01T22:00:00.000Z"
-        }
-    ]
-}
-```
-
-### GET messages/unread | fredmanzi@epicmail.com
-
-```
-{
-    "status": 200,
-    "success": "your unread emails retrieved",
-    "data": [
-        {
-            "id": 8,
-            "subject": "Hello World",
-            "message": "The first program in every programming language",
-            "parentmessageid": 1,
-            "senderemail": "someone@epicmail.com",
-            "receiveremail": "fredmanzi@epicmail.com",
-            "status": "unread",
-            "createdon": "2019-04-01T22:00:00.000Z"
-        }
-    ]
-}
-```
-
-### GET messages/8 | fredmanzi@epicmail.com
-
-```
-{
-    "status": 200,
-    "success": "email retrieved",
-    "data": [
-        {
-            "id": 8,
-            "subject": "Hello World",
-            "message": "The first program in every programming language",
-            "parentmessageid": 1,
-            "senderemail": "someone@epicmail.com",
-            "receiveremail": "fredmanzi@epicmail.com",
-            "status": "read",
-            "createdon": "2019-04-01T22:00:00.000Z"
-        }
-    ]
-}
-```
-
-### GET messages/sent | someone@epicmail.com
-
-```
-{
-    "status": 200,
-    "success": "your sent emails retrieved",
-    "data": [
-        {
-            "id": 8,
-            "subject": "Hello World",
-            "message": "The first program in every programming language",
-            "parentmessageid": 1,
-            "senderemail": "someone@epicmail.com",
-            "receiveremail": "fredmanzi@epicmail.com",
-            "status": "sent",
-            "createdon": "2019-04-01T22:00:00.000Z"
-        }
-    ]
-}
-```
-
-### POST groups
-
-```
-{
-    "status": 201,
-    "success": "group created",
-    "data": [
-        {
-            "id": 5,
-            "name": "Developers",
-            "role": "Coding"
-        }
-    ]
-}
-```
-
-### GET groups
-
-```
-{
-    "status": 200,
-    "success": "groups retrieved",
-    "data": [
-        {
-            "id": 5,
-            "name": "Developers",
-            "role": "Coding",
-            "owner": "someone@epicmail.com"
-        }
-    ]
-}
-```
-
-### POST groups/3/users
-
-```
-{
-    "status": 201,
-    "success": "group member registered",
-    "data": [
-        {
-            "id": 3,
-            "username": "fredmanzi",
-            "email": "fredmanzi@epicmail.com",
-            "groupid": 5
-        }
-    ]
-}
-```
-
-### POST groups/3/messages
-
-```
-{
-    "status": 201,
-    "success": "group email sent",
-    "data": [
-        {
-            "id": 3,
-            "subject": "CODING",
-            "message": "It is a process of telling a computer what to do.",
-            "parentmessageid": 1,
-            "groupid": 5,
-            "createdon": "2019-04-01T22:00:00.000Z"
-        }
-    ]
-}
-```

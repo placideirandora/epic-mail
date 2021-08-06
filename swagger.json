@@ -1,1256 +1,1091 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "EPIC MAIL",
-      "description": "EPIC Mail helps people exchange messages/information over the internet. The app is hosted on GitHub at [https://github.com/placideirandora/epic-mail](https://github.com/placideirandora/epic-mail)"
-    },
-    "contact": {
-      "email": "placideirandora@gmail.com"
-    },
-    "host": "epic-mail-ch3.herokuapp.com",
-    "basePath": "/api/v2",
-    "schemes": [
-      "https",
-      "http"
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "paths": {
-        "/auth/signup": {
-            "post": {
-              "tags": [
-                "AUTHENTICATION ENDPOINT ROUTES"
-              ],
-              "summary": "User registration",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                {
-                  "in": "body",
-                  "name": "body",
-                  "required": true,
-                  "schema": {
-                    "$ref": "#/definitions/User"
-                  }
-                }
-              ],
-              "responses": {
-                "201": {
-                  "description": "User Registered"
-                },
-                "400": {
-                  "description": "Registration Failed"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-        "/auth/login": {
-            "post": {
-              "tags": [
-                "AUTHENTICATION ENDPOINT ROUTES"
-              ],
-              "summary": "User login",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                {
-                  "in": "body",
-                  "name": "body",
-                  "required": true,
-                  "schema": {
-                    "$ref": "#/definitions/Login"
-                  }
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Logged In"
-                },
-                "400": {
-                  "description": "Login Failed"
-                },
-                "404": {
-                  "description": "Invalid Email"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/users": {
-            "get": {
-              "tags": [
-                "USER ENDPOINT ROUTES"
-              ],
-              "parameters":[
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                }
-              ],
-              "summary": "Retrieve users",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Users Retrieved"
-                },
-                "403": {
-                  "description": "Access Denied"
-                },
-                "404": {
-                  "description": "Users Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/users/{userId}": {
-            "get": {
-              "tags": [
-                "USER ENDPOINT ROUTES"
-              ],
-              "summary": "Retrieve a specific user",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                },
-                {
-                  "name": "userId",
-                  "in": "path",
-                  "description": "ID of a user",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "User Retrieved"
-                },
-                "400": {
-                  "description": "Invalid ID"
-                },
-                "403": {
-                  "description": "Access Denied"
-                },
-                "404": {
-                  "description": "User Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "delete": {
-              "tags": [
-                "USER ENDPOINT ROUTES"
-              ],
-              "summary": "Delete a specific user",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                },
-                {
-                  "name": "userId",
-                  "in": "path",
-                  "description": "ID of a user",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "User Deleted"
-                },
-                "400": {
-                  "description": "Invalid ID"
-                },
-                "403": {
-                  "description": "Access Denied"
-                },
-                "404": {
-                  "description": "User Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/auth/reset": {
-            "post": {
-              "tags": [
-                "PASSWORD RESET ROUTES"
-              ],
-              "summary": "Reset a forgotten password",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                {
-                  "in": "body",
-                  "name": "body",
-                  "required": true,
-                  "schema": {
-                    "$ref": "#/definitions/Email"
-                  }
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Successful Password Reset"
-                },
-                "400": {
-                  "description": "Password Reset Failed"
-                },
-                "404": {
-                  "description": "User Not Registered"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "get": {
-              "tags": [
-                "PASSWORD RESET ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                }
-              ],
-              "summary": "Retrieve users who reset their passwords",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Users Retrieved"
-                },
-                "403": {
-                  "description": "Access Denied"
-                },
-                "404": {
-                  "description": "Users Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-
-          },
-          "/messages": {
-            "post": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "summary": "Send an email",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                },
-                {
-                  "in": "body",
-                  "name": "body",
-                  "required": true,
-                  "schema": {
-                    "$ref": "#/definitions/Message"
-                  }
-                }
-              ],
-              "responses": {
-                "201": {
-                  "description": "Email Sent Or Drafted"
-                },
-                "400": {
-                  "description": "Email NoT Sent"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "get": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                }
-              ],
-              "summary": "Retrieve emails",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Emails Retrieved"
-                },
-                "404": {
-                  "description": "Emails NoT Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/messages/sent": {
-            "get": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                }
-              ],
-              "summary": "Retrieve sent emails",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Sent Emails Retrieved"
-                },
-                "404": {
-                  "description": "Sent Emails Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/messages/sent/{messageId}": {
-            "get": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                },
-              {
-                "name": "messageId",
-                "in": "path",
-                "description": "ID of a message",
-                "required": true,
-                "type": "integer",
-                "format": "int64"
-              }
-            ],
-              "summary": "Retrieve a specific sent email",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Sent Email Retrieved"
-                },
-                "404": {
-                  "description": "Sent Email Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "delete": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                },
-              {
-                "name": "messageId",
-                "in": "path",
-                "description": "ID of a message",
-                "required": true,
-                "type": "integer",
-                "format": "int64"
-              }
-            ],
-              "summary": "Delete a specific sent email",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Sent Email Deleted"
-                },
-                "404": {
-                  "description": "Sent Email Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/messages/read": {
-            "get": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                }
-              ],
-              "summary": "Retrieve read emails",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Read Emails Retrieved"
-                },
-                "404": {
-                  "description": "Read Emails Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/messages/unread": {
-            "get": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                }
-              ],
-              "summary": "Retrieve unread emails",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Unread Emails Retrieved"
-                },
-                "404": {
-                  "description": "Unread Emails Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/messages/draft": {
-            "get": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                }
-              ],
-              "summary": "Retrieve draft emails",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Draft Emails Retrieved"
-                },
-                "404": {
-                  "description": "Draft Emails Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/messages/draft/{messageId}": {
-            "get": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                },
-              {
-                "name": "messageId",
-                "in": "path",
-                "description": "ID of a message",
-                "required": true,
-                "type": "integer",
-                "format": "int64"
-              }
-            ],
-              "summary": "Retrieve a specific draft email",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Draft Email Retrieved"
-                },
-                "404": {
-                  "description": "Draft Email Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "delete": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                },
-              {
-                "name": "messageId",
-                "in": "path",
-                "description": "ID of a message",
-                "required": true,
-                "type": "integer",
-                "format": "int64"
-              }
-            ],
-              "summary": "Delete a specific draft email",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Draft Email Deleted"
-                },
-                "404": {
-                  "description": "Draft Email Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/messages/{messageId}": {
-            "get": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "summary": "Retrieve a specific message",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "messageId",
-                  "in": "path",
-                  "description": "ID of a message",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Message Retrieved"
-                },
-                "400": {
-                  "description": "Invalid ID"
-                },
-                "404": {
-                  "description": "Message Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "delete": {
-              "tags": [
-                "MESSAGE ENDPOINT ROUTES"
-              ],
-              "summary": "Delete a specific message",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "messageId",
-                  "in": "path",
-                  "description": "ID of a message",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Email Deleted"
-                },
-                "400": {
-                  "description": "Invalid ID"
-                },
-                "404": {
-                  "description": "Email Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/groups": {
-            "post": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "summary": "Create a group",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "in": "body",
-                  "name": "body",
-                  "required": true,
-                  "schema": {
-                    "$ref": "#/definitions/Group"
-                  }
-                }
-              ],
-              "responses": {
-                "201": {
-                  "description": "Group Created"
-                },
-                "400": {
-                  "description": "Group Not Created"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "get": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "parameters": [
-                {
-                  "name": "Authorization",
-                  "in": "header",
-                  "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                }
-              ],
-              "summary": "Retrieve groups",
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "Groups Retrieved"
-                },
-                "404": {
-                  "description": "Groups NoT Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/groups/{groupId}": {
-            "get": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "summary": "Retrieve a specific group",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "groupId",
-                  "in": "path",
-                  "description": "ID of a group",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Group Retrieved"
-                },
-                "400": {
-                  "description": "Invalid ID"
-                },
-                "404": {
-                  "description": "Group Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "delete": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "summary": "Delete a specific group",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "groupId",
-                  "in": "path",
-                  "description": "ID of a group",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Group Deleted"
-                },
-                "400": {
-                  "description": "Invalid ID"
-                },
-                "404": {
-                  "description": "Group Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/groups/{groupId}/name": {
-            "patch": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "summary": "Change a group name",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "groupId",
-                  "in": "path",
-                  "description": "ID of a group",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                },
-                {
-                  "in": "body",
-                  "name": "body",
-                  "required": true,
-                  "schema": {
-                    "$ref": "#/definitions/GroupName"
-                  }
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Group Name Changed"
-                },
-                "400": {
-                  "description": "Group Name Not Changed"
-                },
-                "404": {
-                  "description": "Group Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/groups/{groupId}/users": {
-            "post": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "summary": "Add a group member",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "groupId",
-                  "in": "path",
-                  "description": "ID of a group",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                },
-                {
-                  "in": "body",
-                  "name": "body",
-                  "required": true,
-                  "schema": {
-                    "$ref": "#/definitions/GroupMember"
-                  }
-                }
-              ],
-              "responses": {
-                "201": {
-                  "description": "Group Member Registered"
-                },
-                "400": {
-                  "description": "Group Member Not Registered"
-                },
-                "404": {
-                  "description": "Group Member Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "get": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "summary": "Retrieve group members",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "groupId",
-                  "in": "path",
-                  "description": "ID of a group",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Group Members Retrieved"
-                },
-                "404": {
-                  "description": "Group Members Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/groups/{groupId}/users/{memberId}": {
-            "get": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "summary": "Retrieve a specific group member",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "groupId",
-                  "in": "path",
-                  "description": "ID of a group",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                },
-                {
-                  "name": "memberId",
-                  "in": "path",
-                  "description": "ID of a group member",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Group Member Retrieved"
-                },
-                "404": {
-                  "description": "Group Member Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "delete": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "summary": "Delete a specific group member",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "groupId",
-                  "in": "path",
-                  "description": "ID of a group",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                },
-                {
-                  "name": "memberId",
-                  "in": "path",
-                  "description": "ID of a group member",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Group Member Deleted"
-                },
-                "404": {
-                  "description": "Group Member Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "/groups/{groupId}/messages": {
-            "post": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "summary": "Send a group message",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "groupId",
-                  "in": "path",
-                  "description": "ID of a group",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                },
-                {
-                  "in": "body",
-                  "name": "body",
-                  "required": true,
-                  "schema": {
-                    "$ref": "#/definitions/GroupMessage"
-                  }
-                }
-              ],
-              "responses": {
-                "201": {
-                  "description": "Group Message Sent"
-                },
-                "400": {
-                  "description": "Group Message Not Sent"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
-            },
-            "get": {
-              "tags": [
-                "GROUP ENDPOINT ROUTES"
-              ],
-              "summary": "Retrieve group messages",
-              "produces": [
-                "application/json"
-              ],
-              "parameters": [
-                  {
-                    "name": "Authorization",
-                    "in": "header",
-                    "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
-                  },
-                {
-                  "name": "groupId",
-                  "in": "path",
-                  "description": "ID of a group",
-                  "required": true,
-                  "type": "integer",
-                  "format": "int64"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Group Messages Retrieved"
-                },
-                "404": {
-                  "description": "Group Messages Not Found"
-                },
-                "500": {
-                  "description": "Internal Server Error"
-                }
-              }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.5",
+    "title": "EPIC MAIL",
+    "description": "EPIC Mail helps people exchange information over the internet. The app is hosted on GitHub at [https://placideirandora.github.io/epic-mail-with-express-and-vanilla-js/client/index.html](https://placideirandora.github.io/epic-mail-with-express-and-vanilla-js/client/index.html)"
+  },
+  "contact": {
+    "email": "placideirandora@gmail.com"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v2",
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": ["AUTHENTICATION ENDPOINT ROUTES"],
+        "summary": "User registration",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
             }
           }
-    },
-    "securityDefinitions": {
-      "jsonwebtoken": {
-        "type": "apiKey",
-        "name": "Authorization",
-        "in": "header"
+        ],
+        "responses": {
+          "201": {
+            "description": "User Registered"
+          },
+          "400": {
+            "description": "Registration Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
-    "definitions": {
-      "User": {
-        "required": [
-          "firstname",
-          "lastname",
-          "username",
-          "password"
+    "/auth/login": {
+      "post": {
+        "tags": ["AUTHENTICATION ENDPOINT ROUTES"],
+        "summary": "User login",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
         ],
-        "properties": {
-          "firstname": {
-            "type": "string"
+        "responses": {
+          "200": {
+            "description": "Logged In"
           },
-          "lastname": {
-            "type": "string"
+          "400": {
+            "description": "Login Failed"
           },
-          "username": {
-            "type": "string",
-            "uniqueItems": true
+          "404": {
+            "description": "Invalid Email"
           },
-          "password": {
-            "type": "string"
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["USER ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          }
+        ],
+        "summary": "Retrieve users",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Users Retrieved"
+          },
+          "403": {
+            "description": "Access Denied"
+          },
+          "404": {
+            "description": "Users Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": ["USER ENDPOINT ROUTES"],
+        "summary": "Retrieve a specific user",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of a user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Retrieved"
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "403": {
+            "description": "Access Denied"
+          },
+          "404": {
+            "description": "User Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-    "Login": {
-        "required": [
-          "email",
-          "password"
-        ],
-        "properties": {
-          "email": {
-            "type": "string"
+      "delete": {
+        "tags": ["USER ENDPOINT ROUTES"],
+        "summary": "Delete a specific user",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
           },
-          "password": {
-            "type": "string"
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of a user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Deleted"
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "403": {
+            "description": "Access Denied"
+          },
+          "404": {
+            "description": "User Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/reset": {
+      "post": {
+        "tags": ["PASSWORD RESET ROUTES"],
+        "summary": "Reset a forgotten password",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Email"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Password Reset"
+          },
+          "400": {
+            "description": "Password Reset Failed"
+          },
+          "404": {
+            "description": "User Not Registered"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "Email": {
-        "required": [
-          "email"
+      "get": {
+        "tags": ["PASSWORD RESET ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          }
         ],
-        "properties": {
-          "email": {
-            "type": "string"
+        "summary": "Retrieve users who reset their passwords",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Users Retrieved"
+          },
+          "403": {
+            "description": "Access Denied"
+          },
+          "404": {
+            "description": "Users Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/messages": {
+      "post": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "summary": "Send an email",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Email Sent Or Drafted"
+          },
+          "400": {
+            "description": "Email NoT Sent"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "Message": {
-        "required": [
-          "subject",
-          "message",
-          "parentMessageId",
-          "receiverEmail",
-          "status"
+      "get": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          }
         ],
-        "properties": {
-          "subject": {
-            "type": "string"
+        "summary": "Retrieve emails",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Emails Retrieved"
           },
-          "message": {
-            "type": "string"
+          "404": {
+            "description": "Emails NoT Found"
           },
-          "parentMessageId": {
-            "type": "integer"
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/messages/sent": {
+      "get": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          }
+        ],
+        "summary": "Retrieve sent emails",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Sent Emails Retrieved"
           },
-          "receiverEmail": {
-            "type": "string"
+          "404": {
+            "description": "Sent Emails Not Found"
           },
-          "status": {
-            "type": "string"
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/messages/sent/{messageId}": {
+      "get": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "ID of a message",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "summary": "Retrieve a specific sent email",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Sent Email Retrieved"
+          },
+          "404": {
+            "description": "Sent Email Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "Group": {
-        "required": [
-          "name",
-          "role"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
+      "delete": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
           },
-          "role": {
-            "type": "string"
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "ID of a message",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "summary": "Delete a specific sent email",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Sent Email Deleted"
+          },
+          "404": {
+            "description": "Sent Email Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/messages/read": {
+      "get": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          }
+        ],
+        "summary": "Retrieve read emails",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Read Emails Retrieved"
+          },
+          "404": {
+            "description": "Read Emails Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/messages/unread": {
+      "get": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          }
+        ],
+        "summary": "Retrieve unread emails",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Unread Emails Retrieved"
+          },
+          "404": {
+            "description": "Unread Emails Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/messages/draft": {
+      "get": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          }
+        ],
+        "summary": "Retrieve draft emails",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Draft Emails Retrieved"
+          },
+          "404": {
+            "description": "Draft Emails Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/messages/draft/{messageId}": {
+      "get": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "ID of a message",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "summary": "Retrieve a specific draft email",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Draft Email Retrieved"
+          },
+          "404": {
+            "description": "Draft Email Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "GroupName": {
-        "required": [
-          "name"
+      "delete": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "ID of a message",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
         ],
-        "properties": {
-          "name": {
-            "type": "string"
+        "summary": "Delete a specific draft email",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Draft Email Deleted"
+          },
+          "404": {
+            "description": "Draft Email Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/messages/{messageId}": {
+      "get": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "summary": "Retrieve a specific message",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "ID of a message",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message Retrieved"
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "404": {
+            "description": "Message Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "GroupMember": {
-        "required": [
-          "username",
-          "email"
-        ],
-        "properties": {
-          "username": {
-            "type": "string"
+      "delete": {
+        "tags": ["MESSAGE ENDPOINT ROUTES"],
+        "summary": "Delete a specific message",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
           },
-          "email": {
-            "type": "string",
-            "uniqueItems": true
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "ID of a message",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email Deleted"
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "404": {
+            "description": "Email Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/groups": {
+      "post": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "summary": "Create a group",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Group"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Group Created"
+          },
+          "400": {
+            "description": "Group Not Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "GroupMessage": {
-        "required": [
-          "subject",
-          "message",
-          "parentMessageId"
+      "get": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          }
         ],
-        "properties": {
-          "subject": {
-            "type": "string"
+        "summary": "Retrieve groups",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Groups Retrieved"
           },
-          "message": {
-            "type": "string"
+          "404": {
+            "description": "Groups NoT Found"
           },
-          "parentMessageId": {
-            "type": "integer"
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/groups/{groupId}": {
+      "get": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "summary": "Retrieve a specific group",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "ID of a group",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group Retrieved"
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "404": {
+            "description": "Group Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "summary": "Delete a specific group",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "ID of a group",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group Deleted"
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "404": {
+            "description": "Group Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/groups/{groupId}/name": {
+      "patch": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "summary": "Change a group name",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "ID of a group",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GroupName"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group Name Changed"
+          },
+          "400": {
+            "description": "Group Name Not Changed"
+          },
+          "404": {
+            "description": "Group Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/groups/{groupId}/users": {
+      "post": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "summary": "Add a group member",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "ID of a group",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GroupMember"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Group Member Registered"
+          },
+          "400": {
+            "description": "Group Member Not Registered"
+          },
+          "404": {
+            "description": "Group Member Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "summary": "Retrieve group members",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "ID of a group",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group Members Retrieved"
+          },
+          "404": {
+            "description": "Group Members Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/groups/{groupId}/users/{memberId}": {
+      "get": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "summary": "Retrieve a specific group member",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "ID of a group",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "memberId",
+            "in": "path",
+            "description": "ID of a group member",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group Member Retrieved"
+          },
+          "404": {
+            "description": "Group Member Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "summary": "Delete a specific group member",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "ID of a group",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "memberId",
+            "in": "path",
+            "description": "ID of a group member",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group Member Deleted"
+          },
+          "404": {
+            "description": "Group Member Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/groups/{groupId}/messages": {
+      "post": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "summary": "Send a group message",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "ID of a group",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GroupMessage"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Group Message Sent"
+          },
+          "400": {
+            "description": "Group Message Not Sent"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["GROUP ENDPOINT ROUTES"],
+        "summary": "Retrieve group messages",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token. Ex: Bearer xxxxxxxxxxxx"
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "description": "ID of a group",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group Messages Retrieved"
+          },
+          "404": {
+            "description": "Group Messages Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     }
+  },
+  "securityDefinitions": {
+    "jsonwebtoken": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "required": ["firstname", "lastname", "username", "password"],
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Login": {
+      "required": ["email", "password"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Email": {
+      "required": ["email"],
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "Message": {
+      "required": ["subject", "message", "receiverEmail", "status"],
+      "properties": {
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "receiverEmail": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "Group": {
+      "required": ["name", "purpose"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        }
+      }
+    },
+    "GroupName": {
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "GroupMember": {
+      "required": ["username", "email"],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "GroupMessage": {
+      "required": ["message"],
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    }
   }
+}

@@ -1,12 +1,9 @@
-/**
- *a class for creating an object to store group creation information
- */
-class group {
-  constructor(name, role, owner) {
+class Group {
+  constructor(name, purpose, owner) {
     this.name = name;
-    this.role = role;
+    this.purpose = purpose;
     this.owner = owner;
   }
 }
 
-export default group;
+export default Group;

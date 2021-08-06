@@ -1,12 +1,9 @@
-/**
- *a class for creating an object to store group member information
- */
-class member {
-  constructor(username, email, memberGroup) {
+class GroupMember {
+  constructor(username, email, group) {
     this.username = username;
     this.email = email;
-    this.memberGroup = memberGroup;
+    this.group = group;
   }
 }
 
-export default member;
+export default GroupMember;

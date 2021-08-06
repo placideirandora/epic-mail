@@ -1,10 +1,9 @@
-/* eslint-disable comma-dangle */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-expressions */
 import chai from 'chai';
 import chaiHTTP from 'chai-http';
-import server from '../server';
-import database from '../db/database';
+import { describe, it } from 'mocha';
+
+import server from '../index';
+import database from '../db';
 import {
   newUser6,
   newUser7,
@@ -32,122 +31,132 @@ describe('GROUP ENDPOINT TESTS', () => {
   let userToken3;
   let adminToken;
 
-  before((done) => {
+  it('Should register a seventh user', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/signup')
       .send(newUser6)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('user registered');
+        res.should.have.status(201);
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.should.have.property('message').equals('User registered');
+        res.body.should.have.property('data');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  before((done) => {
+  it('Should register an eight user', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/signup')
       .send(newUser7)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('user registered');
+        res.should.have.status(201);
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.should.have.property('message').equals('User registered');
+        res.body.should.have.property('data');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  before((done) => {
+  it('Should register a ninth user', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/signup')
       .send(newUser8)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('user registered');
+        res.should.have.status(201);
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.should.have.property('message').equals('User registered');
+        res.body.should.have.property('data');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  before((done) => {
+  it('Should login the sixth user', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
       .send(newUserLogIn6)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        userToken1 = `Bearer ${res.body.token}`;
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('logged in');
-        res.body.should.have.property('token');
+        userToken1 = `Bearer ${res.body.data.token}`;
+
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('Logged in');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  before((done) => {
+  it('Should login the seventh user', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
       .send(newUserLogIn7)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        userToken2 = `Bearer ${res.body.token}`;
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('logged in');
-        res.body.should.have.property('token');
+        userToken2 = `Bearer ${res.body.data.token}`;
+
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('Logged in');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  before((done) => {
+  it('Should login the eight user', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
       .send(newUserLogIn8)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        userToken3 = `Bearer ${res.body.token}`;
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('logged in');
-        res.body.should.have.property('token');
+        userToken3 = `Bearer ${res.body.data.token}`;
+
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('Logged in');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
 
-  before((done) => {
+  it('Should login the admin', (done) => {
     chai
       .request(server)
       .post('/api/v2/auth/login')
       .send(admin)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        adminToken = `Bearer ${res.body.token}`;
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('logged in');
-        res.body.should.have.property('token');
+        adminToken = `Bearer ${res.body.data.token}`;
+
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('Logged in');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
+        res.body.data.should.have.property('token').equals(res.body.data.token);
+        res.body.data.should.have.property('user').equals(res.body.data.user);
         done();
       });
   });
@@ -160,11 +169,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('group created');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('group created');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -177,11 +185,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('group created');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('group created');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -194,48 +201,79 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('group created');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('group created');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
 
-  it('Should retrieve groups', (done) => {
+  it('Should retrieve groups - Admin', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups')
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('admin, groups retrieved');
+        res.should.have.status(200);
+        res.body.should.have
+          .property('message')
+          .equals('admin, groups retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
       });
   });
 
-  it('Should retrieve groups', (done) => {
+  it('Should retrieve specific group - Admin', (done) => {
+    chai
+      .request(server)
+      .get('/api/v2/groups/1')
+      .set('authorization', adminToken)
+      .set('Accept', 'Application/JSON')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have
+          .property('message')
+          .equals('admin, group retrieved');
+        res.body.should.be.a('object');
+        res.body.data.should.be.a('object');
+        done();
+      });
+  });
+
+  it('Should retrieve groups - User', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups')
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('groups retrieved');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('groups retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
       });
   });
 
-  it('Should add a group member', (done) => {
+  it('Should retrieve specific group - User', (done) => {
+    chai
+      .request(server)
+      .get('/api/v2/groups/2')
+      .set('authorization', userToken1)
+      .set('Accept', 'Application/JSON')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('group retrieved');
+        res.body.should.be.a('object');
+        res.body.data.should.be.a('object');
+        done();
+      });
+  });
+
+  it('Should add a group member ', (done) => {
     chai
       .request(server)
       .post('/api/v2/groups/3/users')
@@ -243,11 +281,12 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('group member registered');
+        res.should.have.status(201);
+        res.body.should.have
+          .property('message')
+          .equals('group member registered');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -260,11 +299,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(400);
-        res.body.should.have.property('status').eql(400);
+        res.should.have.status(400);
         res.body.should.have
-          .property('error')
-          .eql(
+          .property('message')
+          .equals(
             'the specified username is already taken. choose another unique name'
           );
         res.body.should.be.a('object');
@@ -280,11 +318,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql(
+          .property('message')
+          .equals(
             'user with the specified email is not even registered. the email is incorrect'
           );
         res.body.should.be.a('object');
@@ -300,11 +337,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(201);
-        res.body.should.have.property('status').eql(201);
-        res.body.should.have.property('success').eql('group email sent');
+        res.should.have.status(201);
+        res.body.should.have.property('message').equals('group email sent');
         res.body.should.be.a('object');
-        res.body.data.should.be.a('array');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -317,75 +353,68 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('group not found');
+        res.should.have.status(404);
+        res.body.should.have.property('message').equals('group not found');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  it('Should retrieve group messages', (done) => {
+  it('Should retrieve group messages - User with Token 1', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups/1/messages')
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('group emails found');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('group messages found');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
       });
   });
 
-  it('Should retrieve group messages', (done) => {
+  it('Should retrieve group messages - Admin', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups/1/messages')
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have
-          .property('success')
-          .eql('admin, group emails found');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('admin, group messages found');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
       });
   });
 
-  it('Should not retrieve group messages, because they are none', (done) => {
+  it('Should not retrieve group messages, because they are none - Admin', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups/2/messages')
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, no group emails found');
+          .property('message')
+          .equals('admin, no group messages found');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  it('Should not retrieve group messages, because the group does not exist', (done) => {
+  it('Should not retrieve group messages, because the group does not exist - Admin', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups/4/messages')
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('admin, group not found');
+        res.should.have.status(404);
+        res.body.should.have.property('message').equals('admin, group not found');
         res.body.should.be.a('object');
         done();
       });
@@ -398,9 +427,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('no group emails found');
+        res.should.have.status(404);
+        res.body.should.have
+          .property('message')
+          .equals('no group messages found');
         res.body.should.be.a('object');
         done();
       });
@@ -413,9 +443,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('no group emails found');
+        res.should.have.status(404);
+        res.body.should.have
+          .property('message')
+          .equals('no group messages found');
         res.body.should.be.a('object');
         done();
       });
@@ -428,11 +459,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken3)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('you are not a member of the group or it does not exist');
+          .property('message')
+          .equals('you are not a member of the group or it does not exist');
         res.body.should.be.a('object');
         done();
       });
@@ -445,105 +475,106 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('no group emails found');
+        res.should.have.status(404);
+        res.body.should.have
+          .property('message')
+          .equals('no group messages found');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  it('Should retrieve group members', (done) => {
+  it('Should retrieve group members - User', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups/3/users')
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('group members retrieved');
+        res.should.have.status(200);
+        res.body.should.have
+          .property('message')
+          .equals('group members retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
       });
   });
 
-  it('Should retrieve group members', (done) => {
+  it('Should retrieve group members - Admin', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups/3/users')
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, group members retrieved');
+          .property('message')
+          .equals('admin, group members retrieved');
         res.body.should.be.a('object');
         res.body.data.should.be.a('array');
         done();
       });
   });
 
-  it('Should not retrieve group members because they are none', (done) => {
+  it('Should not retrieve group members because they are none - Admin', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups/2/users')
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
+        res.should.have.status(404);
         res.body.should.have
-          .property('error')
-          .eql('admin, no group members found');
+          .property('message')
+          .equals('admin, no group members found');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  it('Should not retrieve group members because the group does not exist', (done) => {
+  it('Should not retrieve group members because the group does not exist - Admin', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups/4/users')
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('admin, group not found');
+        res.should.have.status(404);
+        res.body.should.have
+          .property('message')
+          .equals('admin, group not found');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  it('Should not retrieve group members because they are none', (done) => {
+  it('Should not retrieve group members because they are none - User', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups/2/users')
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('no group members found');
+        res.should.have.status(404);
+        res.body.should.have
+          .property('message')
+          .equals('no group members found');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  it('Should not retrieve group members because the group does not exist', (done) => {
+  it('Should not retrieve group members because the group does not exist - User', (done) => {
     chai
       .request(server)
       .get('/api/v2/groups/4/users')
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('group not found');
+        res.should.have.status(404);
+        res.body.should.have.property('message').equals('group not found');
         res.body.should.be.a('object');
         done();
       });
@@ -556,9 +587,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('group member retrieved');
+        res.should.have.status(200);
+        res.body.should.have
+          .property('message')
+          .equals('group member retrieved');
         res.body.should.be.a('object');
         done();
       });
@@ -571,9 +603,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('group member not found');
+        res.should.have.status(404);
+        res.body.should.have
+          .property('message')
+          .equals('group member not found');
         res.body.should.be.a('object');
         done();
       });
@@ -586,15 +619,14 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('group not found');
+        res.should.have.status(404);
+        res.body.should.have.property('message').equals('group not found');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  it('Should change the group name', (done) => {
+  it('Should change the group name - User', (done) => {
     chai
       .request(server)
       .patch('/api/v2/groups/1/name')
@@ -602,15 +634,15 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('group name changed');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('group name changed');
         res.body.should.be.a('object');
+        res.body.data.should.be.a('object');
         done();
       });
   });
 
-  it('Should change the group name', (done) => {
+  it('Should change the group name - Admin', (done) => {
     chai
       .request(server)
       .patch('/api/v2/groups/1/name')
@@ -618,12 +650,12 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
+        res.should.have.status(200);
         res.body.should.have
-          .property('success')
-          .eql('admin, group name changed');
+          .property('message')
+          .equals('admin, group name changed');
         res.body.should.be.a('object');
+        res.body.data.should.be.a('object');
         done();
       });
   });
@@ -635,9 +667,8 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('group member deleted');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('group member deleted');
         res.body.should.be.a('object');
         done();
       });
@@ -650,9 +681,10 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('group member not found');
+        res.should.have.status(404);
+        res.body.should.have
+          .property('message')
+          .equals('group member not found');
         res.body.should.be.a('object');
         done();
       });
@@ -665,48 +697,45 @@ describe('GROUP ENDPOINT TESTS', () => {
       .set('authorization', userToken2)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(404);
-        res.body.should.have.property('status').eql(404);
-        res.body.should.have.property('error').eql('group not found');
+        res.should.have.status(404);
+        res.body.should.have.property('message').equals('group not found');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  it('Should delete the group of id = 2', (done) => {
+  it('Should delete the group of id = 2 - User', (done) => {
     chai
       .request(server)
       .delete('/api/v2/groups/2')
       .set('authorization', userToken1)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('group deleted');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('group deleted');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  it('Should delete the group of id = 3', (done) => {
+  it('Should delete the group of id = 3 - Admin', (done) => {
     chai
       .request(server)
       .delete('/api/v2/groups/3')
       .set('authorization', adminToken)
       .set('Accept', 'Application/JSON')
       .end((err, res) => {
-        res.body.should.have.status(200);
-        res.body.should.have.property('status').eql(200);
-        res.body.should.have.property('success').eql('admin, group deleted');
+        res.should.have.status(200);
+        res.body.should.have.property('message').equals('admin, group deleted');
         res.body.should.be.a('object');
         done();
       });
   });
 
-  database(
+  database.query(
     'TRUNCATE TABLE groups CASCADE; ALTER SEQUENCE groups_id_seq RESTART WITH 1;'
   );
-  database(
+  database.query(
     'TRUNCATE TABLE groupmembers CASCADE; ALTER SEQUENCE groupmembers_id_seq RESTART WITH 1;'
   );
 });

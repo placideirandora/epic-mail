@@ -1,6 +1,3 @@
-/**
- *a class for creating an object to store user registration information
- */
 class User {
   constructor(firstname, lastname, username, email, password) {
     this.firstname = firstname;
