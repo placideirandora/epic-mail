@@ -1,6 +1,16 @@
 import sql from '../../db/queries';
 import databaseClient from '../../db';
 import Message from '../../models/message';
+import {
+  findUser,
+  sendInboxMessage,
+  sendDraftMessage,
+  sendOutboxMessage,
+  findReceivedEmail,
+  markEmailAsRead,
+} from './extracts/user.extract-methods';
+import { findAdmin } from '../group/extracts/admin.extract-methods';
+import { adminFindReceivedEmail } from './extracts/admin.extract-methods';
 
 class ModuleOneMessageController {
   static async sendEmail(req, res) {
@@ -8,9 +18,7 @@ class ModuleOneMessageController {
       const { subject, message, receiverEmail, status } = req.body;
       const senderEmail = req.userEmail;
 
-      const receiver = await databaseClient.query(sql.retrieveSpecificUser, [
-        receiverEmail,
-      ]);
+      const receiver = await findUser(receiverEmail);
 
       if (!receiver.length) {
         return res
@@ -33,43 +41,13 @@ class ModuleOneMessageController {
       );
 
       if (status === 'sent') {
-        // SEND MESSAGE TO THE RECEIVER'S INBO
-        await databaseClient.query(sql.delivered, [
-          messageObj.subject,
-          messageObj.message,
-          messageObj.senderEmail,
-          messageObj.receiverEmail,
-          'unread',
-        ]);
+        await sendInboxMessage(messageObj);
 
-        // KEEP TRACK OF THE SENT MESSAGE
-        const sentMessage = await databaseClient.query(sql.sendEmail, [
-          messageObj.subject,
-          messageObj.message,
-          messageObj.senderEmail,
-          messageObj.receiverEmail,
-          messageObj.status,
-        ]);
-
-        return res.status(201).json({
-          message: 'email sent',
-          data: sentMessage[0],
-        });
+        return sendOutboxMessage(res, messageObj);
       }
 
       if (status === 'draft') {
-        const draftedMessage = await databaseClient.query(sql.draftEmail, [
-          messageObj.subject,
-          messageObj.message,
-          messageObj.senderEmail,
-          messageObj.receiverEmail,
-          messageObj.status,
-        ]);
-
-        res.status(201).json({
-          message: 'email drafted',
-          data: draftedMessage[0],
-        });
+        sendDraftMessage(res, messageObj);
       }
     } catch (error) {
       const message = 'Something went wrong while attempting to send the email';
@@ -122,50 +100,22 @@ class ModuleOneMessageController {
   }
 
   static async retrieveSpecificReceivedEmail(req, res) {
-    const isAdmin = true;
     const { userEmail } = req;
     const emailId = req.params.id;
 
-    const admin = await databaseClient.query(sql.retrieveAdmin, [
-      userEmail,
-      isAdmin,
-    ]);
+    const admin = await findAdmin(userEmail);
 
-    // ADMIN CAN RETRIEVE ALL USER'S RECEIVED EMAIL
     if (admin.length) {
-      const email = await databaseClient.query(
-        sql.adminRetrieveUserSpecificReceivedEmail,
-        [emailId]
-      );
-
-      if (!email.length) {
-        return res
-          .status(404)
-          .json({ message: 'admin, received email not found' });
-      }
-
-      return res.status(200).json({
-        message: 'admin, received email retrieved',
-        data: email,
-      });
+      return adminFindReceivedEmail(res, emailId);
     }
 
-    // USER CAN ONLY RETRIEVE THEIR RECEIVED EMAIL
-    const unreadEmail = await databaseClient.query(
-      sql.retrieveUserSpecificReceivedEmail,
-      [emailId, userEmail]
-    );
+    const unreadEmail = await findReceivedEmail(emailId, userEmail);
 
     if (!unreadEmail.length) {
       return res.status(404).json({ message: 'received email not found' });
     }
 
-    // AFTER RETRIEVING THE EMAIL IT IS MARKED AS READ
-    const status = 'read';
-    const readEmail = await databaseClient.query(sql.emailRead, [
-      status,
-      emailId,
-    ]);
+    const readEmail = await markEmailAsRead(emailId);
 
     res.status(200).json({
       message: 'received email retrieved',

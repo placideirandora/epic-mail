@@ -1,6 +1,15 @@
 import sql from '../../db/queries';
 import databaseClient from '../../db';
 import GroupMessage from '../../models/group-message';
+import {
+  findUserGroup,
+  findGroupMessages,
+  memberFindGroupMessages,
+} from './extracts/user.extract-methods';
+import {
+  findAdmin,
+  adminFindGroupMessages,
+} from './extracts/admin.extract-methods';
 
 class ModuleThreeGroupController {
   static async retrieveGroupMember(req, res) {
@@ -91,83 +100,30 @@ class ModuleThreeGroupController {
   }
 
   static async retrieveGroupMessages(req, res) {
-    const isAdmin = true;
     const { userEmail } = req;
     const groupId = req.params.id;
 
-    const admin = await databaseClient.query(sql.retrieveAdmin, [
-      userEmail,
-      isAdmin,
-    ]);
+    const admin = await findAdmin(userEmail);
 
     if (admin.length) {
-      const group = await databaseClient.query(sql.retrieveSpecificGroup, [
-        groupId,
-      ]);
-
-      if (!group.length) {
-        return res.status(404).json({ message: 'admin, group not found' });
-      }
-
-      const messages = await databaseClient.query(
-        sql.retrieveSpecificGroupEmails,
-        [groupId]
-      );
-
-      if (!messages.length) {
-        return res
-          .status(404)
-          .json({ message: 'admin, no group messages found' });
-      }
-
-      return res.status(200).json({
-        message: 'admin, group messages found',
-        data: messages,
-      });
+      return adminFindGroupMessages(res, groupId);
     }
 
-    const group = await databaseClient.query(sql.retrieveUserGroup, [
-      groupId,
-      userEmail,
-    ]);
+    const group = await findUserGroup(groupId, userEmail);
 
     if (!group.length) {
-      const member = await databaseClient.query(
-        sql.retrieveSpecificGroupMember,
-        [userEmail, groupId]
-      );
-
-      if (!member.length) {
-        return res.status(404).json({
-          message: 'you are not a member of the group or it does not exist',
-        });
-      }
-
-      const emails = await databaseClient.query(sql.retrieveMemberEmails, [
-        groupId,
-      ]);
-
-      if (!emails.length) {
-        return res.status(404).json({ message: 'no group messages found' });
-      }
-
-      return res.status(200).json({
-        message: 'group messages found',
-        data: emails,
-      });
+      return memberFindGroupMessages(res, userEmail, groupId);
     }
 
-    const emails = await databaseClient.query(sql.retrieveSpecificGroupEmails, [
-      groupId,
-    ]);
+    const messages = await findGroupMessages(groupId);
 
-    if (!emails.length) {
+    if (!messages.length) {
       return res.status(404).json({ message: 'no group messages found' });
     }
 
     res.status(200).json({
       message: 'group messages found',
-      data: emails,
+      data: messages,
     });
   }
 }

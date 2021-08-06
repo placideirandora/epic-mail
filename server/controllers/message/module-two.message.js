@@ -1,33 +1,21 @@
 import sql from '../../db/queries';
 import databaseClient from '../../db';
+import { findAdmin } from '../group/extracts/admin.extract-methods';
+import { deleteReceivedEmail } from './extracts/user.extract-methods';
+import {
+  adminDeleteReceivedEmail,
+  adminFindDraftEmail,
+} from './extracts/admin.extract-methods';
 
 class ModuleTwoMessageController {
   static async retrieveSpecificDraftEmail(req, res) {
-    const isAdmin = true;
     const { userEmail } = req;
     const emailId = req.params.id;
 
-    const admin = await databaseClient.query(sql.retrieveAdmin, [
-      userEmail,
-      isAdmin,
-    ]);
+    const admin = await findAdmin(userEmail);
 
     if (admin.length) {
-      const email = await databaseClient.query(
-        sql.adminRetrieveUserSpecificDraftEmail,
-        [emailId]
-      );
-
-      if (!email.length) {
-        return res
-          .status(404)
-          .json({ message: 'admin, draft email not found' });
-      }
-
-      return res.status(200).json({
-        message: 'admin, draft email retrieved',
-        data: email,
-      });
+      return adminFindDraftEmail(res, emailId);
     }
 
     const email = await databaseClient.query(
@@ -46,48 +34,16 @@ class ModuleTwoMessageController {
   }
 
   static async deleteSpecificReceivedEmail(req, res) {
-    const isAdmin = true;
     const { userEmail } = req;
     const emailId = req.params.id;
 
-    const admin = await databaseClient.query(sql.retrieveAdmin, [
-      userEmail,
-      isAdmin,
-    ]);
+    const admin = await findAdmin(userEmail);
 
-    // ADMIN CAN DELETE ANY USER'S RECEIVED EMAILS
     if (admin.length) {
-      const email = await databaseClient.query(
-        sql.adminRetrieveUserSpecificReceivedEmail,
-        [emailId]
-      );
-
-      if (!email.length) {
-        return res
-          .status(404)
-          .json({ message: 'admin, received email not found' });
-      }
-
-      await databaseClient.query(sql.deleteSpecificEmail, [emailId]);
-
-      return res
-        .status(200)
-        .json({ message: 'received email deleted by admin' });
+      return adminDeleteReceivedEmail(res, emailId);
     }
 
-    // USER CAN ONLY DELETE THEIR RECEIVED EMAIL
-    const email = await databaseClient.query(
-      sql.retrieveUserSpecificReceivedEmail,
-      [emailId, userEmail]
-    );
-
-    if (!email.length) {
-      return res.status(404).json({ message: 'received email not found' });
-    }
-
-    await databaseClient.query(sql.deleteSpecificEmail, [emailId]);
-
-    res.status(200).json({ message: 'received email deleted' });
+    deleteReceivedEmail(res, emailId, userEmail);
   }
 
   static async deleteSpecificSentEmail(req, res) {

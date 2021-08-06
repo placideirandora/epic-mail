@@ -1,15 +1,17 @@
-import sql from '../db/queries';
-import User from '../models/user';
-import databaseClient from '../db';
-import AuthHelper from '../helpers/auth.helper';
+import sql from '../../db/queries';
+import databaseClient from '../../db';
+import AuthHelper from '../../helpers/auth.helper';
+import {
+  findUserByEmail,
+  findUserByUsername,
+  saveUser,
+} from './extracts/user.extract-methods';
 
 class UserController {
   static async registerUser(req, res) {
-    const { firstname, lastname, username, password } = req.body;
-
-    const firstnameArr = Array.from(firstname);
-    const lastnameArr = Array.from(lastname);
-    const usernameArr = Array.from(username);
+    const firstnameArr = Array.from(req.body.firstname);
+    const lastnameArr = Array.from(req.body.lastname);
+    const usernameArr = Array.from(req.body.username);
 
     if (!isNaN(firstnameArr[0])) {
       return res
@@ -29,9 +31,7 @@ class UserController {
         .json({ message: 'Username must not start with a number' });
     }
 
-    const usernameTaken = await databaseClient.query(sql.findUsername, [
-      username,
-    ]);
+    const usernameTaken = await findUserByUsername(req.body.username);
 
     if (usernameTaken.length) {
       return res.status(400).json({
@@ -40,36 +40,14 @@ class UserController {
       });
     }
 
-    const email = `${username}@epicmail.com`;
-    const user = new User(firstname, lastname, username, email, password);
-    user.password = AuthHelper.hashPassword(user.password);
-
-    const registeredUser = await databaseClient.query(sql.registerUser, [
-      user.firstname,
-      user.lastname,
-      user.username,
-      user.email,
-      user.password,
-    ]);
-
-    delete registeredUser[0].password;
-
-    const token = AuthHelper.generateToken(registeredUser[0]);
-
-    res.status(201).json({
-      message: 'User registered',
-      data: {
-        token,
-        user: registeredUser[0],
-      },
-    });
+    saveUser(res, req.body);
   }
 
   static async loginUser(req, res) {
     try {
       const { email, password } = req.body;
 
-      const user = await databaseClient.query(sql.loginUser, [email]);
+      const user = await findUserByEmail(email);
 
       if (!user.length) {
         return res.status(401).json({ message: 'Incorrect email or password' });
